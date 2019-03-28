@@ -1,1 +1,2 @@
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). Please see the page "Get Started" at https://bookdown.org/ for how to compile this example.
+Notes are taken in serveral different topics, updating very slow...
+ https://kmsmgsh.github.io/Notes-in-statistics-and-computing/
