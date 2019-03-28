@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 3 Longitudinal data analysis | Notes on Statistics</title>
+  <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 3 Longitudinal data analysis | Notes on Statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Longitudinal data analysis | Notes on Statistics" />
+  
+  <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
+  
+
+<meta name="author" content="Jiaming Shen">
+
+
+<meta name="date" content="2019-03-28">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="statistician-tool-box.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Notes in statistics and computing</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>preliminary</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>2</b> Statistician Tool Box</a><ul>
+<li class="chapter" data-level="2.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>2.1</b> Matrix algebra</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Longitudinal data analysis</a><ul>
+<li class="chapter" data-level="3.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>3.1</b> Linear mixed model</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#condition-mean-vs-marginal-mean"><i class="fa fa-check"></i><b>3.1.1</b> Condition Mean vs Marginal mean</a></li>
+<li class="chapter" data-level="3.1.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#restricted-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>3.1.2</b> Restricted maximum likelihood estimation</a></li>
+<li class="chapter" data-level="3.1.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#prediction"><i class="fa fa-check"></i><b>3.1.3</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#generalised-linear-mixed-models"><i class="fa fa-check"></i><b>3.2</b> Generalised linear mixed models</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#expFam"><i class="fa fa-check"></i><b>3.2.1</b> Exponential distribution family</a></li>
+<li class="chapter" data-level="3.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>3.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>3.2.3</b> GLMMs</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Notes on Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="longitudinal-data-analysis" class="section level1">
+<h1><span class="header-section-number">Chapter 3</span> Longitudinal data analysis</h1>
+<div id="linear-mixed-model" class="section level2">
+<h2><span class="header-section-number">3.1</span> Linear mixed model</h2>
+<p>The model is <span class="math inline">\(Y_i=X_i\beta+Z_ib_i+\epsilon_i\)</span>, with <span class="math inline">\(b_i\sim N(0,G)\)</span></p>
+<p>Under MVN distribution assumption in LMM, we have the density function and log-likelihood function as</p>
+<p><span class="math display" id="eq:Normden">\[\begin{equation}
+f\left(\mathbf{Y}_{i}\right)=(2 \pi)^{-\frac{n_{i}}{2}}\left|\mathbf{\Sigma}_{i}\right|^{-\frac{1}{2}} \exp \left\{-\frac{1}{2}\left(\mathbf{Y}_{i}-\mathbf{X}_{i} \beta\right)^{\prime} \mathbf{\Sigma}_{i}^{-1}\left(\mathbf{Y}_{i}-\mathbf{X}_{i} \beta\right)\right\} 
+ \tag{3.1}
+\end{equation}\]</span></p>
+<p>with <span class="math inline">\(\Sigma_{i}=Z_{i} G Z_{i}^{\prime}+R_{i}=\Sigma_{i}(\theta)\)</span></p>
+<p><span class="math display" id="eq:loglike">\[\begin{equation}
+\ell(\beta, \theta)=-\frac{1}{2}\left[\sum_{i=1}^{m} \log \left|\mathbf{\Sigma}_{i}\right|+\sum_{i=1}^{m}\left(\mathbf{Y}_{i}-\mathbf{X}_{i} \beta\right)^{\prime} \mathbf{\Sigma}_{i}^{-1}\left(\mathbf{Y}_{i}-\mathbf{X}_{i} \beta\right)\right]
+\tag{3.2}
+\end{equation}\]</span></p>
+<p>对<span class="math inline">\(\beta\)</span> 求一阶导，如<a href="statistician-tool-box.html#matrix">2.1</a>中所述，对含有<span class="math inline">\(\beta\)</span>的项求导,令导数为0，得到
+<span class="math display">\[
+\tilde{\beta}(\theta)=\left(\sum_{i=1}^{m} \mathbf{x}_{i}^{\prime} \mathbf{\Sigma}_{i}^{-1} \mathbf{X}_{i}\right)^{-1}\left(\sum_{i=1}^{m} \mathbf{X}_{i}^{\prime} \mathbf{\Sigma}_{i}^{-1} \mathbf{Y}_{i}\right)
+\]</span>
+将其带入<a href="longitudinal-data-analysis.html#eq:loglike">(3.2)</a> 得到关于variance components <span class="math inline">\(\theta\)</span> in <span class="math inline">\(\Sigma\)</span>的profile loglikelihood
+<span class="math display">\[
+\ell_p(\theta)=-\frac{1}{2}\left[\sum_{i=1}^{m} \log \left|\mathbf{\Sigma}_{i}\right|+\sum_{i=1}^{m}\left\{\mathbf{Y}_{i}-\mathbf{X}_{i} \tilde{\beta}(\theta)\right\}^{\prime} \mathbf{\Sigma}_{i}^{-1}\left\{\mathbf{Y}_{i}-\mathbf{X}_{i} \tilde{\beta}(\theta)\right\}\right].
+\]</span>
+有
+<span class="math display">\[
+R S S(\theta)=\sum_{i=1}^{m}\left\{\mathbf{Y}_{i}-\mathbf{X}_{i} \tilde{\beta}(\theta)\right\}^{\prime} \mathbf{\Sigma}_{i}^{-1}\left\{\mathbf{Y}_{i}-\mathbf{X}_{i} \tilde{\beta}(\theta)\right\}\\
+=\mathbf{Y}^{\prime}\left[\mathbf{\Sigma}^{-1}-\mathbf{\Sigma}^{-1} \mathbf{X}\left(\mathbf{X}^{\prime} \mathbf{\Sigma}^{-1} \mathbf{X}\right)^{-1} \mathbf{X}^{\prime} \mathbf{\Sigma}^{-1}\right] \mathbf{Y}
+\]</span>
+所以profile/reduced loglikelihood 就是
+<span class="math display">\[
+\ell_{p}(\theta)=\ell_{p}(\tilde{\beta}(\theta), \theta)=-\frac{1}{2}\{\log |\Sigma(\theta)|+R S S(\theta)\}
+\]</span>
+MLE of <span class="math inline">\(\hat\theta\)</span> 一般没有解析形式。但是对于简单的情况，比如Random Intercept Model，可以用EM算法进行求解，详见J.Pan,LDA notes, p160(376).</p>
+<div id="condition-mean-vs-marginal-mean" class="section level3">
+<h3><span class="header-section-number">3.1.1</span> Condition Mean vs Marginal mean</h3>
+<ul>
+<li>Condition mean of <span class="math inline">\(Y_i\)</span> is the mean under the condition that given the subject-specific random effects <span class="math inline">\(b_i\)</span>.
+<span class="math display">\[
+E\left(\mathbf{Y}_{i} | \mathbf{b}_{i}\right)=\mathbf{X}_{i} \beta+\mathbf{Z}_{i} \mathbf{b}_{i}
+\]</span></li>
+<li>Marginal mean is integral out the random effects, the same as the marginal general linear model
+<span class="math display">\[
+\begin{aligned} E\left(\mathbf{Y}_{i}\right) &amp;=E_{b_{i}}\left(E_{Y_{i}}\left(\mathbf{Y}_{i} | \mathbf{b}_{i}\right)\right) \\ &amp;=E_{b_{i}}\left(\mathbf{X}_{i} \beta+\mathbf{Z}_{i} \mathbf{b}_{i}\right) \\ &amp;=\mathbf{X}_{i} \beta \end{aligned}
+\]</span></li>
+<li>The conditional variance of <span class="math inline">\(Y_i\)</span> is <span class="math inline">\(R_i\)</span></li>
+<li>The marginal variance of <span class="math inline">\(Y_i\)</span> is <span class="math inline">\(Z_iGZ_i&#39;+R_i\)</span></li>
+</ul>
+</div>
+<div id="restricted-maximum-likelihood-estimation" class="section level3">
+<h3><span class="header-section-number">3.1.2</span> Restricted maximum likelihood estimation</h3>
+<p>MLEs of variance components <span class="math inline">\(\theta\)</span> may be biased since the estimation proceure does not account for the loss of data information used in estimating the regression coefficients <span class="math inline">\(\beta\)</span>, consider restricted maximum likelihood estimation procedure to obtain less biased estimators of variance components <span class="math inline">\(\theta\)</span>.</p>
+<p>Use the REML function instead of original log-likelihood function, (Derive can be found in the 没mixed的部分有详细推导)</p>
+<p><span class="math display">\[
+\begin{aligned} \ell_{R}(\theta)=&amp;-\frac{1}{2} \sum_{i=1}^{m} \log \left|\boldsymbol{\Sigma}_{i}\right|-\frac{1}{2} \sum_{i=1}^{m} \log \left|\mathbf{X}_{i}^{\prime} \boldsymbol{\Sigma}_{i}^{-1} \mathbf{X}_{i}\right| \\ &amp;-\frac{1}{2} \sum_{i=1}^{m}\left(\mathbf{Y}_{i}-\mathbf{X}_{i} \tilde{\beta}(\theta)\right)^{\prime} \boldsymbol{\Sigma}_{i}^{-1}\left(\mathbf{Y}_{i}-\mathbf{X}_{i} \tilde{\beta}(\theta)\right) \end{aligned}
+\]</span>
+Once we get the estimation of parameters, the random effects <span class="math inline">\(b_i\)</span> can be predicted by
+<span class="math display">\[
+\hat{\mathbf{b}}_{i}=\mathrm{E}\left[\mathbf{b}_{i} | \mathbf{Y}_{i}, \hat{\beta}, \hat{\theta}\right]=\hat{\mathbf{G}} \mathbf{Z}_{i} \hat{\mathbf{\Sigma}}_{i}^{-1}\left(\mathbf{Y}_{i}-\mathbf{X}_{i} \hat{\beta}\right)
+\]</span></p>
+</div>
+<div id="prediction" class="section level3">
+<h3><span class="header-section-number">3.1.3</span> Prediction</h3>
+<p>Posterior distribution of <span class="math inline">\(b_i\)</span> given the data <span class="math inline">\(Y_i\)</span> is
+<span class="math display">\[
+f\left(b_{i} | Y_{i}\right)=\frac{f\left(Y_{i} | b_{i}\right) f\left(b_{i}\right)}{\int f\left(Y_{i} | b_{i}\right) f\left(b_{i}\right) d b_{i}}
+\]</span>
+Thus, the posterior mean of <span class="math inline">\(b_i\)</span> can be obtained by
+<span class="math display">\[
+\begin{aligned} \hat{b}_{i} &amp;=E\left(b_{i} | Y_{i}\right) \\ &amp;=\int b_{i} f\left(b_{i} | Y_{i}\right) d b_{i} \\ &amp;=G Z_{i}^{\prime} \Sigma_{i}^{-1}\left(Y_{i}-X_{i} \beta\right) \end{aligned}
+\]</span>
+This is called empirical Bayes estimator or the empirical best linear unbiased predictors.</p>
+</div>
+</div>
+<div id="generalised-linear-mixed-models" class="section level2">
+<h2><span class="header-section-number">3.2</span> Generalised linear mixed models</h2>
+<ul>
+<li>Before only consider the data follows Normal distribution, need extend to binomial, binary, Poisson counts, etc.</li>
+<li>推广线性模型的normal到其他分部是用GLM方法</li>
+<li>结合mixed model和GLM，得到GLMMs</li>
+</ul>
+<div id="expFam" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Exponential distribution family</h3>
+<p>涉及到Generalised linear model就会把正态推广到指数函数族，所以这里简单的提一下
+<span class="math display">\[
+f(y ; \theta, \phi)=\exp \left\{\frac{(y \theta-b(\theta))}{a(\phi)}+c(y, \phi)\right\}
+\]</span>
+<span class="math inline">\(\theta\)</span> is natural parameter and <span class="math inline">\(\phi\)</span> is called additional scale or nuisance/dispersion parameter.</p>
+<p>对于指数分布组，我们有
+<span class="math display">\[
+\begin{aligned} \mathrm{E}(Y) &amp;=b^{\prime}(\theta) \\ \operatorname{Var}(Y) &amp;=\phi b^{\prime \prime}(\theta) \end{aligned}
+\]</span></p>
+<p>若要求MLE，有其score function为
+<span class="math display">\[
+\begin{aligned} U &amp;=\frac{\partial}{\partial \theta} \ell(\theta, \phi | y) \\ &amp;=\frac{y-b^{\prime}(\theta)}{\phi} \end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+g(\mu_i)=x_i&#39;\beta
+\]</span>
+Y的不同分布通过不同的连接函数g进行刻画。
+<span class="math display">\[
+Normal: \mu_i=\eta_i=x_i&#39;\beta\\
+Possion/log: \log \lambda_{i}=\eta_{i}=\boldsymbol{x}_{i}^{\prime} \boldsymbol{\beta}\\
+\textit{Bionomial/logistic:}\log \frac{\pi_{i}}{1-\pi_{i}}=\eta_{i}=x_{i}^{\prime} \beta
+\]</span></p>
+</div>
+<div id="iteratively-reweighted-least-square-algorithm-iwls" class="section level3">
+<h3><span class="header-section-number">3.2.2</span> Iteratively reweighted Least square algorithm (IWLS)</h3>
+<p><span class="math display">\[
+\boldsymbol{\beta}^{(\boldsymbol{m})}=\left(\boldsymbol{X}^{\prime} \boldsymbol{W}^{(\boldsymbol{m}-\mathbf{1})} \boldsymbol{X}\right)^{-\mathbf{1}} \boldsymbol{X}^{\prime} \boldsymbol{W}^{(\boldsymbol{m}-\mathbf{1})} \boldsymbol{Z}^{(\boldsymbol{m}-\mathbf{1})}
+\]</span>
+with
+<span class="math display">\[
+\begin{aligned} W &amp;=\operatorname{diag}\left(W_{1}, W_{2}, \ldots, W_{n}\right) \text { with } W_{i}=\frac{1}{\left[g^{\prime}\left(\mu_{i}\right)\right]^{2} V_{i}} \\ Z &amp;=X \beta+D(Y-\mu) \\ D &amp;=\operatorname{diag}\left(D_{1}, D_{2}, \ldots, D_{n}\right) \text { with } D_{i}=g^{\prime}\left(\mu_{i}\right) \end{aligned}
+\]</span>
+More detail about the IWRLS can be found in /MasterCourse/GLM/IWLRS</p>
+</div>
+<div id="glmms" class="section level3">
+<h3><span class="header-section-number">3.2.3</span> GLMMs</h3>
+<ul>
+<li>Random Components:
+<ul>
+<li><p>Response:
+<span class="math display">\[
+\mathbf{Y}_{i j}\left|\mathbf{b}_{i} \sim \exp \left\{\frac{\left(y_{i j} \theta_{i j}-b\left(\theta_{i j}\right)\right)}{a_{i j}(\phi)}+c\left(y_{i j}, \phi\right)\right\}\right.
+\]</span></p></li>
+<li>Random effect:
+<span class="math display">\[
+\mathbf{b}_{i} \sim N_{q}(\mathbf{0}, \mathbf{G})
+\]</span></li>
+</ul></li>
+<li>Systematic components:
+<span class="math display">\[
+\eta_{i j}=\mathbf{x}_{i j}^{\prime} \beta+\mathbf{z}_{i j}^{\prime} \mathbf{b}_{i}
+\]</span></li>
+</ul>
+<p>比如说，response服从Binomial-Normal,那么有
+<span class="math display">\[
+Y_{i j}\left|b_{i} \sim \mathcal{B}\left(K_{i j}, \pi_{i j}\right), i=1,2, \cdots, m ; j=1,2, \dots, n_{i}\right.
+\]</span>
+然后就有模型如下
+<span class="math display">\[
+\log \frac{\pi_{i j}}{1-\pi_{i j}}=\eta_{i j}=\boldsymbol{x}_{i j}^{\prime} \boldsymbol{\beta}+\boldsymbol{z}_{i j}^{\prime} \boldsymbol{b}_{i}
+\]</span>
+Binomial-Normal意味着response的条件分布式Binomial，而random-effect 的分布是Normal.</p>
+<div id="likelihood-function" class="section level4">
+<h4><span class="header-section-number">3.2.3.1</span> Likelihood function</h4>
+<p>用<span class="math inline">\(\theta\)</span>表示随机效应<span class="math inline">\(b_i\)</span>方差阵<span class="math inline">\(G\)</span>中的参数，则可以很自然的写出似然函数：
+<span class="math display">\[
+L(\beta, \theta)=\prod_{i=1}^{m} \int \prod_{j=1}^{n_{i}} f_{y|b}\left(Y_{i j} | \mathbf{b}_{i}\right) f_{b}\left(\mathbf{b}_{i}\right) \mathrm{d} \mathbf{b}_{i}
+\]</span>
+似然函数中，<span class="math inline">\(f_{y|b}\left(Y_{i j} | \mathbf{b}_{i}\right)\)</span> condition on random effect <span class="math inline">\(b_i\)</span>的generalised的分布，<span class="math inline">\(f_b(b_i)\)</span>是随机效应的分布<span class="math inline">\(N(0,G)\)</span>.
+这块似然函数需要把未知的随机效应进行积分，把他积掉，但是一般而言，这个积分十分困难，所以要基于这个似然函数计算MLE不是很容易。
+在GLMM中，如果已知随机效应<span class="math inline">\(b_i\)</span>，则有
+<span class="math display">\[
+\mathrm{E}\left[Y_{i j} | \mathbf{b}_{i}\right]=\mu_{i j} \quad \quad \operatorname{Var}\left[Y_{i j} | \mathbf{b}_{i}\right]=\phi a_{i j} v\left(\mu_{i j}\right)
+\]</span>
+注：<span class="math inline">\(\phi\)</span> 和 <span class="math inline">\(v(\mu_{ij})\)</span> 可以从exponential family那块找到定义。</p>
+<p>为了处理似然函数中的积分，可以构造 <em>integrated quasi-likelihood</em> 进行处理。</p>
+<p><span class="math display" id="eq:intQuasi">\[
+\begin{equation}
+\begin{aligned}
+&amp; \exp \left\{q \ell_{i}(\beta, \theta)\right\} \\ \propto &amp;|\mathbf{G}|^{-\frac{1}{2}} \int \exp \left[-\frac{1}{2 \phi} \sum_{j=1}^{n_{i}} d_{i j}\left(y_{i j} ; \mu_{i j}\right)-\frac{1}{2} \mathbf{b}_{i}^{\prime} \mathbf{G}^{-1} \mathbf{b}_{i}\right] \mathrm{d} \mathbf{b}_{i} 
+\end{aligned}
+\tag{3.3}
+\end{equation}
+\]</span>
+with
+<span class="math display">\[
+d_{i j}(y, \mu)=-2 \int_{y}^{\mu} \frac{y-u}{a_{i j} v(u)} \mathrm{d} u
+\]</span></p>
+<p>这里有一个问题，为啥quasi-likelihood长这样，根据(Wedderburn,1974)，quasi-likelihood的定义是</p>
+
+<div class="definition">
+<span id="def:Quasi" class="definition"><strong>Definition 3.1  </strong></span>quasi-likelihood function <span class="math inline">\(K(z_i,\mu_i)\)</span>
+<span class="math display">\[
+\frac{\partial K\left(z_{i}, \mu_{i}\right)}{\partial \mu_{i}}=\frac{z_{i}-\mu_{i}}{V\left(\mu_{i}\right)}
+\]</span>
+or equivelantly
+<span class="math display">\[
+K\left(z_{i}, \mu_{i}\right)=\int^{\mu_{*}} \frac{z_{i}-\mu_{i}^{\prime}}{V\left(\mu_{i}^{\prime}\right)} d \mu_{i}^{\prime}+\text { function of } z_{i}  
+\]</span>
+</div>
+
+<p>根据其原因，我觉得大概是这样，回到 <a href="longitudinal-data-analysis.html#expFam">3.2.1</a> 中，我们可以看到，对Exponential family distribution求导得到Score function，其形式就是
+<span class="math display">\[
+U=\frac{y-E(y)}{\phi}
+\]</span>
+于是乎quasi-likelihood就反过来，用只要满足求导为这个式子的函数就是一个“likelihood”。
+而同时，quasi-likelihood有一些类似于MLE，比较好的计算性质可以进行利用。</p>
+<p>回到(Breslow and Clayton,1993)的定义式 <a href="longitudinal-data-analysis.html#eq:intQuasi">(3.3)</a>,其中第一部分关于fixed-effect的，直接是用以上quasi-likelihood的定义<a href="longitudinal-data-analysis.html#def:Quasi">3.1</a> 带进去，然后加上第二部分关于random effect中和<span class="math inline">\(G(\theta)\)</span>有关的部分。</p>
+<p>因为quasi-likelihood是从exponential family destribution的Score function来的，所以对于<span class="math inline">\(Y\sim exponential family\)</span>,quasi-likelihood等价于真正的likelihood，然后<span class="math inline">\(d_{ij}\)</span>变成了在积分上下限的loglikelihood 的差值：<span class="math inline">\(2 \phi\{\ell(y ; y, \phi)-\ell(y ; \mu, \phi)\}\)</span>.</p>
+<p>Integrated quasi-likelihood<a href="longitudinal-data-analysis.html#eq:intQuasi">(3.3)</a> 对于个体i，能写成如下形式
+<span class="math display">\[
+c|\mathbf{G}|^{-\frac{1}{2}} \int e^{-\kappa\left(\mathbf{b}_{i}\right)} \mathrm{d} \mathbf{b}_{i}
+\]</span></p>
+<p>这只是把exponential那里一大堆二次型全部塞到<span class="math inline">\(-\kappa(b_i)\)</span>里面去。
+这个积分无法解析的写出来，于是考虑Laplace逼近。</p>
+<p><span class="math display">\[
+\int e^{-\kappa\left(\mathbf{b}_{i}\right)} \mathrm{d} \mathbf{b}_{i}=(2 \pi)^{q / 2}\left|\kappa^{\prime \prime}\left(\tilde{\mathbf{b}}_{i}\right)\right|^{-1 / 2} \exp \left\{-\kappa\left(\tilde{\mathbf{b}}_{i}\right)\right\}
+\]</span>
+<span class="math inline">\(q=\operatorname{dim}(b_i)\)</span>.<span class="math inline">\(\tilde b_i\)</span> 是<span class="math inline">\(\kappa&#39;(b_i)=0\)</span>的解。
+于是有
+<span class="math display" id="eq:quasiLikeKappa">\[
+\begin{equation}
+q \ell_{i}(\beta, \theta) \simeq-\frac{1}{2} \log |\mathbf{G}|-\frac{1}{2} \log \left|\kappa^{\prime \prime}\left(\tilde{\mathbf{b}}_{i}\right)\right|-\kappa\left(\tilde{\mathbf{b}}_{i}\right)
+\tag{3.4}
+\end{equation}
+\]</span>
+以及
+<span class="math display">\[
+\kappa^{\prime}\left(\mathbf{b}_{i}\right)=-\sum_{j=1}^{n_{i}} \frac{\left(Y_{i j}-\mu_{i j}\right) \mathbf{z}_{i j}}{\phi a_{i j} v\left(\mu_{i j}\right) g^{\prime}\left(\mu_{i j}\right)}+\mathbf{G}^{-1} \mathbf{b}_{i}=0
+\]</span>
+和
+<span class="math display">\[
+\begin{aligned} \kappa^{\prime \prime}\left(\mathbf{b}_{i}\right) &amp;=\sum_{j=1}^{n_{i}} \frac{\mathbf{z}_{i j} \mathbf{z}_{i j}^{\prime}}{\phi a_{i j} v\left(\mu_{i j}\right)\left[g^{\prime}\left(\mu_{i j}\right)\right]^{2}}+\mathbf{G}^{-1}+\mathbf{R}_{i} \\ &amp; \simeq \mathbf{Z}_{i}^{\prime} \mathbf{W}_{i} \mathbf{Z}_{i}+\mathbf{G}^{-1} \end{aligned}
+\]</span>
+注意这个<span class="math inline">\(W_i\)</span>有点像IRWLS中的reweighted matrix。
+其中<span class="math inline">\(\boldsymbol R_i\)</span>是</p>
+<p><span class="math display">\[
+\mathbf{R}_{i}=-\sum_{j=1}^{n_{i}}\left(Y_{i j}-\mu_{i j}\right) \mathbf{z}_{i j} \frac{\partial}{\partial \mathbf{b}_{i}}\left[\frac{1}{\phi a_{i j} v\left(\mu_{i j}\right) g^{\prime}\left(\mu_{i j}\right)}\right]
+\]</span></p>
+<p><span class="math inline">\(E(\boldsymbol R_i)=0\)</span>,
+当使用canonical link function时<span class="math inline">\(\boldsymbol R_i=0\)</span>,所以可以忽略掉。把<span class="math inline">\(\kappa&#39;&#39;(b_i)\)</span>带回 <a href="longitudinal-data-analysis.html#eq:quasiLikeKappa">(3.4)</a>，则有</p>
+<p><span class="math display">\[
+q \ell_{i}(\beta, \theta) \simeq-\frac{1}{2} \log |\mathbf{G}|-\frac{1}{2} \log \left|\mathbf{Z}_{i}^{\prime} \mathbf{W}_{i} \mathbf{Z}_{i}+\mathbf{G}^{-1}\right|-\kappa\left(\tilde{\mathbf{b}}_{i}\right)
+\]</span>
+把<span class="math inline">\(\kappa(\cdot)\)</span>打开可以得到</p>
+<p><span class="math display">\[
+\begin{aligned} q \ell(\beta, \theta)=&amp; \sum_{i=1}^{m} q \ell_{i}(\beta, \theta) \\=&amp;-\frac{1}{2} \sum_{i=1}^{m} \log \left|\mathbf{I}_{n_{i}}+\mathbf{Z}_{i}^{\prime} \mathbf{W}_{i} \mathbf{Z}_{i} \mathbf{G}\right| \\ &amp;-\frac{1}{2 \phi} \sum_{i=1}^{m} \sum_{j=1}^{n_{i}} d_{i j}\left(y_{i j} ; \tilde{\mu}_{i j}\right)-\frac{1}{2} \sum_{i=1}^{m} \tilde{\mathbf{b}}_{i}^{\prime} \mathbf{G}^{-1} \tilde{\mathbf{b}}_{i} \end{aligned}
+\]</span>
+极大化这个式子得到的估计值称为 penalised quasi-likelihood(PQL)。把后面那项<span class="math inline">\(\frac{1}{2} \sum_{i=1}^{m} \tilde{\mathbf{b}}_{i}^{\prime} \mathbf{G}^{-1} \tilde{\mathbf{b}}_{i}\)</span> 视为penalty。</p>
+<p>基于某种复杂的和penalized likelihood estimation相同的机制，可以把<span class="math inline">\(\tilde b_i\)</span> 看成一个罚函数的参数单独进行估计，所以有</p>
+<p><span class="math display">\[
+q \ell(\beta, \mathbf{b}) \simeq-\frac{1}{2 \phi} \sum_{i=1}^{m} \sum_{j=1}^{n_{i}} d_{i j}\left(y_{i j} ; \mu_{i j}\right)-\frac{1}{2} \sum_{i=1}^{m} \mathbf{b}_{i}^{\prime} \mathbf{G}^{-1} \mathbf{b}_{i}
+\]</span>
+通过分别找�使得上式极大化的<span class="math inline">\(\beta\)</span>和<span class="math inline">\(\boldsymbol b\)</span> 得到需要的估计。对上式进行微分，得到
+<span class="math display">\[
+\begin{array}{c}{\sum_{i=1}^{m} \sum_{j=1}^{n_{i}} \frac{\left(y_{i j}-\mu_{i j}\right) \mathbf{x}_{i j}}{\phi a_{i j} v\left(\mu_{i j}\right) g^{\prime}\left(\mu_{i j}\right)}=0} \\ {\sum_{j=1}^{n_{i}} \frac{\left(y_{i j}-\mu_{i j}\right) \mathbf{z}_{i j}}{\phi a_{i j} v\left(\mu_{i j}\right) g^{\prime}\left(\mu_{i j}\right)}=\mathbf{G}^{-1} \mathbf{b}_{i}}\end{array}
+\]</span>
+.
+可以使用Fisher-Scoring algorithm进行求解。</p>
+<p>。。。</p>
+<p>求解过程很长很麻烦可以去看课件。。</p>
+<p>。。。</p>
+<p>我们得到了对<span class="math inline">\(b\)</span> 和 <span class="math inline">\(\beta\)</span>的估计以后，下一步就是对Random effect 的 covariance matrix <span class="math inline">\(G(\theta)\)</span> 进行估计。</p>
+<blockquote>
+<p>这里没太懂。</p>
+</blockquote>
+<p>Ignoring throughout the dependence of <span class="math inline">\(W\)</span> on <span class="math inline">\(\theta\)</span> and replacing the deviance</p>
+<p><span class="math display">\[
+\sum_{i=1}^{m} \sum_{j=1}^{n_{i}} d_{i j}\left(y_{i j}, \mu_{i j}\right)
+\]</span>
+by the Pearson Chi-squared statistic
+<span class="math display">\[
+\sum_{i=1}^{m} \sum_{j=1}^{n_{i}} \frac{\left(y_{i j}-\mu_{i j}\right)^{2}}{a_{i j} v\left(\mu_{i j}\right)}
+\]</span>
+带回之前的PQL，可以得到
+<span class="math display">\[
+\begin{aligned} q \ell(\hat{\beta}(\theta), \hat{\mathbf{b}}(\theta)) \simeq &amp;-\frac{1}{2} \sum_{i=1}^{m} \log \left|\mathbf{V}_{i}(\theta)\right| \\ &amp;-\frac{1}{2} \sum_{i=1}^{m}\left(\mathbf{Y}_{i}^{*}-\mathbf{X}_{i} \hat{\beta}(\theta)\right)^{\prime} \mathbf{V}_{i}^{-1}(\theta)\left(\mathbf{Y}_{i}^{*}-\mathbf{X}_{i} \hat{\beta}(\theta)\right) \end{aligned}
+\]</span>
+同样的，这个也可以有一个REML的版本避免<span class="math inline">\(\beta\)</span>的估计对<span class="math inline">\(\theta\)</span>的影响.
+<span class="math display">\[
+\begin{aligned} q \ell^{*}(\hat{\beta}(\theta), \hat{\mathbf{b}}(\theta)) \simeq &amp;-\frac{1}{2} \sum_{i=1}^{m} \log \left|\mathbf{V}_{i}(\theta)\right|-\frac{1}{2} \sum_{i=1}^{m} \log \left|\mathbf{X}_{i}^{\prime} \mathbf{V}_{i}^{-1}(\theta) \mathbf{X}_{i}\right| \\ &amp;-\frac{1}{2} \sum_{i=1}^{m}\left(\mathbf{Y}_{i}^{*}-\mathbf{X}_{i} \hat{\beta}(\theta)\right)^{\prime} \mathbf{V}_{i}^{-1}(\theta)\left(\mathbf{Y}_{i}^{*}-\mathbf{X}_{i} \hat{\beta}(\theta)\right) \end{aligned}
+\]</span>
+同样的求导也可以导出估计方程，然后用fisher-scoring algorithm求解估计方程。
+<span class="math display">\[
+-\frac{1}{2} \sum_{i=1}^{m}\left[\left(\mathbf{Y}_{i}^{*}-\mathbf{X}_{i} \beta\right)^{\prime} \mathbf{V}_{i}^{-1} \frac{\partial \mathbf{V}_{i}}{\partial \theta_{j}} \mathbf{V}_{i}^{-1}\left(\mathbf{Y}_{i}^{*}-\mathbf{X}_{i} \beta\right)-\operatorname{trace}\left(\mathbf{P}_{i} \frac{\partial \mathbf{V}_{i}}{\partial \theta_{j}}\right)\right]=0
+\]</span>
+with
+<span class="math display">\[
+\mathbf{P}_{i}=\mathbf{V}_{i}^{-1}-\mathbf{V}_{i}^{-1} \mathbf{X}_{i}\left(\mathbf{X}_{i}^{\prime} \mathbf{V}_{i}^{-1} \mathbf{X}_{i}\right)^{-1} \mathbf{X}_{i}^{\prime} \mathbf{V}_{i}^{-1}
+\]</span></p>
+
+</div>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="statistician-tool-box.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["Notes in statistics and computing.pdf", "Notes in statistics and computing.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
