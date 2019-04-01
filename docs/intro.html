@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-03-29">
+<meta name="date" content="2019-04-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -70,7 +70,9 @@
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>preliminary</a></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>2</b> Statistician Tool Box</a><ul>
-<li class="chapter" data-level="2.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>2.1</b> Matrix algebra</a></li>
+<li class="chapter" data-level="2.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>2.1</b> Matrix algebra</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>2.1.1</b> Block diagonal matrices</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Longitudinal data analysis</a><ul>
 <li class="chapter" data-level="3.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>3.1</b> Linear mixed model</a><ul>
@@ -83,6 +85,7 @@
 <li class="chapter" data-level="3.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>3.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
 <li class="chapter" data-level="3.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>3.2.3</b> GLMMs</a></li>
 </ul></li>
+<li class="chapter" data-level="3.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>3.3</b> The Bayesian analysis approach for covariance modelling</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -161,6 +164,19 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>

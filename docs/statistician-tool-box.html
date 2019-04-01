@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-03-28">
+<meta name="date" content="2019-04-01">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -50,69 +50,6 @@
 
 
 
-<style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -133,7 +70,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>preliminary</a></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>2</b> Statistician Tool Box</a><ul>
-<li class="chapter" data-level="2.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>2.1</b> Matrix algebra</a></li>
+<li class="chapter" data-level="2.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>2.1</b> Matrix algebra</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>2.1.1</b> Block diagonal matrices</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Longitudinal data analysis</a><ul>
 <li class="chapter" data-level="3.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>3.1</b> Linear mixed model</a><ul>
@@ -146,6 +85,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>3.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
 <li class="chapter" data-level="3.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>3.2.3</b> GLMMs</a></li>
 </ul></li>
+<li class="chapter" data-level="3.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>3.3</b> The Bayesian analysis approach for covariance modelling</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -222,7 +162,21 @@ A^{\prime}(t)=\frac{\mathrm{d}}{\mathrm{d} t} A(t)=\left(\frac{\mathrm{d}}{\math
 \frac{d f}{d x}=\left[ \begin{array}{c}{\frac{\partial f}{\partial \xi_{1}}} \\ {\vdots} \\ {\frac{\partial f}{\partial \xi_{n}}}\end{array}\right]=\left[ \begin{array}{c}{\sum_{j=1}^{n} a_{1 j} \xi_{j}} \\ {\vdots} \\ {\sum_{j=1}^{n} a_{n j} \xi_{j}}\end{array}\right]+\left[ \begin{array}{c}{\sum_{i=1}^{n} a_{i 1} \xi_{i}} \\ {\vdots} \\ {\sum_{i=1}^{n} a_{i n} \xi_{i}}\end{array}\right]=\\ 
 \boldsymbol{A x}+\boldsymbol{A}^{\mathrm{T}} \boldsymbol{x}=\left(\boldsymbol{A}+\boldsymbol{A}^{\mathrm{T}}\right) \boldsymbol{x}
 \]</span></p>
+<div id="block-diagonal-matrices" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Block diagonal matrices</h3>
+<p><span class="math display">\[
+\mathbf{A}=\left[ \begin{array}{cccc}{\mathbf{A}_{1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}}\end{array}\right]
+\]</span></p>
+<p>property:
+<span class="math display">\[
+\begin{aligned} \operatorname{det} \mathbf{A} &amp;=\operatorname{det} \mathbf{A}_{1} \times \cdots \times \operatorname{det} \mathbf{A}_{n} \\ \operatorname{tr} \mathbf{A} &amp;=\operatorname{tr} \mathbf{A}_{1}+\cdots+\operatorname{tr} \mathbf{A}_{n} \end{aligned}
+\]</span></p>
+<p>It’s inverse:</p>
+<p><span class="math display">\[
+\left( \begin{array}{cccc}{\mathbf{A}_{1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}}\end{array}\right)=\left( \begin{array}{cccc}{\mathbf{A}_{1}^{-1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}^{-1}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}^{-1}}\end{array}\right)
+\]</span></p>
 
+</div>
 </div>
 </div>
             </section>
