@@ -301,3 +301,13 @@ $$
 $$
 
 
+## The Bayesian analysis approach for covariance modelling
+
+It is obvious that the mean part $X\beta$ is conditional normal distribution under the condition that we know the covariance matrix part $\Sigma=LDL^T$ or $\Sigma=\Lambda\Gamma\Gamma^T\Lambda$
+
+
+
+
+
+
+

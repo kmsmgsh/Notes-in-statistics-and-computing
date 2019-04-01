@@ -52,5 +52,23 @@ $$
 \boldsymbol{A x}+\boldsymbol{A}^{\mathrm{T}} \boldsymbol{x}=\left(\boldsymbol{A}+\boldsymbol{A}^{\mathrm{T}}\right) \boldsymbol{x}
 $$
 
+### Block diagonal matrices
+
+$$
+\mathbf{A}=\left[ \begin{array}{cccc}{\mathbf{A}_{1}} & {0} & {\cdots} & {0} \\ {0} & {\mathbf{A}_{2}} & {\cdots} & {0} \\ {\vdots} & {\vdots} & {\ddots} & {\vdots} \\ {0} & {0} & {\cdots} & {\mathbf{A}_{n}}\end{array}\right]
+$$
+
+property:
+$$
+\begin{aligned} \operatorname{det} \mathbf{A} &=\operatorname{det} \mathbf{A}_{1} \times \cdots \times \operatorname{det} \mathbf{A}_{n} \\ \operatorname{tr} \mathbf{A} &=\operatorname{tr} \mathbf{A}_{1}+\cdots+\operatorname{tr} \mathbf{A}_{n} \end{aligned}
+$$
+
+It's inverse:
+
+$$
+\left( \begin{array}{cccc}{\mathbf{A}_{1}} & {0} & {\cdots} & {0} \\ {0} & {\mathbf{A}_{2}} & {\cdots} & {0} \\ {\vdots} & {\vdots} & {\ddots} & {\vdots} \\ {0} & {0} & {\cdots} & {\mathbf{A}_{n}}\end{array}\right)=\left( \begin{array}{cccc}{\mathbf{A}_{1}^{-1}} & {0} & {\cdots} & {0} \\ {0} & {\mathbf{A}_{2}^{-1}} & {\cdots} & {0} \\ {\vdots} & {\vdots} & {\ddots} & {\vdots} \\ {0} & {0} & {\cdots} & {\mathbf{A}_{n}^{-1}}\end{array}\right)
+$$
+
+
 
 
