@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 1 Introduction | Notes on Statistics</title>
+  <title>Chapter 4 统计图形笔记 | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 1 Introduction | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 4 统计图形笔记 | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 1 Introduction | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 4 统计图形笔记 | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="e69d82e4b883e69d82e585ab.html">
-<link rel="next" href="statistician-tool-box.html">
+<link rel="prev" href="longitudinal-data-analysis.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -173,9 +173,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1">
-<h1><span class="header-section-number">Chapter 1</span> Introduction</h1>
-<p>This is a notes about the book reading and useful tricks while reading books and codes.</p>
+<div id="section-4" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> 统计图形笔记</h1>
+<p>使用 <code>palette()</code> 进行批量获得色彩
+比如说</p>
+<pre class="sourceCode r"><code class="sourceCode r">x=<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)
+<span class="kw">plot</span>(x,x,<span class="dt">type=</span><span class="st">&#39;l&#39;</span>,<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>) {
+  <span class="kw">lines</span>(x,i<span class="op">*</span>x,<span class="dt">type =</span> <span class="st">&#39;l&#39;</span>,<span class="dt">col=</span><span class="kw">palette</span>()[i])
+}</code></pre>
+<p><img src="Notes_in_statistics_and_computing_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>可以使用<code>adjustcolor(palette()[i], alpha.f = 0.5)</code> 给上述色彩增加透明度
+例如:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x,x,<span class="dt">type=</span><span class="st">&#39;l&#39;</span>,<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>) {
+  <span class="kw">lines</span>(x,i<span class="op">*</span>x,<span class="dt">type =</span> <span class="st">&#39;l&#39;</span>,<span class="dt">col=</span><span class="kw">adjustcolor</span>(<span class="kw">palette</span>()[i], <span class="dt">alpha.f =</span> <span class="fl">0.3</span>))
+}</code></pre>
+<p><img src="Notes_in_statistics_and_computing_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 
 </div>
             </section>
@@ -183,8 +197,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="e69d82e4b883e69d82e585ab.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="statistician-tool-box.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="longitudinal-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -229,19 +243,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

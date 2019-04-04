@@ -1,9 +1,4 @@
----
-title: "Readu"
-author: "Jiaming"
-date: "28/03/2019"
-output: html_document
----
+# 杂七杂八{-}
 
 This is a document describe the build procedure.
 The other branch "gh-pg"(or something like this) 是用于用alternative approach去在github publish 这本书，但是做到一半没做下去，卡在[这里](https://bookdown.org/yihui/bookdown/github.html)，中，Create a token之后，没做到encrypt it.然后改用docs发布发现一次成功就不想试了。
