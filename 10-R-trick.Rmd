@@ -1,0 +1,19 @@
+# R trick
+
+科学计数法：
+
+- 取消科学计数法
+```{r,eval=FALSE}
+options(scipen = 200)
+```
+scipen 表示在200个数字以内都不使用科学计数法
+
+- Rmarkdown 不运行
+``` eval=FALSE ```
+
+- 清除环境变量
+
+```rm(list=ls())```
+
+- 拼接字符串
+```paste()```

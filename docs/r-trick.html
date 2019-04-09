@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Notes on Statistics</title>
+  <title>Chapter 5 R trick | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Notes on Statistics" />
+  <meta property="og:title" content="Chapter 5 R trick | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 5 R trick | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-
-<link rel="next" href="e69d82e4b883e69d82e585ab.html">
+<link rel="prev" href="section-4.html">
+<link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -174,13 +174,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Notes on Statistics</h1>
-<p class="author"><em>Jiaming Shen</em></p>
-<p class="date"><em>2019-04-09</em></p>
-</div>
-<div id="preliminary" class="section level1 unnumbered">
-<h1>preliminary</h1>
+<div id="r-trick" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> R trick</h1>
+<p>科学计数法：</p>
+<ul>
+<li>取消科学计数法</li>
+</ul>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">scipen =</span> <span class="dv">200</span>)</code></pre>
+<p>scipen 表示在200个数字以内都不使用科学计数法</p>
+<ul>
+<li><p>Rmarkdown 不运行
+<code>eval=FALSE</code></p></li>
+<li><p>清除环境变量</p></li>
+</ul>
+<p><code>rm(list=ls())</code></p>
+<ul>
+<li>拼接字符串
+<code>paste()</code></li>
+</ul>
 
 </div>
             </section>
@@ -188,8 +199,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-
-<a href="e69d82e4b883e69d82e585ab.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="section-4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -234,19 +245,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

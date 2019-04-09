@@ -1,3 +1,3 @@
 [
-["section-4.html", "Chapter 4 统计图形笔记", " Chapter 4 统计图形笔记 使用 palette() 进行批量获得色彩 比如说 x=seq(0,1,0.01) plot(x,x,type=&#39;l&#39;,ylim=c(0,10)) for (i in 2:10) { lines(x,i*x,type = &#39;l&#39;,col=palette()[i]) } 可以使用adjustcolor(palette()[i], alpha.f = 0.5) 给上述色彩增加透明度 例如: plot(x,x,type=&#39;l&#39;,ylim=c(0,10)) for (i in 2:10) { lines(x,i*x,type = &#39;l&#39;,col=adjustcolor(palette()[i], alpha.f = 0.3)) } "]
+["r-trick.html", "Chapter 5 R trick", " Chapter 5 R trick 科学计数法： 取消科学计数法 options(scipen = 200) scipen 表示在200个数字以内都不使用科学计数法 Rmarkdown 不运行 eval=FALSE 清除环境变量 rm(list=ls()) 拼接字符串 paste() "]
 ]
