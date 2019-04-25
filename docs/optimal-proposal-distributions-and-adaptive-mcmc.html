@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 8 Optimal Proposal Distributions and Adaptive MCMC | Notes on Statistics</title>
+  <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 8 Optimal Proposal Distributions and Adaptive MCMC | Notes on Statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 8 Optimal Proposal Distributions and Adaptive MCMC | Notes on Statistics" />
+  
+  <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
+  
+
+<meta name="author" content="Jiaming Shen">
+
+
+<meta name="date" content="2019-04-25">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="reversible-jump-mcmc.html">
+<link rel="next" href="references.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Notes in statistics and computing</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>preliminary</a></li>
+<li class="chapter" data-level="" data-path="e69d82e4b883e69d82e585ab.html"><a href="e69d82e4b883e69d82e585ab.html"><i class="fa fa-check"></i>杂七杂八</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>2</b> Statistician Tool Box</a><ul>
+<li class="chapter" data-level="2.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>2.1</b> Matrix algebra</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>2.1.1</b> Block diagonal matrices</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Longitudinal data analysis</a><ul>
+<li class="chapter" data-level="3.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>3.1</b> Linear mixed model</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#condition-mean-vs-marginal-mean"><i class="fa fa-check"></i><b>3.1.1</b> Condition Mean vs Marginal mean</a></li>
+<li class="chapter" data-level="3.1.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#restricted-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>3.1.2</b> Restricted maximum likelihood estimation</a></li>
+<li class="chapter" data-level="3.1.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#prediction"><i class="fa fa-check"></i><b>3.1.3</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#generalised-linear-mixed-models"><i class="fa fa-check"></i><b>3.2</b> Generalised linear mixed models</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#expFam"><i class="fa fa-check"></i><b>3.2.1</b> Exponential distribution family</a></li>
+<li class="chapter" data-level="3.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>3.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>3.2.3</b> GLMMs</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>3.3</b> The Bayesian analysis approach for covariance modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-4.html"><a href="section-4.html"><i class="fa fa-check"></i><b>4</b> 统计图形笔记</a></li>
+<li class="chapter" data-level="5" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>5</b> BasicMCMC</a><ul>
+<li class="chapter" data-level="5.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>5.1</b> Metropolis-Hastings Update</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-update"><i class="fa fa-check"></i><b>5.1.1</b> Metropolis Update</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>5.2</b> The Gibbs Update</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="basicmcmc.html"><a href="basicmcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>5.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
+<li class="chapter" data-level="5.2.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>5.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="basicmcmc.html"><a href="basicmcmc.html#combining-updates"><i class="fa fa-check"></i><b>5.3</b> Combining Updates</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="basicmcmc.html"><a href="basicmcmc.html#composition"><i class="fa fa-check"></i><b>5.3.1</b> Composition</a></li>
+<li class="chapter" data-level="5.3.2" data-path="basicmcmc.html"><a href="basicmcmc.html#palindromic-composition"><i class="fa fa-check"></i><b>5.3.2</b> Palindromic Composition</a></li>
+<li class="chapter" data-level="5.3.3" data-path="basicmcmc.html"><a href="basicmcmc.html#state-independent-mixing"><i class="fa fa-check"></i><b>5.3.3</b> State-Independent Mixing</a></li>
+<li class="chapter" data-level="5.3.4" data-path="basicmcmc.html"><a href="basicmcmc.html#subsampling"><i class="fa fa-check"></i><b>5.3.4</b> Subsampling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="basicmcmc.html"><a href="basicmcmc.html#a-metropolis-example"><i class="fa fa-check"></i><b>5.4</b> A Metropolis Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="r-trick.html"><a href="r-trick.html"><i class="fa fa-check"></i><b>6</b> R trick</a></li>
+<li class="chapter" data-level="7" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html"><i class="fa fa-check"></i><b>7</b> Reversible Jump MCMC</a><ul>
+<li class="chapter" data-level="7.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#from-metropolis-hastings-to-reversible-jump"><i class="fa fa-check"></i><b>7.1.1</b> From Metropolis-Hastings to Reversible Jump</a></li>
+<li class="chapter" data-level="7.1.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#application-area"><i class="fa fa-check"></i><b>7.1.2</b> Application Area</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#implementation"><i class="fa fa-check"></i><b>7.2</b> Implementation</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-dimension-matching"><i class="fa fa-check"></i><b>7.2.1</b> Example Dimension Matching</a></li>
+<li class="chapter" data-level="7.2.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-moment-matching-in-a-finite-mixture-of-univariate-normals"><i class="fa fa-check"></i><b>7.2.2</b> Example: Moment Matching in a Finite Mixture of Univariate Normals</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#mapping-functions-and-proposal-distribution"><i class="fa fa-check"></i><b>7.3</b> Mapping Functions and Proposal Distribution</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#marginalization-and-augmentation"><i class="fa fa-check"></i><b>7.3.1</b> Marginalization and augmentation:</a></li>
+<li class="chapter" data-level="7.3.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#centering-and-order-methods"><i class="fa fa-check"></i><b>7.3.2</b> Centering and Order Methods</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html"><i class="fa fa-check"></i><b>8</b> Optimal Proposal Distributions and Adaptive MCMC</a><ul>
+<li class="chapter" data-level="8.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#intro-1"><i class="fa fa-check"></i><b>8.1</b> Intro</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#mh-algorithm"><i class="fa fa-check"></i><b>8.1.1</b> MH algorithm</a></li>
+<li class="chapter" data-level="8.1.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling"><i class="fa fa-check"></i><b>8.1.2</b> Optimal Scaling</a></li>
+<li class="chapter" data-level="8.1.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc"><i class="fa fa-check"></i><b>8.1.3</b> Adaptive MCMC</a></li>
+<li class="chapter" data-level="8.1.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#comparing-markov-chains"><i class="fa fa-check"></i><b>8.1.4</b> Comparing Markov Chains</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling-of-random-walk-metropolis"><i class="fa fa-check"></i><b>8.2</b> Optimal Scaling of Random-Walk Metropolis</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#basic-principle"><i class="fa fa-check"></i><b>8.2.1</b> Basic principle</a></li>
+<li class="chapter" data-level="8.2.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-acceptance-rate-as-drightarrow-infty"><i class="fa fa-check"></i><b>8.2.2</b> Optimal Acceptance Rate as <span class="math inline">\(d\rightarrow \infty\)</span></a></li>
+<li class="chapter" data-level="8.2.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-target-distributions"><i class="fa fa-check"></i><b>8.2.3</b> Inhomogeneous Target Distributions</a></li>
+<li class="chapter" data-level="8.2.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#metropolis-adjusted-langevin-algorithm."><i class="fa fa-check"></i><b>8.2.4</b> Metropolis-Adjusted Langevin Algorithm.</a></li>
+<li class="chapter" data-level="8.2.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#numerical-examples"><i class="fa fa-check"></i><b>8.2.5</b> Numerical Examples</a></li>
+<li class="chapter" data-level="8.2.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-covariance"><i class="fa fa-check"></i><b>8.2.6</b> Inhomogeneous Covariance</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc-1"><i class="fa fa-check"></i><b>8.3</b> Adaptive MCMC</a></li>
+<li class="chapter" data-level="8.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#ergodicity-of-adaptive-mcmc"><i class="fa fa-check"></i><b>8.4</b> Ergodicity of Adaptive MCMC</a><ul>
+<li class="chapter" data-level="8.4.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis"><i class="fa fa-check"></i><b>8.4.1</b> Adaptive Metropolis</a></li>
+<li class="chapter" data-level="8.4.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis-within-gibbs"><i class="fa fa-check"></i><b>8.4.2</b> Adaptive Metropolis-within-Gibbs</a></li>
+<li class="chapter" data-level="8.4.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#state-dependent-proposal-scalings"><i class="fa fa-check"></i><b>8.4.3</b> State-Dependent Proposal Scalings</a></li>
+<li class="chapter" data-level="8.4.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#limit-theorem"><i class="fa fa-check"></i><b>8.4.4</b> Limit Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="8.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#faq"><i class="fa fa-check"></i><b>8.5</b> FAQ</a></li>
+<li class="chapter" data-level="8.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#conclusion"><i class="fa fa-check"></i><b>8.6</b> Conclusion</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Notes on Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="optimal-proposal-distributions-and-adaptive-mcmc" class="section level1">
+<h1><span class="header-section-number">Chapter 8</span> Optimal Proposal Distributions and Adaptive MCMC</h1>
+<div id="intro-1" class="section level2">
+<h2><span class="header-section-number">8.1</span> Intro</h2>
+<p>MH 算法需要选proposal，很自然，有些proposal比较好用。决定使用哪个proposal非常重要也非常难。这个问题经常使用一个<em>ad hoc</em> 方法试错。但是，这个问题可以尝试从理论角度估计出一个最优的proposal scalings 或者adaptive algorithms去自动的找到一个好的proposal。这章回顾了这几个可能性的方法。</p>
+<div id="mh-algorithm" class="section level3">
+<h3><span class="header-section-number">8.1.1</span> MH algorithm</h3>
+<p>Accept rate（虽然之前有但是既然写了就再抄一遍）
+<span class="math display">\[
+\alpha(\mathbf{x}, \mathbf{y})=\left\{\begin{array}{ll}{\min \left\{\frac{\pi(\mathbf{y})}{\pi(\mathbf{x})} \frac{q(\mathbf{y}, \mathbf{x})}{q(\mathbf{x}, \mathbf{y})}, 1\right\},} &amp; {\pi(\mathbf{x}) q(\mathbf{x}, \mathbf{y})&gt;0} \\ {1,} &amp; {\pi(\mathbf{x}) q(\mathbf{x}, \mathbf{y})=0}\end{array}\right.
+\]</span></p>
+<p>If the proposal is symmetric, than this becomes a simpler version:
+<span class="math display">\[
+\alpha(\mathbf{x}, \mathbf{y})=\left\{\begin{array}{ll}{\min \left\{\frac{\pi(\mathbf{y})}{\pi(\mathbf{x})}, 1\right\},} &amp; {\pi(\mathbf{x}) q(\mathbf{x}, \mathbf{y})&gt;0} \\ {1,} &amp; {\pi(\mathbf{x}) q(\mathbf{x}, \mathbf{y})=0}\end{array}\right.
+\]</span></p>
+</div>
+<div id="optimal-scaling" class="section level3">
+<h3><span class="header-section-number">8.1.2</span> Optimal Scaling</h3>
+<p>当然最快的收敛方式是<span class="math inline">\(q(x,y)=\pi(y)\)</span> and in which case <span class="math inline">\(\alpha(x,y)=1\)</span>. Then the convergence is immediate. But ofc in MCMC contex the <span class="math inline">\(\pi(y)\)</span> cannot be sampled directly. 最常见的是symmetric random-walk Metropolis algoithm(RMW)对称随机游走Metropolis。形式为<span class="math inline">\(Y_{n+1}=X_n+Z_{n+1}\)</span>, 而加的部分<span class="math inline">\(\{Z_n\}\)</span> 是独立的服从某些对称分布（比如正态<span class="math inline">\(N(0,\sigma^2)\)</span>）.在这种情况下，核心问题就变成如何选择proposal的scale。（选<span class="math inline">\(\sigma\)</span>）。过小的话会让chain移动的过于缓慢。过大的话proposal就会经常被拒绝。必须要排除这些及短期看。(Goldilocks principle.)
+Metropolis在1953的文章就认识到了这一点，并且考虑<span class="math inline">\(Z_{n} \sim U[-\alpha, \alpha]\)</span>. 最近，在选取最优proposal的scaling上有了显著的进步，可以得到渐进接受率。在某些情况下，可以精确的得到最优的scaling。
+具体在4.2讨论。</p>
+</div>
+<div id="adaptive-mcmc" class="section level3">
+<h3><span class="header-section-number">8.1.3</span> Adaptive MCMC</h3>
+<p>一般来讲手动选取proposal，试错法。但是这很难，特别是在高维的情况。一个替代方法是adaptive MCMC。思想是asks the computer to automatically “learn” better parameter values “on the fly”.也就是说，在算法运行的时候。
+假设<span class="math inline">\(\left\{P_{\gamma}\right\}_{\gamma \in \mathcal{Y}}\)</span> 是一族Markov Chain，with stationary distribution <span class="math inline">\(\pi\)</span>。 比方说一个RWM, with increment distribution <span class="math inline">\(N\left(0, \gamma^{2} I_{d}\right)\)</span>.Adaptive MCMC讲随机的更新<span class="math inline">\(\gamma\)</span>在每个迭代过程中，以便于去寻找最合适的值。
+反直觉的是，adaptive MCMC并不总是保证stationarity of <span class="math inline">\(\pi\)</span> 。但是，如果adaptation设计的满足一定条件，stationarity是可以保证的。同时速度上的优势能保持。在4.3会讲。</p>
+</div>
+<div id="comparing-markov-chains" class="section level3">
+<h3><span class="header-section-number">8.1.4</span> Comparing Markov Chains</h3>
+<p>以上方法都是为了去找“better”或者“best” MCMC samplers, 但是在我们深入这些问题之前，我们必须先考虑一个问题，对于一个MCMC sampler，什么叫“好”？</p>
+<p>假设<span class="math inline">\(P_1\)</span>和<span class="math inline">\(P_2\)</span>是两个Markov chain，并且都有stationary distribution <span class="math inline">\(\pi\)</span>. 那么我们称“<em><span class="math inline">\(P_1\)</span>收敛比<span class="math inline">\(P_2\)</span>快</em>”，如果<span class="math inline">\(\sup _{A}\left|P_{1}^{n}(x, A)-\pi(A)\right| \leq \sup _{A}\left|P_{2}^{n}(x, A)-\pi(A)\right|\)</span>&quot; for all <span class="math inline">\(n\)</span> and <span class="math inline">\(x\)</span>.</p>
+<p>也可以说<span class="math inline">\(P_1\)</span>比<span class="math inline">\(P_2\)</span><em>方差小</em>如果<span class="math inline">\(\mathbf{\operatorname { V a r }}\left(\frac{1}{n} \sum_{i=1}^{n} g\left(X_{i}\right)\right)\)</span> 对<span class="math inline">\(P_1\)</span>来说更小。这个方法关注于g以后的方差，并可能依赖于<span class="math inline">\(g\)</span>的选取。也可能依赖于迭代次数n或者起始点。</p>
+<p>一般我们假设Markov chain已经stationary了，那么对于足够大的n，有<span class="math inline">\(\mathbf{\operatorname { Var }}\left(\frac{1}{n} \sum_{i=1}^{n} g\left(X_{i}\right)\right) \approx \frac{1}{n} \mathbf{V} \mathbf{a} \mathbf{r}_{\pi}(g) \tau_{g}\)</span>,where <span class="math inline">\(\tau_{g}=\sum_{k=-\infty}^{\infty} \operatorname{corr}\left(g\left(X_{0}\right), g\left(X_{k}\right)\right)=1+2 \sum_{i=1}^{\infty} \operatorname{corr}\left(g\left(X_{0}\right), g\left(X_{i}\right)\right)\)</span> is the integrated autocorrelation time. 所以可以从<span class="math inline">\(\tau_g\)</span>的角度来判断。哪个链比较好。</p>
+<p>另外一个角度是Markov chain是否能更快的探索整个状态空间。称为“<em><span class="math inline">\(P_1\)</span> mixed faster than <span class="math inline">\(P_2\)</span></em>”, if <span class="math inline">\(\mathrm{E}\left[\left(X_{n}-X_{n-1}\right)^{2}\right]\)</span> is larger under <span class="math inline">\(P_1\)</span> than under <span class="math inline">\(P_2\)</span>. <span class="math inline">\(\mathrm{E}\left[\left(X_{n}-X_{n-1}\right)^{2}\right]\)</span> 经常用<span class="math inline">\(\frac{1}{n} \sum_{i=1}^{n}\left(X_{i}-X_{i-1}\right)^{2}\)</span>或者<span class="math inline">\(\frac{1}{n-B} \sum_{i=B}^{n}\left(X_{i}-X_{i-1}\right)^{2}\)</span>进行估计。 但是要注意的是，在这个估计下，拒绝的移动会导致<span class="math inline">\(\left(X_{n}-X_{n-1}\right)^{2}=0\)</span>,也就是说，拒绝减缓了chain，但是小步的移动也不会有很大的帮助。最好能找到有理由的，大步的移动。</p>
+<p>由于以上几个角度，如果定义“更好”的Markov chain取决于具体要研究的问题。但是，在某些条件下，这几个准则可以等价，所以可以得到一致最优的proposal scaling选取。</p>
+</div>
+</div>
+<div id="optimal-scaling-of-random-walk-metropolis" class="section level2">
+<h2><span class="header-section-number">8.2</span> Optimal Scaling of Random-Walk Metropolis</h2>
+<p>Method: RWM with <span class="math inline">\(Y_{n+1}=X_n+Z_{n+1}\)</span>, where <span class="math inline">\(\{Z_i\}\)</span> are i.i.d. with fixed symmetric density with some scaling parameter <span class="math inline">\(\sigma&gt;0\)</span>.</p>
+<div id="basic-principle" class="section level3">
+<h3><span class="header-section-number">8.2.1</span> Basic principle</h3>
+<p>A first observation is that if <span class="math inline">\(\sigma\)</span> is very samll, then virtually all proposed moves will be accepted, but the movement is very small, so overall the chain will not mix well. Similarly, if <span class="math inline">\(\sigma\)</span> is too large, then most moves will be rejected, the main will usually not move at all. What we need is reasonable-sized proposal moves together with a reasonably high acceptance probability.</p>
+</div>
+<div id="optimal-acceptance-rate-as-drightarrow-infty" class="section level3">
+<h3><span class="header-section-number">8.2.2</span> Optimal Acceptance Rate as <span class="math inline">\(d\rightarrow \infty\)</span></h3>
+<p>Major progress about optimal scalings was made by Roberts et al.(1997). (做MCMC中心极限定理那帮人) They considered RWM on <span class="math inline">\(\mathbf R^d\)</span> for very special target densities, of the form
+<span class="math display">\[
+\pi\left(x_{1}, x_{2}, \ldots, x_{d}\right)=f\left(x_{1}\right) f\left(x_{2}\right) \ldots f\left(x_{d}\right)
+\]</span>
+for some one-dimensional smooth density <span class="math inline">\(f\)</span>.</p>
+<p>That is, the target density is assumed to consist of i.i.d. components. Of course, this assumption is entirely unrealistic for MCMC, since it means that to sample from <span class="math inline">\(\pi\)</span> it suffices to sample each component separately from the one-dimensional density f(which is generally easy to do numerically).</p>
+<p>Under this assumption, and assuming proposal increment distribution of the form <span class="math inline">\(N(0,\sigma^2I_d)\)</span>, Roberts proved the remarkable result that as <span class="math inline">\(d\rightarrow \infty\)</span>, <em>the optimal acceptance rate is precisely 0.234</em>. This is clearly a major refinement of the general principle that the acceptance rate should be far from 0 and far from 1.</p>
+<p>More precisely, their result is the following.</p>
+<p>Suppose that <span class="math inline">\(\sigma=\ell/\sqrt d\)</span> from some <span class="math inline">\(\ell&gt;0\)</span>. Then as <span class="math inline">\(d\rightarrow \infty\)</span>, if time is sppeded up by a factor of <span class="math inline">\(d\)</span>,and space is shrunk by a factor of <span class="math inline">\(\sqrt d\)</span>, then each component of the Markov chain converges to a diffusion having stationary distribution f, and speed function given by <span class="math inline">\(h(\ell)=2\ell^2\Phi(-\sqrt I \ell)\)</span>, where <span class="math inline">\(\Phi\)</span> is the cumulative distribution function of a standard normal, and <span class="math inline">\(I\)</span> is a constant depending on <span class="math inline">\(f\)</span>, given in fact by <span class="math inline">\(I=\int_{-\infty}^{\infty}\left[\left(\frac{f^{\prime}(X)}{f(X)}\right)^{2}\right] f(x) d x\)</span>.</p>
+<p>It follows that this diffusion is optimized (in terms of <em>any</em> of the criteria in previous section) when <span class="math inline">\(\ell\)</span> is chosen to maximize <span class="math inline">\(h(\ell)\)</span>. It is computed numerically that this optimal value of <span class="math inline">\(\ell\)</span> is given by <span class="math inline">\(\ell_{\mathrm{opt}} \doteq 2.38 / \sqrt{I}\)</span>.</p>
+<p>Furthermore, the asymptotic (stationary) acceptance rate is given by <span class="math inline">\(A(\ell)=2 \Phi(-\sqrt{I} \ell / 2)\)</span>. Hence, the optimal acceptance rate is equal to <span class="math inline">\(A\left(\ell_{\mathrm{opt}}\right) \doteq 2 \Phi(-2.38 / 2) \doteq=0.234\)</span>, which is where the figure 0.234 comes from.</p>
+<blockquote>
+<p>这点没看懂，不过好像作者也没好好写，两个问题，第一个，因为有<span class="math inline">\(\sigma=\ell/\sqrt d\)</span> 当<span class="math inline">\(d\rightarrow \infty\)</span> 时<span class="math inline">\(\sigma\rightarrow 0\)</span>. 这个收敛性就很奇怪？是什么东西呢 第二个问题Markov chain converges to a diffusion，这个diffusion是什么意思，然后这个speed function 又是什么呢，而diffusion is optimized,所以极大化这个speed function又是什么？h function versus A function又有啥意义，感觉从最后这个图来看更像是某种criteria或者mixing的速度的感觉。</p>
+</blockquote>
+</div>
+<div id="inhomogeneous-target-distributions" class="section level3">
+<h3><span class="header-section-number">8.2.3</span> Inhomogeneous Target Distributions</h3>
+<p>Above result requires the strong assumption that <span class="math inline">\(\pi(x)=\prod ^d_{i=1}f(x_i)\)</span>,Roberts and Rosenthal considered inhomogeneous target densities of the form
+<span class="math display">\[
+\pi(\mathbf{x})=\prod_{i=1}^{d} C_{i} f\left(C_{i} x_{i}\right)
+\]</span>
+<span class="math inline">\(\{C_i\}\)</span> are i.i.d. from some fixed distribution. They proved that in this case, the result previous still holds, except that the limiting diffusion speed is divided by an “inhomogeneity factor” of <span class="math inline">\(b \equiv \mathrm{E}\left(C_{i}^{2}\right) /\left(\mathrm{E}\left(C_{i}\right)\right)^{2} \geq 1\)</span>. In particular, the more inhomogeneous the target distibution, (the greater the variability of the <span class="math inline">\(C_i\)</span>), the slower the resulting algorithm.</p>
+<p>As a special case, if the target distribution is <span class="math inline">\(N(0,\Sigma)\)</span> , by change of basis this is equivalent to the case of proposal increment <span class="math inline">\(N(0,I_d)\)</span> and target distribution <span class="math inline">\(N(0,\Sigma\Sigma_p^{-1})\)</span>.</p>
+<p>In the corresponding eigenbasis, this target distribution is of the form, where now <span class="math inline">\(C_i=\sqrt\lambda_i\)</span> with <span class="math inline">\(\{\lambda_i\}^d_{i=1}\)</span> the eigenvalues of the matrix <span class="math inline">\(\Sigma\Sigma_p^{-1}\)</span>. For large d, this approximately corresponds to the case where the <span class="math inline">\(\{C_i\}\)</span> are random with <span class="math inline">\(\mathrm{E}\left(C_{i}\right)=\frac{1}{d} \sum_{j=1}^{d} \sqrt{\lambda_{j}}\)</span> and <span class="math inline">\(\mathrm{E}\left(C_{i}^{2}\right)=\frac{1}{d} \sum_{j=1}^{d} \lambda_{j}\)</span>. The inhomogeneity factor <span class="math inline">\(b\)</span> then becomes
+<span class="math display">\[
+b \equiv \frac{\mathrm{E}\left(C_{i}^{2}\right)}{\left(\mathrm{E}\left(C_{i}\right)^{2}\right.} \approx \frac{\frac{1}{d} \sum_{j=1}^{d} \lambda_{j}}{\left(\frac{1}{d} \sum_{j=1}^{d} \sqrt{\lambda_{j}}\right)^{2}}=d \frac{\sum_{i=1}^{d} \lambda_{j}}{\left(\sum_{j=1}^{d} \sqrt{\lambda_{j}}\right)^{2}}
+\]</span></p>
+<p>Sherlock(2006) did explicit finite-dimensional computations for the case of normal target distributions, and came to similar conclusions.</p>
+</div>
+<div id="metropolis-adjusted-langevin-algorithm." class="section level3">
+<h3><span class="header-section-number">8.2.4</span> Metropolis-Adjusted Langevin Algorithm.</h3>
+<p>Roberts and Tweedie(1996) and Roberts and Rosenthal(1998) considered the more sophisticated <em>Metropolis-Adjusted Langevin algorithm</em> (MALA). This algorithm is similar to RWM, except that the proposal increment distribution <span class="math inline">\(Z_i\sim N(0,\sigma^2I)\)</span> is replaced by
+<span class="math display">\[
+Z_{i} \sim N\left(\frac{\sigma^{2}}{2} \nabla \log \pi\left(X_{n}\right), \sigma^{2} I_{d}\right).
+\]</span>
+Here the extra term <span class="math inline">\(\frac{\sigma^2}{2}\nabla \log \pi (X_n)\)</span>, corresponding to the discrete-time approximation to the continuous-time Langevin diffusion for <span class="math inline">\(\pi\)</span>, is an attempt to move in the direction in which the (smooth) target density <span class="math inline">\(\pi\)</span> is increasing.</p>
+<p>In this case, under some speed and scale, <span class="math inline">\(A\left(\ell_{\mathrm{opt}}\right)=0.574\)</span> (as opposed to 0.234).</p>
+<p>This proves that the optimal proposal scaling <span class="math inline">\(\sigma\)</span> and the acceptance rate are both significantly larger for MALA than for RWM, indicating that MALA an improved algorithm with faster convergence. The catch, of course, is that the gradient of <span class="math inline">\(\pi\)</span> must be computed at each new state reached, which could be difficult and/or time-consuming. Thus, TWM is much more popular than MALA in practice.</p>
+</div>
+<div id="numerical-examples" class="section level3">
+<h3><span class="header-section-number">8.2.5</span> Numerical Examples</h3>
+<p>Consider the case as <span class="math inline">\(d=10\)</span>. Target density <span class="math inline">\(\pi\)</span> is ten-dimensional normal with some covariance matrix <span class="math inline">\(\Sigma\)</span>.</p>
+<p>Let M be the <span class="math inline">\(d\times d\)</span> matrix having diagonal elements 1, and off-diagonal elements given by the product of the row and column number divided by <span class="math inline">\(d^2\)</span>, that is, <span class="math inline">\(m_{ii}=1\)</span>, and <span class="math inline">\(m_{ij}=ij/d^2\)</span> for <span class="math inline">\(j\neq i\)</span>. Then let <span class="math inline">\(\Sigma^{-1}=M^2\)</span>. Then let <span class="math inline">\(\Sigma^{-1}=M^{2}\)</span> (since M is symmetrix, <span class="math inline">\(\Sigma\)</span> is positive-definite), and let the target density <span class="math inline">\(\pi\)</span> be that of <span class="math inline">\(N(0,\Sigma)\)</span>.</p>
+<p>The result of arthor is</p>
+<p><img src="pic/MHAtable.png" /><!-- --></p>
+<p>This result showed that if the sigma is too small (0.1), or too large(3.0), the result will be poor. The best medium select is with accept rate around 0.234.</p>
+<p>Then this confirms that, when scaling the increment covariance as <span class="math inline">\(\sigma I_d\)</span>, it is optimal to find <span class="math inline">\(\sigma\)</span> to make the acceptance rate close to 0.234.</p>
+</div>
+<div id="inhomogeneous-covariance" class="section level3">
+<h3><span class="header-section-number">8.2.6</span> Inhomogeneous Covariance</h3>
+<p>Consider a case for non-diagonal proposal increment, the same target density <span class="math inline">\(N(0,\Sigma)\)</span> but with <span class="math inline">\(\Sigma=diag(1^2,2^2,...,10^2)\)</span>.</p>
+<p>This is interesting because the last coordinate now has the highest variance. Start the algorithms with the initial value <span class="math inline">\(X_0=(1,0,0,...,0)\)</span>.</p>
+<p>Usual RWM algorithm
+<span class="math display">\[
+\begin{array}{cccc}{\sigma} &amp; {\text { Mean Acc. Rate }} &amp; {\text { Estimate }} &amp; {\text { RMSE }} \\ \hline 0.7 &amp; {0.230} &amp; {114.8 \pm 28.2} &amp; {30.5} \\ \hline\end{array}
+\]</span></p>
+<p>Even though <span class="math inline">\(\sigma\)</span> was well chosen, the resulting algorithm still converges poorly, leading to a poor estimate with large standard error and large RMSE.</p>
+<p>Next consider the modified algorithm with increment proposal equal to <span class="math inline">\(N(0,\sigma^2\Sigma)\)</span>, with result</p>
+<p><span class="math display">\[
+\begin{array}{cccc}{\sigma} &amp; {\text { Mean Acc. Rate }} &amp; {\text { Estimate }} &amp; {\text { RMSE }} \\ \hline 0.7 &amp; {0.294} &amp; {100.25 \pm 1.91} &amp; {1.83} \\ \hline\end{array}
+\]</span></p>
+<p>The increment proposal covariance proportional to the target covariance is very dramatic. Estimate is much better and very close to true value. That indicate that use increment proposals which mimic the covariance of the target distribution if at all possible.</p>
+<p>FAQ:</p>
+<ul>
+<li>Larger acceptance preferable?
+<ul>
+<li>No. Showed above.</li>
+</ul></li>
+<li>Essential for acceptance rate be exactly 0.234?
+<ul>
+<li>No. As the example shows, efficiency remains high when AR between 0.1 and 0.6.</li>
+</ul></li>
+<li>Are there asymptotic results relevant to finite-dimensional problems?
+<ul>
+<li>Yes. Infinete dimensional results are good approximations to finite-dimensional situations</li>
+</ul></li>
+</ul>
+<blockquote>
+<p>没看懂上面这个</p>
+</blockquote>
+<ul>
+<li>Do these result hold for all taget distributions?
+<ul>
+<li>No. They are only proved for very special cases. Simulation seem to suggest that they approximately hold in other cases too.</li>
+</ul></li>
+<li>Do these results hold for multimodal distributions?
+<ul>
+<li>Yes, but only in principle. At least for distributions with independent (while perhaps multimodal). But the asymptotic acceptance rate is only respect to the <em>entire</em> target distribution. That is, if the sampler stuck in one mode, it may misrepresent the asymptotic acceptance rate.</li>
+</ul></li>
+<li>Do these results hold for,say, Metropolis-within-Gibbs algorithms?
+<ul>
+<li>No, since they are proved for full-dimensional Metropolis updates only. Indeed, the Metropolis-within-Gibbs algorithm involves updating just one coordinate at a time, and thus essentially corresponds to the case <span class="math inline">\(d=1\)</span>. In that case, it appears that the optimal acceptance rate is usually closer to 0.44 than 0.234.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="adaptive-mcmc-1" class="section level2">
+<h2><span class="header-section-number">8.3</span> Adaptive MCMC</h2>
+<p>之前的章节讲了在某些criteria一个MCMC算法的proposal能有最优。但是问题的关键还没解决，如何找到这些最优解。就比如说如果我们确信接受率为0.234的时候最优，如何找到一个合适的proposal scaling从而得到这个接受率。</p>
+<p>一个最常见的方法，就是试错法，如果AR太高，则降低<span class="math inline">\(\sigma\)</span>,然后再来，如果太低就加高..这个方法一般来说都很有用，但是问题是比较耗时间，需要搜东调整。而且这个方法不能处理更复杂的进步，比如说让proposal的covariance matrix渐进的服从未知分布的真实covariance matrix<span class="math inline">\(\Sigma\)</span>。</p>
+<p>As an alternative, 考虑一个算法能自己提升Markov chain.特别的，让<span class="math inline">\(\left\{P_{\gamma}\right\}_{y \in \mathcal{Y}}\)</span> 为一族Markov chain的转移核，都有一样的平稳分布<span class="math inline">\(\pi\)</span>.让<span class="math inline">\(\Gamma_n\)</span> 是选取的kernel在第n次迭代，所以有：
+<span class="math display">\[
+\operatorname{Pr}\left(X_{n+1} \in A | X_{n}=x, \Gamma_{n}=\gamma, X_{n-1}, \ldots, X_{0}, \Gamma_{n-1}, \ldots, \Gamma_{0}\right)=P_{\gamma}(x, A)
+\]</span>
+for <span class="math inline">\(n=0,1,2,...\)</span>, <span class="math inline">\(\{\Gamma_n\}\)</span>是通过某种自适应的更新算法。理论上来说<span class="math inline">\(\Gamma_n\)</span> 可以依赖于整个Markov chain的历史<span class="math inline">\(X_{n-1}, \ldots, X_{0}, \Gamma_{n-1}, \ldots, \Gamma_{0}\)</span>, 虽然在实践中这一堆元素<span class="math inline">\(\left\{\left(X_{n}, \Gamma_{n}\right)\right\}_{n=0}^{\infty}\)</span>是Markovian的。一般来讲这个算法非常容易实现，只需要一些额外的修改。
+是否这些adaptive的方法会提高收敛依赖，显然依赖于选取的adaptive algorithm。更基础的问题，我们现在考虑的，是是否adaptation会<em>破坏</em> 收敛性。</p>
+</div>
+<div id="ergodicity-of-adaptive-mcmc" class="section level2">
+<h2><span class="header-section-number">8.4</span> Ergodicity of Adaptive MCMC</h2>
+<p>Adaptive MCMC方法的遍历性。</p>
+<p>一般来讲，既然每个Markov chain的<span class="math inline">\(P_{\gamma}\)</span>都收敛到了<span class="math inline">\(\pi\)</span>,那么所有的自适应混合应该也收敛到<span class="math inline">\(\pi\)</span>才对。但是，不是这个情况。一个很简单的反例如下：（这里有三篇文献）
+let <span class="math inline">\(\mathcal{Y}=\{1,2\}\)</span>, let <span class="math inline">\(\mathcal{X}=\{1,2,3,4\}\)</span>, with <span class="math inline">\(\pi(1)=\pi(3)=\pi(4)=0.333\)</span> and <span class="math inline">\(\pi(2)=0.001\)</span>. 设<span class="math inline">\(P_\gamma\)</span>是一个RWM algorithm，with proposal <span class="math inline">\(Y_{n+1} \sim U\left\{X_{n}-1, X_{n}+1\right\}\)</span> for <span class="math inline">\(P_1\)</span>, or <span class="math inline">\(Y_{n+1} \sim U\left\{X_{n}-2, X_{n}-1, X_{n}+1, X_{n}+2\right\}\)</span> for <span class="math inline">\(P_2\)</span>.(当然，任意跑出了<span class="math inline">\(\mathcal X\)</span>).定义一个adaptive策略如下
+<span class="math inline">\(\Gamma_{n+1}=2\)</span> 如果nth proposal被接受了，否则<span class="math inline">\(\Gamma_{n+1}=1\)</span> .</p>
+<p>这时候因为proposal是uniform，但是因为<span class="math inline">\(\pi(2)=0.001\)</span>，所以MH 的accept ratio肯定不会高，所以会失败.</p>
+<p>1-&gt; 如果从<span class="math inline">\(\Gamma_2\)</span>开始，那么可能-2，-1，+1，+2，那50%的概率直接越界拒绝，切到1，+1的话到2但是MH ratio很低也容易被拒绝，只有+2才不会被stuck，
+如果第一次失败了，留在1，但是就切到<span class="math inline">\(\Gamma_1\)</span>，那只能跳到2，或者-1直接拒绝，但是2的概率也小，所以也会拒绝，所以就stuck在1上了。</p>
+<p>根据反例，很重要有足够的条件保证<span class="math inline">\(\{X_n\}\)</span>能收敛到<span class="math inline">\(\pi\)</span>. 近些年有很多文献证明了adaptive MCMC在不同情况下的遍历性（各态历经性？）。
+特别，Roberts and Rosenthal (2007) 证明了<span class="math inline">\(\lim _{n \rightarrow \infty} \sup _{A \subseteq \mathcal{X}} \| \operatorname{Pr}\left(X_{n} \in A\right)-\pi(A) \|=0\)</span>,渐进收敛，并且有<span class="math inline">\(\lim _{n \rightarrow \infty} \frac{1}{n} \sum_{i=1}^{n} g\left(X_{i}\right)=\pi(g)\)</span>,对于所有有界的映射<span class="math inline">\(g : \mathcal{X} \rightarrow \mathbf{R}(\mathrm{WLLN})\)</span>,假设只有diminishing (a.k.a. vanishing) adaption condition
+<span class="math display">\[
+\lim _{n \rightarrow \infty} \sup _{x \in \mathcal{X}}\left\|P_{\Gamma_{n+1}}(x, \cdot)-P_{\Gamma_{n}}(x, \cdot)\right\|=0 \quad \text { in probability }
+\]</span>
+并且有containment(a.k.a. <em>bounded convergence</em>) condition
+<span class="math display">\[
+\left\{M_{\epsilon}\left(X_{n}, \Gamma_{n}\right)\right\}_{n=0}^{\infty} \text { is bounded in probability, } \epsilon&gt;0
+\]</span>
+where <span class="math inline">\(M_{\epsilon}(x, \gamma)=\inf \left\{n \geq 1 :\left\|P_{\gamma}^{n}(x, \cdot)-\pi(\cdot)\right\| \leq \epsilon\right\}\)</span> is the convergence time of the kernel <span class="math inline">\(P_\gamma\)</span> when beginning in state <span class="math inline">\(x\in \mathcal X\)</span>.</p>
+<p>The previous equation is a technical condition which is satisfied for virtually all reasonable adaptive schemes.</p>
+<p>It holds whenever <span class="math inline">\(\mathcal X \times \mathcal Y\)</span> is finite, or is compact in some topology in which either the transition kernels <span class="math inline">\(P_\gamma\)</span>, or the Metropolis-Hastings proposal kernels <span class="math inline">\(Q_\gamma\)</span>,have jointly continuous densities. It also holds for adaptive RWM and Metropolis-within-Gibbs algorithms under very general conditions(Bai et al.,2008)</p>
+<p><strong>So, in practice, the requirement , the previous equation can be largely ignored. </strong></p>
+<p>By contrast, condition <em>diminishing adaption condition</em> is much more fundmental. It requires that the amount of adapting at the nth iteration goes to 0 as <span class="math inline">\(n\rightarrow \infty\)</span>.也就是说adapting过程中，当<span class="math inline">\(n\rightarrow \infty\)</span> 时adapting的量到0，也就是不adapting了？原文的英文没太懂，啥叫amount of adapting，但是应该是这个理解。（Note that the sum of the adaptations can still be infinite,i.e. an infinite total amount of adaptation is still permissible, and it is not neccessarily required that the adaptive parameter <span class="math inline">\(\{\Gamma_n\}\)</span> converge to some fixed value.） 所以还是能有无限个proposal，proposal的scaling也不用收敛到一个常数。
+比如说，如果算法adapts 在n次迭代有概率<span class="math inline">\(p(n)\)</span> ，则这个条件自动满足如果<span class="math inline">\(p(n)\rightarrow 0.\)</span> 换种方式，如果<span class="math inline">\(\gamma\)</span>的选取基于一个empirical averageover iterations 1，通过n，那么这n次迭代是<span class="math inline">\(O(1/n)\)</span> ，则goes to 0.</p>
+<blockquote>
+<p>这段还是没懂，特别是最后这句话，<span class="math inline">\(O(1/n)\)</span>这块是什么意思？还有nth iteration only with probability <span class="math inline">\(p(n)\)</span>这个也没懂。</p>
+</blockquote>
+<p>这些结论能让我们更新我们的参数<span class="math inline">\(\{\Gamma_n\}\)</span> 实际上任何方法我们希望，只要vanishing condition holds。那么这样，哪个adaption的方法最好？</p>
+<div id="adaptive-metropolis" class="section level3">
+<h3><span class="header-section-number">8.4.1</span> Adaptive Metropolis</h3>
+<p>第一个重要的adaptive MCMC是adaptive Metropolis (AM) algorithm. (Haario et al.(2001))。这个算法是启发于观察diminishing adaption condition,对于Random Walk Metropolis (RWM) in <span class="math inline">\(\mathbf R^d\)</span> ,至少对于正态的目标分布，最优的是一个proposal covariance matrix of the form <span class="math inline">\((2.38)^2/d\)</span> 乘以目标协方差矩阵<span class="math inline">\(\Sigma\)</span>. 因为<span class="math inline">\(\Sigma\)</span> 不知道，所以用<span class="math inline">\(\Sigma_n\)</span> 进行估计，经验协方差矩阵<span class="math inline">\(X_0,...,X_n\)</span>.</p>
+<p>则AM算法最后在第n次迭代使用的proposal分布如下：
+<span class="math display">\[
+Y_{n+1} \sim N\left(X_{n},\left[\frac{(2.38)^{2}}{d}\right] \Sigma_{n}\right)
+\]</span>
+为了保证这个proposal covariances不会落到0（会违反vanishing/diminishing 条件）。有几种方法，比如在每次iteration对<span class="math inline">\(\Sigma_n\)</span>上加一个<span class="math inline">\(\epsilon I_d\)</span> <span class="math inline">\(\epsilon&gt;0\)</span>. 另外一个可能性是替代性的使用一个混合分布有如下形式：
+<span class="math display">\[
+(1-\beta) N\left(X_{n},\left[\frac{(2.38)^{2}}{d}\right] \Sigma_{n}\right)+\beta N\left(X_{n}, \Sigma_{0}\right)
+\]</span>
+对于某些<span class="math inline">\(0&lt;\beta&lt;1\)</span> 和某些固定的非退化矩阵<span class="math inline">\(\Sigma_0\)</span>.(比如说<span class="math inline">\(\Sigma_{0}=\left[(0.1)^{2} / d\right] I_{d}\)</span>). （其他版本，用某些固定的proposal distribution对一开始几次迭代，当经验协方差矩阵不是良定的，比如说一开始几次迭代，求不了经验分布函数(n&lt;p)）。</p>
+<p>Since empirical estimates change at the nth iteration by only <span class="math inline">\(O(1/n)\)</span>, it follows that the diminishing adaption condition will be satisfied. Furthermore, the containment condition will certainly be satisfied if one restricts to compact regions, and in fact containment still holds provided the target density <span class="math inline">\(\pi\)</span> decays at least polynomially in each coordinate, a very mild assumption. So, AM is indeed a valid sampling algorithm.</p>
+<p>Computer simulation demonstrate AM algorithm will indeed “learn” the target covariance matrix, and approach an optimal algorithm, even in very high dimensions. This will converge considerably faster than a nonadapted RWM algorithm.</p>
+</div>
+<div id="adaptive-metropolis-within-gibbs" class="section level3">
+<h3><span class="header-section-number">8.4.2</span> Adaptive Metropolis-within-Gibbs</h3>
+<p>A standard alternative to the usual full-dimensional Metropolis algorithm is the “Metropolis-within_Gibbs” algorithm.</p>
+<p>To be specific, suppose that the ith coordinate is updated using a proposal increment distribution <span class="math inline">\(N(0,e^{2 ls_i})\)</span>, so <span class="math inline">\(ls_i\)</span> is the log of the standard deviation of the increment. We would like to find optimal values of the <span class="math inline">\(ls_i\)</span>, whcih may of course be different for the different variables.由之前的章节可知，一个经验法则是选取accept rate approximately 0.44.
+但是就算用这些方法，在高维条件下手动调整<span class="math inline">\(ls_i\)</span>也非常困难。</p>
+<p>一个方法（Roberts and Rosenthal,2009）去adapt <span class="math inline">\(ls_i\)</span> 是拆分run into “batches”，比如说50个迭代。在第n个batch，更新<span class="math inline">\(ls_i\)</span> by 加或者减一个adaptation amount <span class="math inline">\(\delta(n)\)</span>. 这个adapting努力使得接受率十分靠近0.44.特别的，我们增加<span class="math inline">\(ls_i\)</span> 用<span class="math inline">\(\delta(n)\)</span> 如果对分布variable i 的接受率高于0.44在第n个batch，或者降低<span class="math inline">\(ls_i\)</span>如果比0.44低.</p>
+<p>为了满足diminishing condition，我们需要<span class="math inline">\(\delta\rightarrow 0\)</span>;比如取<span class="math inline">\(\delta(n)=\min \left(0.01, n^{-1 / 2}\right)\)</span>. 而第二个条件很容易满足，只需要限制<span class="math inline">\(ls_i\)</span> 在一个有限的区域<span class="math inline">\([-M,M]\)</span>. 但是，这还不够。由Bai et.al.2008, 这个条件几乎都能满足，如果target density <span class="math inline">\(\pi\)</span> decreases at least polynomially in each direction (a very mild condition). Hence, the restriction is once again not of practical concern.</p>
+<p>Simulations (Roberts and Rosenthal,2009) 表示adaptive Metropolis-within-Gibbs algorithm does a good job of correctly scaling the <span class="math inline">\(ls_i\)</span> values. 即是维度高达500，leading to chains which mix much faster than those with pre-chosen proposal scalings.</p>
+<p>Preliminary general-purpose software to implement this algorithm is now available (Rosenthal,2007).</p>
+</div>
+<div id="state-dependent-proposal-scalings" class="section level3">
+<h3><span class="header-section-number">8.4.3</span> State-Dependent Proposal Scalings</h3>
+<p>另外一个方法让proposal scaling,也就是proposal的方差 基于目前的状态<span class="math inline">\(X_n\)</span>,使得，比如说，给定<span class="math inline">\(X_n=x\)</span>,我们可能提议<span class="math inline">\(\mathcal Y_{n+1}\sim N(x,\sigma^2_x)\)</span>. 在这种情况，接受概率变为
+<span class="math display">\[
+\alpha(x, y)=\min \left[1, \frac{\pi(y)}{\pi(x)}\left(\frac{\sigma_{x}}{\sigma_{y}}\right)^{d} \exp \left(-\frac{1}{2}(x-y)^{2}\left(\sigma_{y}^{-2}-\sigma_{x}^{-2}\right)\right)\right]
+\]</span>
+<span class="math inline">\(\sigma_x\)</span>的函数形式可以有多种方法进行选择，去得到更快的收敛性。</p>
+<p>比如说，在很多问题中，目标分布将会更分散当我们离初始点很远的时候。这种情况，可能更适合，让<span class="math inline">\(\sigma_x=e^{a}(1+|x|)^{b}\)</span>,<span class="math inline">\(a\)</span>和<span class="math inline">\(b\)</span>adaptively的选取。比如说，我们能在此把链分为batches，每个batches包含50次迭代。每次迭代之后，算法会更新<span class="math inline">\(a\)</span>通过加或者减<span class="math inline">\(\delta(n)\)</span> 使得接受率尽可能的接近0.234或者0.44. 这个算法同时也加或者减<span class="math inline">\(\delta(n)\)</span> 给 <span class="math inline">\(b\)</span> 使得接受概率在这两个区间之内：<span class="math inline">\(\{x \in \mathcal{X} :|x|&gt;C\}\)</span>,<span class="math inline">\(\{x \in \mathcal{X} :|x| \leq C\}\)</span>C是取定的常数。</p>
+<p>再一次的，要满足diminishing adaptive condition得有<span class="math inline">\(\delta(n)\rightarrow 0\)</span>,并且有界性条件则非常容易满足。所以，者提供了一个方便的方法去给出一个useful functional form to <span class="math inline">\(\sigma_x\)</span>，就算不知道a和b的值也不要紧。 (Roberts and Rosenthal 2009) 表示算法工作的很好，至少在简单的时候如此。</p>
+<p>另外一个方法，有些时候被称为regional adaptive Metropolis algorithm(RAMA).使用有限次分割状态空间：<span class="math inline">\(\mathcal{X}=\mathcal{X}_{1} \dot{\cup} \ldots \dot{\cup} \mathcal{X}_{m}\)</span>. The proposal scaling is then giving by <span class="math inline">\(\sigma_x=e^{a_i}\)</span> whenever <span class="math inline">\(x\in \mathcal X_i\)</span> with the acceptance probability in previous equation. 每个<span class="math inline">\(a_i\)</span>的值is again adapted after each batch of iterations, by adding or subtracting <span class="math inline">\(\delta(n)\)</span> in an attempt to make the acceptance fraction of <span class="math inline">\(\mathcal X_i\)</span> close to 0.234.(作为一个特殊的情况，如果在一个batch里面没有访问到<span class="math inline">\(\mathcal X_i\)</span>)，那么我们总是加一块<span class="math inline">\(\delta(n)\)</span>到<span class="math inline">\(a_i\)</span>上，去避免<span class="math inline">\(a_i\)</span>过小然后使得proposed move永远不move到<span class="math inline">\(\mathcal X_i\)</span>。 再一次的，这个算法在非常宽泛的条件下能够使得<span class="math inline">\(\delta(n)\rightarrow 0\)</span>.
+最近(Craiu et al.(2009))的工作考虑特殊的改造RAMA，多个算法的拷贝同时运行去找到所有最大值点而不是困在一个极值点。他们的工作同时也允许proposal distribution是一个加权混合不同的<span class="math inline">\(N\left(x, e^{2 a_{i}}\right)\)</span>.，使得不同分割<span class="math inline">\(\{\mathcal X_i\}\)</span> 不完美的选取，使得有更复杂的RAMA-type算法得到更广泛的应用。</p>
+<p>当然，Langevin（MALA）算法可能也被归类于一类状态依赖 scaling,当然也可能有adaptive的版本的MALA（Atchade,2006）.</p>
+</div>
+<div id="limit-theorem" class="section level3">
+<h3><span class="header-section-number">8.4.4</span> Limit Theorem</h3>
+<p>很多MCMC的一款能够用中可以使用如下Markov chain limit theorem，比如weak law of large numbers(WLLN), strong law of large numbers (SSLN), and central lmit theorem (CLT), in order to guarantee good asymptotic estimates and estimate stnadard errors.
+所以一个很自然的问题就是adaptive MCMC这些极限定理还是否成立。
+基于diminishing adaptation and containment 的假设，WLLN对于所有的 <em>bounded functional</em>都成立。 (Roberts and Rosenthal,2007,Thm3).所以至少意味着使用adaptive MCMC用于估计有界泛函的均值，将会以很高的概率得到一个准确的答案，如果运行足够长的链。
+对于无界泛函，WLLN一般来说也成立，但是不总是成立。甚至对有界泛函，SLLN不一定能成立，同样的例子证明CLT可能也不成立。所以建议是估计MCMC的标准差对于adaptive MCMC来说就很challenging如果我们只假设diminishing adaptation and containment.</p>
+<p>基于更强的假设，将会有更多的结论。比如说（文献），证明了对于adaptive MCMC算法各种情况下的极限定理，假设假设adaptive parameters converge to fixed values sufficiently quickly.他们也证明了这些adaptive algorithms将会继承很多渐进最优性质对于对应的固定参数方法、这些结论促进了adaptive MCMC的更多的应用。然而，浙西需要不同的technical条件，实践中会更难以验证。</p>
+</div>
+</div>
+<div id="faq" class="section level2">
+<h2><span class="header-section-number">8.5</span> FAQ</h2>
+<ul>
+<li>需要满足diminishing adaptation condition才能保证converge</li>
+<li>不需要搞定所有technical condition才能用adaptive MCMC，只要满足diminishing adaptation，基本上就能渐进可用。</li>
+<li>adaptive MCMC经常用于加速高维收敛。比如几百维的基因问题</li>
+<li>需要adaptation过程设计的能特别的达到最优的parameter值吗，不需要，各态历经性在这方面完全不需要<span class="math inline">\(\{\Gamma_n\}\)</span> 收敛，只需要满足diminishing adaptation condition，只需要满足the possibility of infinite total adaptation. 但是，很多特定的adaptive MCMC algorithms proposed are indeed designed to attempt to converge to specific values. (比如说proposal scaling能使得渐进接受率是0.234)</li>
+<li>可以adapt一定时间，然后就不adapt了，用最后adapt的参数抽？可以，因为每个kernel都是ergodic的，但是要adapt多久没有理论支持，比如说对于200维的数据，将会需要上百万的迭代adapt之后才会得到一个比较好的proposal covariance matrix。</li>
+<li>只能用特定的几种adaptive MCMC吗？（adaptive Metropolis，adaptive Metropolis-within-Gibbs,RAMA,…）不是，什么情况都行，可以使用任意规则对<span class="math inline">\(\{\Gamma_n\}\)</span>进行adapt。只要满足adaptation diminishes，那么算法就有很大的可能性可行。最优挑战的部分就是找到sensible/clever adaptation rules.</li>
+<li>有其他方法，不仅仅是adaptive MCMC,可以帮助算法“学习”如何去converge well？
+当然有，比如说particle filters, population Monte Carlo, sequential Monte Carlo,可以都帮忙考虑作为尝试“学习”快速收敛的方法。但是这些算法的细节和这里提出的adaptive MCMC不一样。</li>
+</ul>
+</div>
+<div id="conclusion" class="section level2">
+<h2><span class="header-section-number">8.6</span> Conclusion</h2>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="reversible-jump-mcmc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["Notes in statistics and computing.pdf", "Notes in statistics and computing.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

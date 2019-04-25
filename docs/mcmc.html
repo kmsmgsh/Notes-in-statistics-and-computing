@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Chapter 5 MCMC | Notes on Statistics</title>
+  <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="Chapter 5 MCMC | Notes on Statistics" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 MCMC | Notes on Statistics" />
+  
+  <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
+  
+
+<meta name="author" content="Jiaming Shen">
+
+
+<meta name="date" content="2019-04-20">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="section-4.html">
+<link rel="next" href="r-trick.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Notes in statistics and computing</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>preliminary</a></li>
+<li class="chapter" data-level="" data-path="e69d82e4b883e69d82e585ab.html"><a href="e69d82e4b883e69d82e585ab.html"><i class="fa fa-check"></i>杂七杂八</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>2</b> Statistician Tool Box</a><ul>
+<li class="chapter" data-level="2.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>2.1</b> Matrix algebra</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>2.1.1</b> Block diagonal matrices</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Longitudinal data analysis</a><ul>
+<li class="chapter" data-level="3.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>3.1</b> Linear mixed model</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#condition-mean-vs-marginal-mean"><i class="fa fa-check"></i><b>3.1.1</b> Condition Mean vs Marginal mean</a></li>
+<li class="chapter" data-level="3.1.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#restricted-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>3.1.2</b> Restricted maximum likelihood estimation</a></li>
+<li class="chapter" data-level="3.1.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#prediction"><i class="fa fa-check"></i><b>3.1.3</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#generalised-linear-mixed-models"><i class="fa fa-check"></i><b>3.2</b> Generalised linear mixed models</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#expFam"><i class="fa fa-check"></i><b>3.2.1</b> Exponential distribution family</a></li>
+<li class="chapter" data-level="3.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>3.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>3.2.3</b> GLMMs</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>3.3</b> The Bayesian analysis approach for covariance modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="section-4.html"><a href="section-4.html"><i class="fa fa-check"></i><b>4</b> 统计图形笔记</a></li>
+<li class="chapter" data-level="5" data-path="mcmc.html"><a href="mcmc.html"><i class="fa fa-check"></i><b>5</b> MCMC</a><ul>
+<li class="chapter" data-level="5.1" data-path="mcmc.html"><a href="mcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>5.1</b> Metropolis-Hastings Update</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="mcmc.html"><a href="mcmc.html#metropolis-update"><i class="fa fa-check"></i><b>5.1.1</b> Metropolis Update</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="mcmc.html"><a href="mcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>5.2</b> The Gibbs Update</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="mcmc.html"><a href="mcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>5.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
+<li class="chapter" data-level="5.2.2" data-path="mcmc.html"><a href="mcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>5.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="mcmc.html"><a href="mcmc.html#combining-updates"><i class="fa fa-check"></i><b>5.3</b> Combining Updates</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="mcmc.html"><a href="mcmc.html#composition"><i class="fa fa-check"></i><b>5.3.1</b> Composition</a></li>
+<li class="chapter" data-level="5.3.2" data-path="mcmc.html"><a href="mcmc.html#palindromic-composition"><i class="fa fa-check"></i><b>5.3.2</b> Palindromic Composition</a></li>
+<li class="chapter" data-level="5.3.3" data-path="mcmc.html"><a href="mcmc.html#state-independent-mixing"><i class="fa fa-check"></i><b>5.3.3</b> State-Independent Mixing</a></li>
+<li class="chapter" data-level="5.3.4" data-path="mcmc.html"><a href="mcmc.html#subsampling"><i class="fa fa-check"></i><b>5.3.4</b> Subsampling</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="mcmc.html"><a href="mcmc.html#a-metropolis-example"><i class="fa fa-check"></i><b>5.4</b> A Metropolis Example</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="r-trick.html"><a href="r-trick.html"><i class="fa fa-check"></i><b>6</b> R trick</a></li>
+<li class="chapter" data-level="7" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html"><i class="fa fa-check"></i><b>7</b> Reversible Jump MCMC</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Notes on Statistics</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="mcmc" class="section level1">
+<h1><span class="header-section-number">Chapter 5</span> MCMC</h1>
+<div id="metropolis-hastings-update" class="section level2">
+<h2><span class="header-section-number">5.1</span> Metropolis-Hastings Update</h2>
+<p>Specified distribution has <em>unnormalized density</em> <span class="math inline">\(h\)</span>,that is, <span class="math inline">\(h\)</span> is a positive constant ties a probability density. The MH update does:</p>
+<ul>
+<li>When current state is <span class="math inline">\(x\)</span>, propose a move to <span class="math inline">\(y\)</span>, having conditional probability density given <span class="math inline">\(x\)</span> denoted <span class="math inline">\(q(x,\cdot)\)</span>.</li>
+<li>Calculate the Hastings ratio
+<span class="math display">\[
+r(x, y)=\frac{h(y) q(y, x)}{h(x) q(x, y)}
+\]</span></li>
+<li>Accept the proposed move <span class="math inline">\(y\)</span> with probability
+<span class="math display">\[
+a(x, y)=\min (1, r(x, y))
+\]</span>
+That is, the state after the update is <span class="math inline">\(y\)</span> with probability <span class="math inline">\(a(x,y)\)</span>, and the state after the update is <span class="math inline">\(x\)</span> with probability <span class="math inline">\(1-a(x,y)\)</span>.</li>
+</ul>
+<blockquote>
+<p>The different between the Metropolis rejection with the “reject sampling” in MC method is that MC rejection samping is done repeatedly until some proposal is accepted. MH rejection is always new state but remains the same.</p>
+</blockquote>
+<blockquote>
+<p>Propose a move, how? Care <span class="math inline">\(h\)</span> is the stationary distribution(what we want), the <span class="math inline">\(q(\cdot|\cdot)\)</span> the proposal distribution.</p>
+</blockquote>
+<p>Update session:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (<span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span>MH_ratio){
+  x=y
+}</code></pre>
+<p>or in log-scale</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (log_MH_raio<span class="op">&gt;=</span><span class="dv">0</span><span class="op">||</span><span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span><span class="kw">exp</span>(log_MH_ratio)){
+  x=y
+  }</code></pre>
+<p>The Metropolis-Hastings update is reversible with respect to <span class="math inline">\(h\)</span>,
+Assume <span class="math inline">\(X_n\)</span> is the current state and <span class="math inline">\(Y_n\)</span> is the proposal, we have <span class="math inline">\(X_n=X_{n+1}\)</span> whenever the proposal is rejected. The distribution of <span class="math inline">\((X_n,X_{n+1})\)</span> given rejection is exchangeable. 相当于恒等映射的可逆的，当然没问题。
+Hence, it only remains to be shown that <span class="math inline">\((X_n,Y_n)\)</span> is exchangeable given acceptance. We need to show that</p>
+<p><span class="math display">\[
+\mathrm{E}\left\{f\left(X_{n}, Y_{n}\right) a\left(X_{n}, Y_{n}\right)\right\}=\mathrm{E}\left\{f\left(Y_{n}, X_{n}\right) a\left(X_{n}, Y_{n}\right)\right\}
+\]</span>
+for any function <span class="math inline">\(f\)</span> that has expectation(assuming <span class="math inline">\(X_n\)</span> has desired stationary distribution). That is, we must show we can interchange arguments of <span class="math inline">\(f\)</span> in
+<span class="math display">\[
+\iint f(x, y) h(x) a(x, y) q(x, y) d x d y
+\]</span>
+integrals can be replaced by sums if the state is discrete. This follows if we can interchange <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> in
+<span class="math display">\[
+h(x) a(x, y) q(x, y)
+\]</span>
+because we can exchange <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> in the integration. The set of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> such that <span class="math inline">\(h(x)&gt;0,q(x,y)&gt;0\)</span> and <span class="math inline">\(a(x,y)&gt;0\)</span> contributes to the integral or (in the discrete case) sum. These inequalities further imply that <span class="math inline">\(h(y)&gt;0\)</span> and <span class="math inline">\(q(y,x)&gt;0\)</span>.Thus we may assume these inequalities, in which case we have
+<span class="math display">\[
+r(y, x)=\frac{1}{r(x, y)}
+\]</span>
+&gt; 这个式子来源于MH-ratio 中<span class="math inline">\(r\)</span>的定义</p>
+<p>Suppose that <span class="math inline">\(r(x,y)\leq 1\)</span>, so <span class="math inline">\(r(x,y)=a(x,y)\)</span> and <span class="math inline">\(a(y,x)=1\)</span>
+&gt; 来源于<span class="math inline">\(a(x,y)\)</span> 的定义</p>
+<p>Then</p>
+<p><span class="math display">\[
+\begin{aligned} h(x) a(x, y) q(x, y) &amp;=h(x) r(x, y) q(x, y) \\ &amp;=h(y) q(y, x) \\ &amp;=h(y) q(y, x) a(y, x) \end{aligned}
+\]</span>
+Conversely, suppose that <span class="math inline">\(r(x,y)&gt;1\)</span>, so <span class="math inline">\(a(x,y)=1\)</span> and <span class="math inline">\(a(y,x)=r(y,x)\)</span>. Then
+<span class="math display">\[
+\begin{aligned} h(x) a(x, y) q(x, y) &amp;=h(x) q(x, y) \\ &amp;=h(y) r(y, x) q(y, x) \\ &amp;=h(y) a(y, x) q(y, x) \end{aligned}
+\]</span>
+In either case, we cn exchange <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, the proof is done. 因为 reversible 好像是个更强的。原文：Reversibility implies stationarity,but not vice versa.</p>
+<div id="metropolis-update" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> Metropolis Update</h3>
+<p>The special case of the Metropolis-Hastings update when <span class="math inline">\(q(x,y)=q(y,x)\)</span> for all <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>. Then the MH-ratio has a simpler form:
+<span class="math display">\[
+r(x,y)=\frac{h(y)}{h(x)}
+\]</span></p>
+<p>One obvious way is make proposal as the form <span class="math inline">\(y=x+\epsilon\)</span> where e is stochastically independent of <span class="math inline">\(x\)</span> and symmetrically distributed about zero. Then let <span class="math inline">\(q(x,y)=f(y-x)\)</span>, where <span class="math inline">\(f\)</span> is the density of <span class="math inline">\(e\)</span>. Widely used proposal is <span class="math inline">\(N(0,\sigma)\)</span> or uniformly distributed on a ball or a hypercube centered at zero.</p>
+</div>
+</div>
+<div id="the-gibbs-update" class="section level2">
+<h2><span class="header-section-number">5.2</span> The Gibbs Update</h2>
+<p>The proposal is from a conditional distribution of the desired equilibrium distribution. Always accept version of MH algorithm.</p>
+<p>The proof of reversible is :
+Suppose <span class="math inline">\(X_n\)</span> has the desired stationary distribution. Suppose that the conditional distribution of <span class="math inline">\(X_{n+1}\)</span> given <span class="math inline">\(f(X_n)\)</span> is same as the conditional distribution of <span class="math inline">\(X_n\)</span> given <span class="math inline">\(f(X_n)\)</span>. Then the pair <span class="math inline">\(X_n,X_{n+1}\)</span> is conditionally exchangeable given <span class="math inline">\(f(X_n)\)</span>, hence unconditionally exchangeable.</p>
+<p>A Gibbs update uses the conditional distribution of one component of the state vector given the rest of the components, that is, the special case of the update described above where <span class="math inline">\(f(X_n)\)</span> is <span class="math inline">\(X_n\)</span> with one component omitted. Conditional distribution of this form are called “full conditionals.” There is no reason other than tradition why such conditional distributions should be preferred.</p>
+<p>Gibbs updates have one curious property not shared by other MH updates: Gibbs are idempotent, meaning is multiple updates is the same as the effect of just one. Because update never changes <span class="math inline">\(f(X_n)\)</span> .</p>
+<div id="variable-at-a-time-metropolis-hastings" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Variable-at-a-Time Metropolis-Hastings</h3>
+<p>Gibbs updates alter only part of the state vector; when using “full conditionals” the part is a single component. Metropolis-Hastings updates can be modified todo the same.</p>
+<blockquote>
+<p>所以看来，从理论上来说，最初始的MH是全部待估参数一起来的，但是可以做到类似Gibbs的conditional distribution然后一个一个更新。</p>
+</blockquote>
+<p>Divide the state vector into two parts, <span class="math inline">\(x=(u,v)\)</span>. Let the proposal alter <span class="math inline">\(u\)</span> but no <span class="math inline">\(v\)</span>. Hence, the proposal density has the form <span class="math inline">\(q(x,u)\)</span> instead of <span class="math inline">\(q(x,y)\)</span> we had in Section before. Again let <span class="math inline">\(h(x)=h(u,v)\)</span> be the unnormalized density of the desired equilibrium distribution. The variable-at-a-time MH update does the following:</p>
+<ul>
+<li>When the current state is <span class="math inline">\(x=(u,v)\)</span>, propose a move to <span class="math inline">\(y=(u^*,v)\)</span>, where <span class="math inline">\(u^*\)</span> has conditional probability density given <span class="math inline">\(x\)</span> denoted <span class="math inline">\(q(x,\cdot)=q(u,v,\cdot)\)</span>.</li>
+<li>Calculate the <em>Hastings ratio</em>
+<span class="math display">\[
+r(x, y)=\frac{h\left(u^{*}, v\right) q\left(u^{*}, v, u\right)}{h(u, v) q\left(u, v, u^{*}\right)}
+\]</span></li>
+<li>Accept the proposed move <span class="math inline">\(y\)</span> with probability we defined before, that is, the state after the update is y with porbability <span class="math inline">\(a(x,y)\)</span>, and the state after the update is <span class="math inline">\(x\)</span> with probability <span class="math inline">\(1-a(x,y)\)</span>.</li>
+</ul>
+<p>Actually the sampler run in Metropolis et.al(1953) was a “variable-at-a-time” sampler. So name it as “variable-at-a-time MH” is sometimes of a misnomer.</p>
+<blockquote>
+<p>很显然，因为那么高维一起抽接受率堪忧。。</p>
+</blockquote>
+</div>
+<div id="the-gibbs-is-a-special-case-of-metropolis-hastings" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> The Gibbs is a special case of Metropolis-Hastings:</h3>
+<p><span class="math inline">\(x=(u,v)\)</span>, v is the part of the state on which the Gibbs update conditions. Doing block Gibbs updating <span class="math inline">\(u\)</span> from its conditional distribution given v. Factor the unnormalized density <span class="math inline">\(h(u,v)=g(v)q(v,u)\)</span>, where <span class="math inline">\(g(v)\)</span> is an unnormalized marginal of <span class="math inline">\(v\)</span> and q(v,u) is the conditional of <span class="math inline">\(u\)</span> given <span class="math inline">\(v\)</span>. Now do a MH update with <span class="math inline">\(q\)</span> as the proposal distribution.
+&gt;也就是说，把h，目标密度，分为g和q，g是initi部分，q是condition部分。则用q的部分作为MH的proposal。则在这种情况下可以得到MH ratio.</p>
+<p><span class="math display">\[
+r(x, y)=\frac{h\left(u^{*}, v\right) q(u, v)}{h(u, v) q\left(v, u^{*}\right)}=\frac{g(v) q\left(v, u^{*}\right) q(u, v)}{g(v) q(v, u) q\left(v, u^{*}\right)}=1
+\]</span></p>
+</div>
+</div>
+<div id="combining-updates" class="section level2">
+<h2><span class="header-section-number">5.3</span> Combining Updates</h2>
+<div id="composition" class="section level3">
+<h3><span class="header-section-number">5.3.1</span> Composition</h3>
+<p>Let <span class="math inline">\(P_1,...,P_k\)</span> be update mechanism(computer code) and let <span class="math inline">\(P_1P_2...P_k\)</span> denote the composite update that consists of these updates done in that order with <span class="math inline">\(P_1\)</span> first and <span class="math inline">\(P_k\)</span> last. If each <span class="math inline">\(P_i\)</span> preserves a distribution, then obviously so does <span class="math inline">\(P_1P_2...P_k\)</span>.</p>
+<p>If <span class="math inline">\(P_1,...,P_k\)</span> are the Gibbs updates foro the “full conditionals” ofo the desired equilibrium distribution, then the composition update is often called a fixed scan Gibbs sampler.</p>
+</div>
+<div id="palindromic-composition" class="section level3">
+<h3><span class="header-section-number">5.3.2</span> Palindromic Composition</h3>
+<p>Note that <span class="math inline">\(P_1P_2...P_k\)</span> is not reversible with respect to the distribution it preserves unless the transition probabilities associated with <span class="math inline">\(P_1P_2...P_k\)</span> and <span class="math inline">\(P_kP_{k-1}...P_1\)</span> are the same.</p>
+<p>The most obvious way to arrange reversibility is to make <span class="math inline">\(P_i=P_{k-i}\)</span> for <span class="math inline">\(i=1,...,k\)</span>. Then we call this composite update <em>palindromic</em>.</p>
+</div>
+<div id="state-independent-mixing" class="section level3">
+<h3><span class="header-section-number">5.3.3</span> State-Independent Mixing</h3>
+<p>Let <span class="math inline">\(P_y\)</span> be update mechanism(computer code), and let <span class="math inline">\(E(P_y)\)</span> denote the update that consists of doing a random one of these updates: generate <span class="math inline">\(Y\)</span> from some distribution and do <span class="math inline">\(P_y\)</span>.</p>
+<blockquote>
+<p>相当于是 比如给出3个更新机制，随机选一个。</p>
+</blockquote>
+<p>如果Y独立于current state，同时<span class="math inline">\(P_y\)</span> 有同样的分布，则<span class="math inline">\(E(P_y)\)</span> 也一样。如果<span class="math inline">\(X_n\)</span> 有同样的稳定分布，则<span class="math inline">\(X_n\)</span>关于Y的条件分布也是同一分布，<span class="math inline">\(X_{n+1}\)</span>也有同样的条件分布。
+也就是说，Markov chain update with <span class="math inline">\(E(P_Y)\)</span> 是可逆的如果<span class="math inline">\(P_y\)</span>是可逆的。</p>
+<p>这个mixing一般用于mixture model。</p>
+</div>
+<div id="subsampling" class="section level3">
+<h3><span class="header-section-number">5.3.4</span> Subsampling</h3>
+<p>Let P is an update mechanism, write <span class="math inline">\(P^k\)</span> to denote the k-fold composition of P.</p>
+<p>This process is take every kth element of a Markov chain <span class="math inline">\(X_1,X_2,..\)</span> forming a new Markov chain <span class="math inline">\(X_1,X_{k+1},X_{2k+1},...\)</span> is called <em>subsampling</em> the original Markov chain.</p>
+<p>Subsampling cannot improve the accuracy of MCMC approximation; it must make things worse. The original motivation for subsampling appears to have been to reduce autocorrelation in the subsampled chain to a negligible level. This is only done by before Markov chain CLT was well understood. Now the Markov chain CLT is well understood, this cannot be a justification for subsamplig.</p>
+<p>所以唯一有用的部分是just to reduce the amount of output of a Markov chain sampler to manageable levels. Billions of iterations may be needed for convergence, but billions of iterations of output may be too much to handle, especially in R.</p>
+<p>然而batches 方法也可以做到，所以唯一能用subsampling的时候就是不能使用batching的时候。</p>
+<p>这种情况很少，所以基本不用sub-sampling…</p>
+</div>
+</div>
+<div id="a-metropolis-example" class="section level2">
+<h2><span class="header-section-number">5.4</span> A Metropolis Example</h2>
+<p>Frequency logistic regression.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mcmc)
+<span class="kw">data</span>(<span class="st">&quot;logit&quot;</span>)
+out=<span class="kw">glm</span>(y<span class="op">~</span><span class="st"> </span>x1<span class="op">+</span>x2<span class="op">+</span>x3<span class="op">+</span>x4,<span class="dt">data=</span>logit,<span class="dt">family=</span><span class="kw">binomial</span>(),<span class="dt">x=</span><span class="ot">TRUE</span>)
+<span class="kw">summary</span>(out)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = y ~ x1 + x2 + x3 + x4, family = binomial(), data = logit, 
+##     x = TRUE)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -1.7461  -0.6907   0.1540   0.7041   2.1943  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)   
+## (Intercept)   0.6328     0.3007   2.104  0.03536 * 
+## x1            0.7390     0.3616   2.043  0.04100 * 
+## x2            1.1137     0.3627   3.071  0.00213 **
+## x3            0.4781     0.3538   1.351  0.17663   
+## x4            0.6944     0.3989   1.741  0.08172 . 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 137.628  on 99  degrees of freedom
+## Residual deviance:  87.668  on 95  degrees of freedom
+## AIC: 97.668
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>Do this in bayesian analysis where the prior for coefficients are <span class="math inline">\(N(0,2)\)</span>.</p>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;-<span class="st"> </span>out<span class="op">$</span>x 
+y &lt;-<span class="st"> </span>out<span class="op">$</span>y
+lupost &lt;-<span class="st"> </span><span class="cf">function</span>(beta, x, y, ...) { 
+  eta &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(x <span class="op">%*%</span><span class="st"> </span>beta)
+  logp &lt;-<span class="st"> </span><span class="kw">ifelse</span>(eta <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, eta <span class="op">-</span><span class="st"> </span><span class="kw">log1p</span>(<span class="kw">exp</span>(eta)),<span class="op">-</span><span class="st"> </span><span class="kw">log1p</span> (<span class="kw">exp</span>(<span class="op">-</span><span class="st"> </span>eta))) 
+  logq &lt;-<span class="st"> </span><span class="kw">ifelse</span>(eta <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="op">-</span><span class="st"> </span><span class="kw">log1p</span>(<span class="kw">exp</span>(eta)), <span class="op">-</span><span class="st"> </span>eta <span class="op">-</span><span class="st"> </span><span class="kw">log1p</span> (<span class="kw">exp</span>(<span class="op">-</span><span class="st"> </span>eta))) 
+  logl &lt;-<span class="st"> </span><span class="kw">sum</span>(logp[y <span class="op">==</span><span class="st"> </span><span class="dv">1</span>]) <span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(logq[y <span class="op">==</span><span class="st"> </span><span class="dv">0</span>]) 
+  <span class="kw">return</span>(logl <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(beta<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="dv">8</span>)
+}
+beta.init &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">coefficients</span>(out))
+out &lt;-<span class="st"> </span><span class="kw">metrop</span>(lupost, beta.init, <span class="fl">1e3</span>, <span class="dt">x =</span> x, <span class="dt">y =</span> y)
+out2=<span class="kw">metrop</span>(out,<span class="dt">x=</span>x,<span class="dt">y=</span>y)</code></pre>
+<p>The functions in the mcmc package are designed so that if given the output of a preceding run as their first argument, they continue the run of the Markov chain where the other run left off.</p>
+<p>It is generally accepted that an acceptance rate of about 20% is right.</p>
+<p>Although this magic number can fail, but this is good for most cases, and easy to understand and implement for beginners.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="section-4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="r-trick.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["Notes in statistics and computing.pdf", "Notes in statistics and computing.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

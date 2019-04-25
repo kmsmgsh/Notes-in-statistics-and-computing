@@ -17,3 +17,28 @@ scipen 表示在200个数字以内都不使用科学计数法
 
 - 拼接字符串
 ```paste()```
+
+
+- Try catch
+
+```{r,eval=FALSE}
+for (i in 1:10) {
+tryCatch({log(4-i)},warning=function(a){print("warning!");browser();stop()},finally = {print(i);})
+}
+```
+Try后面expr中的式子，如果一切无事，则run finally里面的expr，如果有warning，就run warning里面的function，如果有error，就run error 里面的function。
+
+- Call browser when error
+
+```
+options(error=browser)
+options(warn=2)
+options(error=recover)
+```
+
+
+- R 取余:%%
+```{r}
+2300%%100 
+230%%100
+```
