@@ -1,0 +1,12 @@
+# Mathematical statistic Trick
+
+## Normal distribution as exponential family
+
+Theorem: If the density function with the form:
+$$
+f(x) \propto \exp \left\{-\frac{1}{2} x^{T} A x+B x\right\}
+$$
+
+Then, we have $X\sim N\left(\left(B A^{-1}\right)^{T}, A^{-1}\right)$
+
+可以配合\@ref(sumSquare) 食用更佳

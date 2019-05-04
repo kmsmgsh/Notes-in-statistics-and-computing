@@ -70,5 +70,25 @@ $$
 $$
 
 
+## 两个二次型相加 {#sumSquare}
+
+In vector formulation(Assuming $\Sigma_1$,$\Sigma_2$ are symmetric)
+有：
+$$
+\begin{array}{c}{-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{1}\right)^{T} \mathbf{\Sigma}_{1}^{-1}\left(\mathbf{x}-\mathbf{m}_{1}\right)} \\ {-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{2}\right)^{T} \mathbf{\Sigma}_{2}^{-1}\left(\mathbf{x}-\mathbf{m}_{2}\right)} \\ {=-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{c}\right)^{T} \mathbf{\Sigma}_{c}^{-1}\left(\mathbf{x}-\mathbf{m}_{c}\right)+C}\end{array}
+$$
+其中：
+$$
+\begin{aligned} \mathbf{\Sigma}_{c}^{-1}=& \mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1} \\ \mathbf{m}_{c} &=\left(\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\right)^{-1}\left(\mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \\ C &=\frac{1}{2}\left(\mathbf{m}_{1}^{T} \mathbf{\Sigma}_{1}^{-1}+\mathbf{m}_{2}^{T} \mathbf{\Sigma}_{2}^{-1}\right)\left(\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\right)^{-1}\left(\mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \\ &-\frac{1}{2}\left(\mathbf{m}_{1}^{T} \mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{m}_{2}^{T} \mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \end{aligned}
+$$
+
+
+而对于我需要的情况，简化$m_1=0$,$m_2=0$
+
+那么就有，只需要$\mathbf{\Sigma}_{c}^{-1}=\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}$,同时$m_c=0$.
+
+
+
+
 
 

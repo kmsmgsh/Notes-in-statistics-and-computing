@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 2 Statistician Tool Box | Notes on Statistics</title>
+  <title>Chapter 3 Statistician Tool Box | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 2 Statistician Tool Box | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 3 Statistician Tool Box | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Statistician Tool Box | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 3 Statistician Tool Box | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -25,14 +25,14 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-04-24">
+<meta name="date" content="2019-05-04">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="intro.html">
+<link rel="prev" href="mathematical-statistic-trick.html">
 <link rel="next" href="longitudinal-data-analysis.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -133,80 +133,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>preliminary</a></li>
 <li class="chapter" data-level="" data-path="e69d82e4b883e69d82e585ab.html"><a href="e69d82e4b883e69d82e585ab.html"><i class="fa fa-check"></i>杂七杂八</a></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>2</b> Statistician Tool Box</a><ul>
-<li class="chapter" data-level="2.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>2.1</b> Matrix algebra</a><ul>
-<li class="chapter" data-level="2.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>2.1.1</b> Block diagonal matrices</a></li>
+<li class="chapter" data-level="2" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html"><i class="fa fa-check"></i><b>2</b> Mathematical statistic Trick</a><ul>
+<li class="chapter" data-level="2.1" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#normal-distribution-as-exponential-family"><i class="fa fa-check"></i><b>2.1</b> Normal distribution as exponential family</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>3</b> Statistician Tool Box</a><ul>
+<li class="chapter" data-level="3.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>3.1</b> Matrix algebra</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>3.1.1</b> Block diagonal matrices</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#sumSquare"><i class="fa fa-check"></i><b>3.2</b> 两个二次型相加</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Longitudinal data analysis</a><ul>
+<li class="chapter" data-level="4.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>4.1</b> Linear mixed model</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#condition-mean-vs-marginal-mean"><i class="fa fa-check"></i><b>4.1.1</b> Condition Mean vs Marginal mean</a></li>
+<li class="chapter" data-level="4.1.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#restricted-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>4.1.2</b> Restricted maximum likelihood estimation</a></li>
+<li class="chapter" data-level="4.1.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#prediction"><i class="fa fa-check"></i><b>4.1.3</b> Prediction</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#generalised-linear-mixed-models"><i class="fa fa-check"></i><b>4.2</b> Generalised linear mixed models</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#expFam"><i class="fa fa-check"></i><b>4.2.1</b> Exponential distribution family</a></li>
+<li class="chapter" data-level="4.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>4.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
+<li class="chapter" data-level="4.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>4.2.3</b> GLMMs</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>4.3</b> The Bayesian analysis approach for covariance modelling</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="section-5.html"><a href="section-5.html"><i class="fa fa-check"></i><b>5</b> 统计图形笔记</a></li>
+<li class="chapter" data-level="6" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>6</b> BasicMCMC</a><ul>
+<li class="chapter" data-level="6.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>6.1</b> Metropolis-Hastings Update</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-update"><i class="fa fa-check"></i><b>6.1.1</b> Metropolis Update</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>6.2</b> The Gibbs Update</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="basicmcmc.html"><a href="basicmcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>6.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
+<li class="chapter" data-level="6.2.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>6.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="basicmcmc.html"><a href="basicmcmc.html#combining-updates"><i class="fa fa-check"></i><b>6.3</b> Combining Updates</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="basicmcmc.html"><a href="basicmcmc.html#composition"><i class="fa fa-check"></i><b>6.3.1</b> Composition</a></li>
+<li class="chapter" data-level="6.3.2" data-path="basicmcmc.html"><a href="basicmcmc.html#palindromic-composition"><i class="fa fa-check"></i><b>6.3.2</b> Palindromic Composition</a></li>
+<li class="chapter" data-level="6.3.3" data-path="basicmcmc.html"><a href="basicmcmc.html#state-independent-mixing"><i class="fa fa-check"></i><b>6.3.3</b> State-Independent Mixing</a></li>
+<li class="chapter" data-level="6.3.4" data-path="basicmcmc.html"><a href="basicmcmc.html#subsampling"><i class="fa fa-check"></i><b>6.3.4</b> Subsampling</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="basicmcmc.html"><a href="basicmcmc.html#a-metropolis-example"><i class="fa fa-check"></i><b>6.4</b> A Metropolis Example</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="r-trick.html"><a href="r-trick.html"><i class="fa fa-check"></i><b>7</b> R trick</a></li>
+<li class="chapter" data-level="8" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html"><i class="fa fa-check"></i><b>8</b> Reversible Jump MCMC</a><ul>
+<li class="chapter" data-level="8.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#introduction"><i class="fa fa-check"></i><b>8.1</b> Introduction</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#from-metropolis-hastings-to-reversible-jump"><i class="fa fa-check"></i><b>8.1.1</b> From Metropolis-Hastings to Reversible Jump</a></li>
+<li class="chapter" data-level="8.1.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#application-area"><i class="fa fa-check"></i><b>8.1.2</b> Application Area</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#implementation"><i class="fa fa-check"></i><b>8.2</b> Implementation</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-dimension-matching"><i class="fa fa-check"></i><b>8.2.1</b> Example Dimension Matching</a></li>
+<li class="chapter" data-level="8.2.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-moment-matching-in-a-finite-mixture-of-univariate-normals"><i class="fa fa-check"></i><b>8.2.2</b> Example: Moment Matching in a Finite Mixture of Univariate Normals</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#mapping-functions-and-proposal-distribution"><i class="fa fa-check"></i><b>8.3</b> Mapping Functions and Proposal Distribution</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#marginalization-and-augmentation"><i class="fa fa-check"></i><b>8.3.1</b> Marginalization and augmentation:</a></li>
+<li class="chapter" data-level="8.3.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#centering-and-order-methods"><i class="fa fa-check"></i><b>8.3.2</b> Centering and Order Methods</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>3</b> Longitudinal data analysis</a><ul>
-<li class="chapter" data-level="3.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>3.1</b> Linear mixed model</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#condition-mean-vs-marginal-mean"><i class="fa fa-check"></i><b>3.1.1</b> Condition Mean vs Marginal mean</a></li>
-<li class="chapter" data-level="3.1.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#restricted-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>3.1.2</b> Restricted maximum likelihood estimation</a></li>
-<li class="chapter" data-level="3.1.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#prediction"><i class="fa fa-check"></i><b>3.1.3</b> Prediction</a></li>
+<li class="chapter" data-level="9" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html"><i class="fa fa-check"></i><b>9</b> Optimal Proposal Distributions and Adaptive MCMC</a><ul>
+<li class="chapter" data-level="9.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#intro-1"><i class="fa fa-check"></i><b>9.1</b> Intro</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#mh-algorithm"><i class="fa fa-check"></i><b>9.1.1</b> MH algorithm</a></li>
+<li class="chapter" data-level="9.1.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling"><i class="fa fa-check"></i><b>9.1.2</b> Optimal Scaling</a></li>
+<li class="chapter" data-level="9.1.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc"><i class="fa fa-check"></i><b>9.1.3</b> Adaptive MCMC</a></li>
+<li class="chapter" data-level="9.1.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#comparing-markov-chains"><i class="fa fa-check"></i><b>9.1.4</b> Comparing Markov Chains</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#generalised-linear-mixed-models"><i class="fa fa-check"></i><b>3.2</b> Generalised linear mixed models</a><ul>
-<li class="chapter" data-level="3.2.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#expFam"><i class="fa fa-check"></i><b>3.2.1</b> Exponential distribution family</a></li>
-<li class="chapter" data-level="3.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>3.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
-<li class="chapter" data-level="3.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>3.2.3</b> GLMMs</a></li>
+<li class="chapter" data-level="9.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling-of-random-walk-metropolis"><i class="fa fa-check"></i><b>9.2</b> Optimal Scaling of Random-Walk Metropolis</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#basic-principle"><i class="fa fa-check"></i><b>9.2.1</b> Basic principle</a></li>
+<li class="chapter" data-level="9.2.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-acceptance-rate-as-drightarrow-infty"><i class="fa fa-check"></i><b>9.2.2</b> Optimal Acceptance Rate as <span class="math inline">\(d\rightarrow \infty\)</span></a></li>
+<li class="chapter" data-level="9.2.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-target-distributions"><i class="fa fa-check"></i><b>9.2.3</b> Inhomogeneous Target Distributions</a></li>
+<li class="chapter" data-level="9.2.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#metropolis-adjusted-langevin-algorithm."><i class="fa fa-check"></i><b>9.2.4</b> Metropolis-Adjusted Langevin Algorithm.</a></li>
+<li class="chapter" data-level="9.2.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#numerical-examples"><i class="fa fa-check"></i><b>9.2.5</b> Numerical Examples</a></li>
+<li class="chapter" data-level="9.2.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-covariance"><i class="fa fa-check"></i><b>9.2.6</b> Inhomogeneous Covariance</a></li>
 </ul></li>
-<li class="chapter" data-level="3.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>3.3</b> The Bayesian analysis approach for covariance modelling</a></li>
+<li class="chapter" data-level="9.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc-1"><i class="fa fa-check"></i><b>9.3</b> Adaptive MCMC</a></li>
+<li class="chapter" data-level="9.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#ergodicity-of-adaptive-mcmc"><i class="fa fa-check"></i><b>9.4</b> Ergodicity of Adaptive MCMC</a><ul>
+<li class="chapter" data-level="9.4.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis"><i class="fa fa-check"></i><b>9.4.1</b> Adaptive Metropolis</a></li>
+<li class="chapter" data-level="9.4.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis-within-gibbs"><i class="fa fa-check"></i><b>9.4.2</b> Adaptive Metropolis-within-Gibbs</a></li>
+<li class="chapter" data-level="9.4.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#state-dependent-proposal-scalings"><i class="fa fa-check"></i><b>9.4.3</b> State-Dependent Proposal Scalings</a></li>
+<li class="chapter" data-level="9.4.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#limit-theorem"><i class="fa fa-check"></i><b>9.4.4</b> Limit Theorem</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="section-4.html"><a href="section-4.html"><i class="fa fa-check"></i><b>4</b> 统计图形笔记</a></li>
-<li class="chapter" data-level="5" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>5</b> BasicMCMC</a><ul>
-<li class="chapter" data-level="5.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>5.1</b> Metropolis-Hastings Update</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-update"><i class="fa fa-check"></i><b>5.1.1</b> Metropolis Update</a></li>
+<li class="chapter" data-level="9.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#faq"><i class="fa fa-check"></i><b>9.5</b> FAQ</a></li>
+<li class="chapter" data-level="9.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#conclusion"><i class="fa fa-check"></i><b>9.6</b> Conclusion</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>5.2</b> The Gibbs Update</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="basicmcmc.html"><a href="basicmcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>5.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
-<li class="chapter" data-level="5.2.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>5.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="basicmcmc.html"><a href="basicmcmc.html#combining-updates"><i class="fa fa-check"></i><b>5.3</b> Combining Updates</a><ul>
-<li class="chapter" data-level="5.3.1" data-path="basicmcmc.html"><a href="basicmcmc.html#composition"><i class="fa fa-check"></i><b>5.3.1</b> Composition</a></li>
-<li class="chapter" data-level="5.3.2" data-path="basicmcmc.html"><a href="basicmcmc.html#palindromic-composition"><i class="fa fa-check"></i><b>5.3.2</b> Palindromic Composition</a></li>
-<li class="chapter" data-level="5.3.3" data-path="basicmcmc.html"><a href="basicmcmc.html#state-independent-mixing"><i class="fa fa-check"></i><b>5.3.3</b> State-Independent Mixing</a></li>
-<li class="chapter" data-level="5.3.4" data-path="basicmcmc.html"><a href="basicmcmc.html#subsampling"><i class="fa fa-check"></i><b>5.3.4</b> Subsampling</a></li>
-</ul></li>
-<li class="chapter" data-level="5.4" data-path="basicmcmc.html"><a href="basicmcmc.html#a-metropolis-example"><i class="fa fa-check"></i><b>5.4</b> A Metropolis Example</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="r-trick.html"><a href="r-trick.html"><i class="fa fa-check"></i><b>6</b> R trick</a></li>
-<li class="chapter" data-level="7" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html"><i class="fa fa-check"></i><b>7</b> Reversible Jump MCMC</a><ul>
-<li class="chapter" data-level="7.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#introduction"><i class="fa fa-check"></i><b>7.1</b> Introduction</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#from-metropolis-hastings-to-reversible-jump"><i class="fa fa-check"></i><b>7.1.1</b> From Metropolis-Hastings to Reversible Jump</a></li>
-<li class="chapter" data-level="7.1.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#application-area"><i class="fa fa-check"></i><b>7.1.2</b> Application Area</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#implementation"><i class="fa fa-check"></i><b>7.2</b> Implementation</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-dimension-matching"><i class="fa fa-check"></i><b>7.2.1</b> Example Dimension Matching</a></li>
-<li class="chapter" data-level="7.2.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-moment-matching-in-a-finite-mixture-of-univariate-normals"><i class="fa fa-check"></i><b>7.2.2</b> Example: Moment Matching in a Finite Mixture of Univariate Normals</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#mapping-functions-and-proposal-distribution"><i class="fa fa-check"></i><b>7.3</b> Mapping Functions and Proposal Distribution</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#marginalization-and-augmentation"><i class="fa fa-check"></i><b>7.3.1</b> Marginalization and augmentation:</a></li>
-<li class="chapter" data-level="7.3.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#centering-and-order-methods"><i class="fa fa-check"></i><b>7.3.2</b> Centering and Order Methods</a></li>
+<li class="chapter" data-level="10" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html"><i class="fa fa-check"></i><b>10</b> Hamiltonian Monte Carlo</a><ul>
+<li class="chapter" data-level="10.0.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#properties-of-hamiltonian-dynamics"><i class="fa fa-check"></i><b>10.0.1</b> Properties of Hamiltonian Dynamics</a></li>
+<li class="chapter" data-level="10.0.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#conservation-of-the-hamiltonian"><i class="fa fa-check"></i><b>10.0.2</b> Conservation of the Hamiltonian</a></li>
+<li class="chapter" data-level="10.0.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#volume-preservation"><i class="fa fa-check"></i><b>10.0.3</b> Volume preservation</a></li>
+<li class="chapter" data-level="10.0.4" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#symplecticness-"><i class="fa fa-check"></i><b>10.0.4</b> Symplecticness (辛？)</a></li>
+<li class="chapter" data-level="10.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#discretizing-hamiltons-equations-the-leapfrog-method."><i class="fa fa-check"></i><b>10.1</b> Discretizing Hamilton’s Equations: The leapfrog method.</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#modification-of-eulers-method"><i class="fa fa-check"></i><b>10.1.1</b> Modification of Euler’s Method</a></li>
+<li class="chapter" data-level="10.1.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#the-leapfrog-method"><i class="fa fa-check"></i><b>10.1.2</b> The leapfrog Method</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html"><i class="fa fa-check"></i><b>8</b> Optimal Proposal Distributions and Adaptive MCMC</a><ul>
-<li class="chapter" data-level="8.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#intro-1"><i class="fa fa-check"></i><b>8.1</b> Intro</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#mh-algorithm"><i class="fa fa-check"></i><b>8.1.1</b> MH algorithm</a></li>
-<li class="chapter" data-level="8.1.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling"><i class="fa fa-check"></i><b>8.1.2</b> Optimal Scaling</a></li>
-<li class="chapter" data-level="8.1.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc"><i class="fa fa-check"></i><b>8.1.3</b> Adaptive MCMC</a></li>
-<li class="chapter" data-level="8.1.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#comparing-markov-chains"><i class="fa fa-check"></i><b>8.1.4</b> Comparing Markov Chains</a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling-of-random-walk-metropolis"><i class="fa fa-check"></i><b>8.2</b> Optimal Scaling of Random-Walk Metropolis</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#basic-principle"><i class="fa fa-check"></i><b>8.2.1</b> Basic principle</a></li>
-<li class="chapter" data-level="8.2.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-acceptance-rate-as-drightarrow-infty"><i class="fa fa-check"></i><b>8.2.2</b> Optimal Acceptance Rate as <span class="math inline">\(d\rightarrow \infty\)</span></a></li>
-<li class="chapter" data-level="8.2.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-target-distributions"><i class="fa fa-check"></i><b>8.2.3</b> Inhomogeneous Target Distributions</a></li>
-<li class="chapter" data-level="8.2.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#metropolis-adjusted-langevin-algorithm."><i class="fa fa-check"></i><b>8.2.4</b> Metropolis-Adjusted Langevin Algorithm.</a></li>
-<li class="chapter" data-level="8.2.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#numerical-examples"><i class="fa fa-check"></i><b>8.2.5</b> Numerical Examples</a></li>
-<li class="chapter" data-level="8.2.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-covariance"><i class="fa fa-check"></i><b>8.2.6</b> Inhomogeneous Covariance</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc-1"><i class="fa fa-check"></i><b>8.3</b> Adaptive MCMC</a></li>
-<li class="chapter" data-level="8.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#ergodicity-of-adaptive-mcmc"><i class="fa fa-check"></i><b>8.4</b> Ergodicity of Adaptive MCMC</a><ul>
-<li class="chapter" data-level="8.4.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis"><i class="fa fa-check"></i><b>8.4.1</b> Adaptive Metropolis</a></li>
-<li class="chapter" data-level="8.4.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis-within-gibbs"><i class="fa fa-check"></i><b>8.4.2</b> Adaptive Metropolis-within-Gibbs</a></li>
-<li class="chapter" data-level="8.4.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#state-dependent-proposal-scalings"><i class="fa fa-check"></i><b>8.4.3</b> State-Dependent Proposal Scalings</a></li>
-<li class="chapter" data-level="8.4.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#limit-theorem"><i class="fa fa-check"></i><b>8.4.4</b> Limit Theorem</a></li>
-</ul></li>
-<li class="chapter" data-level="8.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#faq"><i class="fa fa-check"></i><b>8.5</b> FAQ</a></li>
-</ul></li>
+<li class="chapter" data-level="11" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>11</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -229,12 +245,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="statistician-tool-box" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Statistician Tool Box</h1>
+<h1><span class="header-section-number">Chapter 3</span> Statistician Tool Box</h1>
 <div id="matrix" class="section level2">
-<h2><span class="header-section-number">2.1</span> Matrix algebra</h2>
+<h2><span class="header-section-number">3.1</span> Matrix algebra</h2>
 
 <div class="definition">
-<span id="def:unnamed-chunk-2" class="definition"><strong>Definition 2.1  </strong></span>定义：矩阵<span class="math inline">\(A(t)\)</span>的导数
+<span id="def:unnamed-chunk-2" class="definition"><strong>Definition 3.1  </strong></span>定义：矩阵<span class="math inline">\(A(t)\)</span>的导数
 如果矩阵<span class="math inline">\(A(t)=\left(a_{i j}(t)\right)_{m \times n}\)</span> 的每一个元素<span class="math inline">\(a_{ij}(t)\)</span>是变量t的可微函数，则称A(t)可微，其导数（微商）定义为
 <span class="math display">\[
 A^{\prime}(t)=\frac{\mathrm{d}}{\mathrm{d} t} A(t)=\left(\frac{\mathrm{d}}{\mathrm{d} t} a_{i j}(t)\right)_{m \times n}
@@ -243,7 +259,7 @@ A^{\prime}(t)=\frac{\mathrm{d}}{\mathrm{d} t} A(t)=\left(\frac{\mathrm{d}}{\math
 
 
 <div class="definition">
-<p><span id="def:unnamed-chunk-3" class="definition"><strong>Definition 2.2  </strong></span>定义：矩阵对矩阵的导数
+<p><span id="def:unnamed-chunk-3" class="definition"><strong>Definition 3.2  </strong></span>定义：矩阵对矩阵的导数
 设 <span class="math inline">\(\boldsymbol{X}=\left(\xi_{i j}\right)_{m \times n}\)</span>, <span class="math inline">\(mn\)</span> 元函数 <span class="math inline">\(f(\boldsymbol{X})=f\left(\xi_{11}, \xi_{12}\cdots, \xi_{1 n}, \xi_{21}, \cdots, \xi_{m n} )\right.\)</span>,定义<span class="math inline">\(f(X)\)</span> 对矩阵<span class="math inline">\(X\)</span>的导数为</p>
 <span class="math display">\[\begin{equation}
 \frac{\mathrm{d} f}{\mathrm{d} \boldsymbol{X}}=\left(\frac{\partial f}{\partial \xi_{i j}}\right)_{m \times n}=
@@ -283,7 +299,7 @@ A^{\prime}(t)=\frac{\mathrm{d}}{\mathrm{d} t} A(t)=\left(\frac{\mathrm{d}}{\math
 \boldsymbol{A x}+\boldsymbol{A}^{\mathrm{T}} \boldsymbol{x}=\left(\boldsymbol{A}+\boldsymbol{A}^{\mathrm{T}}\right) \boldsymbol{x}
 \]</span></p>
 <div id="block-diagonal-matrices" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> Block diagonal matrices</h3>
+<h3><span class="header-section-number">3.1.1</span> Block diagonal matrices</h3>
 <p><span class="math display">\[
 \mathbf{A}=\left[ \begin{array}{cccc}{\mathbf{A}_{1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}}\end{array}\right]
 \]</span></p>
@@ -295,8 +311,22 @@ A^{\prime}(t)=\frac{\mathrm{d}}{\mathrm{d} t} A(t)=\left(\frac{\mathrm{d}}{\math
 <p><span class="math display">\[
 \left( \begin{array}{cccc}{\mathbf{A}_{1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}}\end{array}\right)=\left( \begin{array}{cccc}{\mathbf{A}_{1}^{-1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}^{-1}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}^{-1}}\end{array}\right)
 \]</span></p>
-
 </div>
+</div>
+<div id="sumSquare" class="section level2">
+<h2><span class="header-section-number">3.2</span> 两个二次型相加</h2>
+<p>In vector formulation(Assuming <span class="math inline">\(\Sigma_1\)</span>,<span class="math inline">\(\Sigma_2\)</span> are symmetric)
+有：
+<span class="math display">\[
+\begin{array}{c}{-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{1}\right)^{T} \mathbf{\Sigma}_{1}^{-1}\left(\mathbf{x}-\mathbf{m}_{1}\right)} \\ {-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{2}\right)^{T} \mathbf{\Sigma}_{2}^{-1}\left(\mathbf{x}-\mathbf{m}_{2}\right)} \\ {=-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{c}\right)^{T} \mathbf{\Sigma}_{c}^{-1}\left(\mathbf{x}-\mathbf{m}_{c}\right)+C}\end{array}
+\]</span>
+其中：
+<span class="math display">\[
+\begin{aligned} \mathbf{\Sigma}_{c}^{-1}=&amp; \mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1} \\ \mathbf{m}_{c} &amp;=\left(\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\right)^{-1}\left(\mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \\ C &amp;=\frac{1}{2}\left(\mathbf{m}_{1}^{T} \mathbf{\Sigma}_{1}^{-1}+\mathbf{m}_{2}^{T} \mathbf{\Sigma}_{2}^{-1}\right)\left(\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\right)^{-1}\left(\mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \\ &amp;-\frac{1}{2}\left(\mathbf{m}_{1}^{T} \mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{m}_{2}^{T} \mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \end{aligned}
+\]</span></p>
+<p>而对于我需要的情况，简化<span class="math inline">\(m_1=0\)</span>,<span class="math inline">\(m_2=0\)</span></p>
+<p>那么就有，只需要<span class="math inline">\(\mathbf{\Sigma}_{c}^{-1}=\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\)</span>,同时<span class="math inline">\(m_c=0\)</span>.</p>
+
 </div>
 </div>
             </section>
@@ -304,7 +334,7 @@ A^{\prime}(t)=\frac{\mathrm{d}}{\mathrm{d} t} A(t)=\left(\frac{\mathrm{d}}{\math
           </div>
         </div>
       </div>
-<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mathematical-statistic-trick.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="longitudinal-data-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

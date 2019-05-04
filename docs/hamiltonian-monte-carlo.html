@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>References | Notes on Statistics</title>
+  <title>Chapter 10 Hamiltonian Monte Carlo | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="References | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 10 Hamiltonian Monte Carlo | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 10 Hamiltonian Monte Carlo | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="imputation.html">
-
+<link rel="prev" href="optimal-proposal-distributions-and-adaptive-mcmc.html">
+<link rel="next" href="imputation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -220,7 +220,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#discretizing-hamiltons-equations-the-leapfrog-method."><i class="fa fa-check"></i><b>10.1</b> Discretizing Hamilton’s Equations: The leapfrog method.</a><ul>
 <li class="chapter" data-level="10.1.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#modification-of-eulers-method"><i class="fa fa-check"></i><b>10.1.1</b> Modification of Euler’s Method</a></li>
 <li class="chapter" data-level="10.1.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#the-leapfrog-method"><i class="fa fa-check"></i><b>10.1.2</b> The leapfrog Method</a></li>
+<li class="chapter" data-level="10.1.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#local-and-global-error-of-discretization-methods."><i class="fa fa-check"></i><b>10.1.3</b> Local and Global Error of discretization Methods.</a></li>
 </ul></li>
+<li class="chapter" data-level="10.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#mcmc-from-hamiltonian-dynamics."><i class="fa fa-check"></i><b>10.2</b> MCMC from Hamiltonian Dynamics.</a></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>11</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -244,17 +246,129 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="hamiltonian-monte-carlo" class="section level1">
+<h1><span class="header-section-number">Chapter 10</span> Hamiltonian Monte Carlo</h1>
+<div id="properties-of-hamiltonian-dynamics" class="section level3">
+<h3><span class="header-section-number">10.0.1</span> Properties of Hamiltonian Dynamics</h3>
+<ol style="list-style-type: decimal">
+<li>Hamiltonian dynamics is <em>reversible</em>. That is, the mapping <span class="math inline">\(T_{s}\)</span> from the state at time t,<span class="math inline">\((q(t),p(t))\)</span> to the state at time <span class="math inline">\(t+s,(q(t+s),p(t+s))\)</span>, is one-to-one, so hence there exists an inverse, <span class="math inline">\(T_{-s}\)</span>.</li>
+</ol>
+<p>可以从空间能量那一块来理解，由一个最普通的Hamilton的定义<span class="math inline">\(H(q, p)=U(q)+K(p)\)</span>,中，动能部分<span class="math inline">\(K(p)=K(-p)\)</span>,而由后文的<span class="math inline">\(K(p)==p^{T} M^{-1} p / 2\)</span>,则p是速度，K(p)是动能(kinetic energy)，所以和p的方向无关。所以inverse mapping也可以通过对negating p之后再作用<span class="math inline">\(T_s\)</span>,然后再negating p。</p>
+<p>在一元的例子中，正逆变换都是逆时针转s radians。</p>
+<p>而Hamiltonian dynamics的reversibility对MCMC更新非常重要，这样使用dynamics更新的MCMC就能使稳定分布是需要的分布。最简单证明稳定性的方法就是使用Reversible。</p>
+</div>
+<div id="conservation-of-the-hamiltonian" class="section level3">
+<h3><span class="header-section-number">10.0.2</span> Conservation of the Hamiltonian</h3>
+<p>A second property of the dynamics is that it keeps the Hamiltonian invariant (i.e. conserved).</p>
+<p><span class="math display">\[
+\frac{d H}{d t}=\sum_{i=1}^{d}\left[\frac{d q_{i}}{d t} \frac{\partial H}{\partial q_{i}}+\frac{d p_{i}}{d t} \frac{\partial H}{\partial p_{i}}\right]=\sum_{i=1}^{d}\left[\frac{\partial H}{\partial p_{i}} \frac{\partial H}{\partial q_{i}}-\frac{\partial H}{\partial q_{i}} \frac{\partial H}{\partial p_{i}}\right]=0
+\]</span>
+等式成立来源于Hamilton’s equations.</p>
+<p>在一元的例子中，相当于是说旋转变换保持了Hamiltonian的值不变，是half the squared distance from the origin.</p>
+<p>在Metropolis updates中，如果用 Hamiltonian dynamics作为proposal的话，也就是HMC，接受率是1如果H能保持invariant. 后面可以看到。但是在实践中只能保持H approximately invariant, 所以我们很难达到这个目标。</p>
+</div>
+<div id="volume-preservation" class="section level3">
+<h3><span class="header-section-number">10.0.3</span> Volume preservation</h3>
+<p>Hamiltonian dynamics的第三个基础性质是在(q,p)空间内他保持volume。（Liouville’s theorem的结论）。如果我们队映射<span class="math inline">\(T_s\)</span>作用到一个在（q,p）空间的区域R上的一些点，有体积V,则R在<span class="math inline">\(T_s\)</span>的像也有体积V。
+在一维的例子中的体现就是映射只是旋转变化，明显不改变面基。当然也不改变区域的形状。后者则不总是成立。Hamiltonian dynamics 可能对区域在某个方向进行拉伸，当这个区域因为在其他方向非常集中，为了保证volume，所以进行拉伸。</p>
+<p>在MCMC中，保证volume不变的意以不导致对于任意change in volume in the acceptance probability for Metropolis updates. 改变volume不会导致Metropolis updates的接受概率变化。如果我们考虑proposed新的状态，用一些随机的，非Hamiltonian，dynamics,我们可能会需要去计算Jacobian matrix for the mapping the dynamics defines的行列式，这可能做不到。</p>
+<p>由之前的定义，divergence of the vector field have</p>
+<p><span class="math display">\[
+\sum_{i=1}^{d}\left[\frac{\partial}{\partial q_{i}} \frac{d q_{i}}{d t}+\frac{\partial}{\partial p_{i}} \frac{d p_{i}}{d t}\right]=\sum_{i=1}^{d}\left[\frac{\partial}{\partial q_{i}} \frac{\partial H}{\partial p_{i}}-\frac{\partial}{\partial p_{i}} \frac{\partial H}{\partial q_{i}}\right]=\sum_{i=1}^{d}\left[\frac{\partial^{2} H}{\partial q_{i} \partial p_{i}}-\frac{\partial^{2} H}{\partial p_{i} \partial q_{i}}\right]=0
+\]</span></p>
+<p>而有一个结论，A vector field with zero divergence can be shown to preserve volume.</p>
+<p>如果不通过divergence，可以有一个不严格的证明。从之前提到的行列式的角度进行思考。</p>
+<p>The volume preservation is equivalent to the determinant of the Jacobian matrix of <span class="math inline">\(T_s\)</span> having absolute value one, which is related to the well-known role of this determinant in regard to the effect of transformations on definite integrals and on probability density functions.</p>
+<p>Jacobian matrix of <span class="math inline">\(T_s\)</span>, <span class="math inline">\(2d\times 2d\)</span>, as a mapping of <span class="math inline">\(z=(q,p)\)</span>, will be written as <span class="math inline">\(B_s\)</span>. In general, <span class="math inline">\(B_s\)</span> will depend on the values of <span class="math inline">\(q\)</span> and <span class="math inline">\(p\)</span> before the mapping. When <span class="math inline">\(B_s\)</span> is diagonal, it is easy to see that the absolute values of its diagonal elements are the factors by which <span class="math inline">\(T_s\)</span> wtrtches or compresses a region in each dimesnions, so that the product of these factos, which is equal to the absolute value of <span class="math inline">\(det(B_s)\)</span>, is the factor by which the volume of the region changes. Detail and general prove will not be put here, but, note that if rotate the coordinate system used, <span class="math inline">\(B_s\)</span> would no longer be diagonal, but the determinant of <span class="math inline">\(B_s\)</span> is invariant to such transformations, and so would still give the gactor by which the volume changes.</p>
+<p>Consider Volume preservation for Hamiltonian dynamics in one dimension. Approximate <span class="math inline">\(T_\delta\)</span> for <span class="math inline">\(\delta\)</span> near zero as follows:</p>
+<p><span class="math display">\[
+T_{\delta}(q, p)=\left[ \begin{array}{c}{q} \\ {p}\end{array}\right]+\delta \left[ \begin{array}{l}{d q / d t} \\ {d p / d t}\end{array}\right]+\text { terms of order } \delta^{2} \text { or higher. }
+\]</span>
+Taking the time derivatives from the Hamiltonian equation, the Jacobian matrix can be written as
+<span class="math display">\[
+B_{\delta}=\left[ \begin{array}{cc}{1+\delta \frac{\partial^{2} H}{\partial q \partial p}} &amp; {\delta \frac{\partial^{2} H}{\partial p^{2}}} \\ {-\delta \frac{\partial^{2} H}{\partial q^{2}}} &amp; {1-\delta \frac{\partial^{2} H}{\partial p \partial q}}\end{array}\right]+\text { terms of order } \delta^{2} \text { or higher. }
+\]</span></p>
+<p>Then we can write the determinant of this matrix as</p>
+<p><span class="math display">\[
+\begin{aligned} \operatorname{det}\left(B_{\delta}\right) &amp;=1+\delta \frac{\partial^{2} H}{\partial q \partial p}-\delta \frac{\partial^{2} H}{\partial p \partial q}+\text { terms of order } \delta^{2} \text { or higher } \\ &amp;=1+\text { terms of order } \delta^{2} \text { or higher. } \end{aligned}
+\]</span></p>
+<p>Since <span class="math inline">\(\log (1+x) \approx x\)</span> for x near zero, <span class="math inline">\(log det (B_\delta)\)</span> is zero, except perhaps the terms of order <span class="math inline">\(\delta^2\)</span> or higher. Now consider <span class="math inline">\(log det (B_s)\)</span> for some time interval s that is not close to zero let <span class="math inline">\(\delta=s/n\)</span> (现在就close to zero了)，then可以把<span class="math inline">\(T_s\)</span>分解成作用n次<span class="math inline">\(T_\delta\)</span>, so <span class="math inline">\(det (B_s)\)</span> is the n-fold product of <span class="math inline">\(det(B_\delta)\)</span> evaluated at n points along the trajectory. Then we have</p>
+<p><span class="math display">\[
+\begin{aligned} \log \operatorname{det}\left(B_{S}\right) &amp;=\sum_{i=1}^{n} \log \operatorname{det}\left(B_{\delta}\right) \\ &amp;=\sum_{i=1}^{n}\left\{\text { terms of order } 1 / n^{2} \text { or smaller }\right\} \\ &amp;=\text { terms of order } 1 / n \text { or smaller. } \end{aligned}
+\]</span>
+所以对于不靠近0的<span class="math inline">\(B_s\)</span>, <span class="math inline">\(log det (B_s)\)</span>,也有log几乎为0当<span class="math inline">\(n\rightarrow 0\)</span>. 当然在sum过程中，<span class="math inline">\(B_\delta\)</span>的值可能会依赖于i，也就是轨迹上的点（p,q）的变化会影响<span class="math inline">\(T_s\)</span>. Assumeing that trajectories are not singular, the variation in <span class="math inline">\(B_\delta\)</span> must be bounded along any particular trajectory. （这个没懂，轨迹非退化，那么就有界然后就能通过n收敛？）
+所以就preserves volume。</p>
+<p>当高于一维的情况，Jacobian matrix有如下形式</p>
+<p><span class="math display">\[
+B_{8}=\left[ \begin{array}{c}{I+\delta\left[\frac{\partial^{2} H}{\partial q_{j} \partial p_{i}}\right]} &amp; {\delta\left[\frac{\partial^{2} H}{\partial p_{j} \partial p_{i}}\right]} \\ {-\delta\left[\frac{\partial^{2} H}{\partial q_{j} \partial q_{i}}\right]} &amp; {I-\delta\left[\frac{\partial^{2} H}{\partial p_{j} \partial q_{i}}\right]}\end{array}\right]+\text { terms of order } \delta^{2} \text { or higher. }
+\]</span>
+类似的形式，但是变成了分块矩阵。</p>
+<p>高阶的项消掉了，剩下的项处理方式和1维的时候类似。</p>
+</div>
+<div id="symplecticness-" class="section level3">
+<h3><span class="header-section-number">10.0.4</span> Symplecticness (辛？)</h3>
+<p>volume不变性是Hamiltonian dynamics being symplectic的一个结论。假设<span class="math inline">\(z=(q,p)\)</span>, 定义J是<span class="math inline">\(J=\left[ \begin{array}{cc}{0_{d \times d}} &amp; {I_{d \times d}} \\ {-I_{d \times d}} &amp; {0_{d \times d}}\end{array}\right]\)</span>, symplecticness condition is that the Jacobian matrix, <span class="math inline">\(B_s\)</span>, of the mapping <span class="math inline">\(T_s\)</span> satisfies</p>
+<p><span class="math display">\[
+B_{s}^{T} J^{-1} B_{s}=J^{-1}
+\]</span>
+This implies volume conservation, since <span class="math inline">\(det(B^T_s)det(J^{-1})det(B_s)=det(J^{-1})\)</span> 则有<span class="math inline">\(det(B_s)^2=1\)</span>. 当d&gt;1的时候，symplecticness condition is stronger than volume preservation. Hamiltonian dynamics and the symplecticness condition can be generalized to where J is any matrix for which <span class="math inline">\(J^T=-J\)</span> and <span class="math inline">\(det(j)\neq 0\)</span>.</p>
+<p>在实践中，Reversibility, preservation of volume, and symplecticness可以确实被保证，也必须被保证。</p>
+</div>
+<div id="discretizing-hamiltons-equations-the-leapfrog-method." class="section level2">
+<h2><span class="header-section-number">10.1</span> Discretizing Hamilton’s Equations: The leapfrog method.</h2>
+<p>为了在计算机中实现，Hamilton’s equations must be approximated by discretizing time, using some small stepsize,<span class="math inline">\(\epsilon\)</span>. 在0时刻开始，iteratively compute (approximately) the state at times <span class="math inline">\(\epsilon,2\epsilon,3\epsilon,etc.\)</span></p>
+<p>In discussing how to do this, assume that the Hamiltonian has the form <span class="math inline">\(H(q,p)=U(q)+K(p)\)</span>. 虽然这个方法对各种定义的动能都适用，但是为了简化操作还是假设<span class="math inline">\(K(p)=p^{T} M^{-1} p / 2\)</span>. 然后M是diagonal的，对角元是<span class="math inline">\(m_1,...,m_d\)</span>, so that
+<span class="math display">\[
+K(p)=\sum_{i=1}^{d} \frac{p_{i}^{2}}{2 m_{i}}
+\]</span>
+相当于动能是每个方向上的动能之和。</p>
+<div id="eulers-method" class="section level4">
+<h4><span class="header-section-number">10.1.0.1</span> Euler’s Method</h4>
+<p>最广为人知的逼近微分方程系统的解的方法是Euler’s method. 对于Hamilton’s equations, this method performs the following step, for each component of position and momentum, indexed by i=1,…,d:</p>
+<p><span class="math display">\[
+\begin{array}{l}{p_{i}(t+\varepsilon)=p_{i}(t)+\varepsilon \frac{d p_{i}}{d t}(t)=p_{i}(t)-\varepsilon \frac{\partial U}{\partial q_{i}}(q(t))} \\ {q_{i}(t+\varepsilon)=q_{i}(t)+\varepsilon \frac{d q_{i}}{d t}(t)=q_{i}(t)+\varepsilon \frac{p_{i}(t)}{m_{i}}}\end{array}
+\]</span>
+对于每个分量的速度和（势能？），下一时刻的等于这一时刻加上一阶导乘以步长，然后通过Hamilton’s equation就等于另外一个量的变化量。（减去的势能等于增加的动能？增加的动能等于减去的势能？）</p>
+<p>对于一般的Euler法解的轨迹并不好,轨迹叉到无穷上了，但是真实的轨道是一个圆、</p>
+</div>
+<div id="modification-of-eulers-method" class="section level3">
+<h3><span class="header-section-number">10.1.1</span> Modification of Euler’s Method</h3>
+<p><span class="math display">\[
+\begin{array}{c}{p_{i}(t+\varepsilon)=p_{i}(t)-\varepsilon \frac{\partial U}{\partial q_{i}}(q(t))} \\ {q_{i}(t+\varepsilon)=q_{i}(t)+\varepsilon \frac{p_{i}(t+\varepsilon)}{m_{i}}}\end{array}
+\]</span></p>
+<p>变化是使用<span class="math inline">\(p_i(t+\epsilon)\)</span>代替了<span class="math inline">\(p_i(t)\)</span>。也就是说使用了“目前的动量”代替了前一时刻的动量。</p>
+<p>图中显示了虽然不完美，但是这个方法更靠近了真实的轨迹。 事实上，修改后的方法确实确保了volue，这样帮助避免发散到无穷或者螺旋地回到起点，这样就让volume expand to infinity or contracting to zero.</p>
+<p>要探究modification of Euler’s method preserve volume, exactly despite the finite discretization of time, 注意这两个变换 from <span class="math inline">\((q(t), p(t))\)</span> to <span class="math inline">\(q(t),p(t+\epsilon)\)</span> 通过modification的第一个等式，然后第二个等式是从<span class="math inline">\((q(t), p(t+\varepsilon))\)</span>变换到<span class="math inline">\((q(t+\varepsilon), p(t+\varepsilon))\)</span>. 这是“shear” transformation (剪羊毛？没懂)，每次变换只变换一个值，要么<span class="math inline">\(p_i\)</span>，要么<span class="math inline">\(q_i\)</span>,这样只会变一个参数，而any shear transformation will preserve volume,因为这样变换的Jacobian只有一个元，并且值为1.</p>
+</div>
+<div id="the-leapfrog-method" class="section level3">
+<h3><span class="header-section-number">10.1.2</span> The leapfrog Method</h3>
+<p>Leapfrog method可以得到更好的结果</p>
+<p><span class="math display">\[
+\begin{aligned} p_{i}(t+\varepsilon / 2) &amp;=p_{i}(t)-(\varepsilon / 2) \frac{\partial U}{\partial q_{i}}(q(t)) \\ q_{i}(t+\varepsilon) &amp;=q_{i}(t)+\varepsilon \frac{p_{i}(t+\varepsilon / 2)}{m_{i}} \\ p_{i}(t+\varepsilon) &amp;=p_{i}(t+\varepsilon / 2)-(\varepsilon / 2) \frac{\partial U}{\partial q_{i}}(q(t+\varepsilon)) \end{aligned}
+\]</span>
+从冲量对应的变量开始半步更新，然后再重新开始做全更新。使用新的（更新了半步的）冲量变量，然后最后做剩下半步冲量变量的更新，使用新的位置变量（<span class="math inline">\(q_i(t+\epsilon)\)</span>）。一个类似的方法可以对任何的动能函数成立，只需要用<span class="math inline">\(\partial K / \partial p_{i}\)</span>替换<span class="math inline">\(p_{i} / m_{i}\)</span>.
+这个方法当然也保证了volume，因为第一个更新通过第三个更新是shear transformation，由于对称性，这也是reversible的by simply negating p again.</p>
+</div>
+<div id="local-and-global-error-of-discretization-methods." class="section level3">
+<h3><span class="header-section-number">10.1.3</span> Local and Global Error of discretization Methods.</h3>
+<p>How the error from discretizing the dynamics behaves in the limit as the stepsize, <span class="math inline">\(\epsilon\)</span>, goes to zero; Leimkuhler and Reich(2004) provide a much more detail discussion.</p>
+<p>The error goes to zero as <span class="math inline">\(\epsilon\)</span> goes to zero, so that any upper limit on the error will apply (apart from a usually unknown constant factor) to any differentiable function of state. For example, if the error for (q,p) is no more than order <span class="math inline">\(\epsilon^2\)</span>, the error for <span class="math inline">\(H(q,p)\)</span> will also be no more than order <span class="math inline">\(\epsilon^2\)</span>.</p>
+<p>The <em>local error</em> is the error after one step, that moves from time t to time <span class="math inline">\(t+\epsilon\)</span>. The global error is the error after simulating for some fixed time interval, s, which will require <span class="math inline">\(s/epsilon\)</span> steps.</p>
+<p>If the local error is order <span class="math inline">\(\epsilon^p\)</span>, the global error will be order <span class="math inline">\(\epsilon^{p-1}\)</span>. If we instead fix <span class="math inline">\(\epsilon\)</span> and consider increasing the time, s, for which the trajectory is simulated, the error can in general increase exponentially with s. Interesting. However, this is often not what happens when simulating Hamiltonian dynamics with a symplectic method, as can be seen in Figure. The Euler method and its modification above have order <span class="math inline">\(\epsilon^2\)</span> local error and order <span class="math inline">\(\epsilon\)</span> global error. Leapfrog method has order <span class="math inline">\(\epsilon^3\)</span> local error and order <span class="math inline">\(\epsilon^2\)</span> global error. As shown by Leimkuhler and Reich, this difference is a consequence of leapfrog being reversible, since any reversible method must have global error that is of even order in <span class="math inline">\(\epsilon.\)</span></p>
+</div>
+</div>
+<div id="mcmc-from-hamiltonian-dynamics." class="section level2">
+<h2><span class="header-section-number">10.2</span> MCMC from Hamiltonian Dynamics.</h2>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="imputation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="optimal-proposal-distributions-and-adaptive-mcmc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="imputation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
