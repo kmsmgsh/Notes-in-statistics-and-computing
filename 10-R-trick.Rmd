@@ -42,3 +42,41 @@ options(error=recover)
 2300%%100 
 230%%100
 ```
+
+- 一个进度条的包，这个是外跳一个进度条窗口
+
+```{r,eval=FALSE}
+library(tcltk2)
+
+u <- 1:2000
+
+plot.new()
+
+pb <- tkProgressBar("进度","已完成 %",  0, 100)
+
+for(i in u) {
+
+x<-rnorm(u)
+
+points(x,x^2,col=i)
+
+info <- sprintf("已完成 %d%%", round(i*100/length(u)))
+
+setTkProgressBar(pb, i*100/length(u), sprintf("进度 (%s)", info), info)
+
+}
+
+```
+
+
+- [进度条](https://github.com/r-lib/progress)
+我觉得这个更好用
+
+```{r,eval=FALSE}
+library(progress)
+pb <- progress_bar$new(total = 100)
+for (i in 1:100) {
+  pb$tick()
+  Sys.sleep(1 / 100)
+}
+```
