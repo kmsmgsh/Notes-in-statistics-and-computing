@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-05-08">
+<meta name="date" content="2019-05-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -211,6 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#faq"><i class="fa fa-check"></i><b>9.5</b> FAQ</a></li>
 <li class="chapter" data-level="9.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#conclusion"><i class="fa fa-check"></i><b>9.6</b> Conclusion</a></li>
+<li class="chapter" data-level="9.7" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#a-tutorial-on-adaptive-mcmc"><i class="fa fa-check"></i><b>9.7</b> A tutorial on adaptive MCMC</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html"><i class="fa fa-check"></i><b>10</b> Hamiltonian Monte Carlo</a><ul>
 <li class="chapter" data-level="10.0.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#properties-of-hamiltonian-dynamics"><i class="fa fa-check"></i><b>10.0.1</b> Properties of Hamiltonian Dynamics</a></li>
@@ -240,7 +241,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#discretization-by-splitting-handling-constraints-and-other-applications"><i class="fa fa-check"></i><b>10.4.1</b> Discretization by Splitting: Handling constraints and Other Applications</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>11</b> Imputation</a></li>
+<li class="chapter" data-level="11" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>11</b> Bayes variable selection</a><ul>
+<li class="chapter" data-level="11.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>11.1</b> Prior Specification</a></li>
+<li class="chapter" data-level="11.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>11.2</b> Summaries the posterior distribution and model averaged inference</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
+<li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
+<li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>13</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -506,7 +515,33 @@ Y_{n+1} \sim N\left(X_{n},\left[\frac{(2.38)^{2}}{d}\right] \Sigma_{n}\right)
 </div>
 <div id="conclusion" class="section level2">
 <h2><span class="header-section-number">9.6</span> Conclusion</h2>
+</div>
+<div id="a-tutorial-on-adaptive-mcmc" class="section level2">
+<h2><span class="header-section-number">9.7</span> A tutorial on adaptive MCMC</h2>
+<p><span class="citation">(Andrieu and Thoms <a href="#ref-Andrieu:2008kh">2008</a>)</span></p>
+<ul>
+<li><p>ergodic: It is guaranteed to eventually produce samples <span class="math inline">\(\{X_i\}\)</span> distributed according to <span class="math inline">\(\pi\)</span></p></li>
+<li><p>The aim of this paper is to review the theoretical underpinnings and recent methodological advances in the area of computer algorithms that aim to “optimise” such parameterised MCMC transition probabilities in order to lead to computationally efficient and reliable procedures.</p></li>
+<li><p>Such as tempering type algorithms.</p></li>
+<li><p>Discuss the choice of a criterion to optimise.</p></li>
+<li><p>Class of process called <em>Controlled Markov chains</em></p></li>
+</ul>
+<p>Controlled Markov chain Monte Carlo</p>
+<ul>
+<li><p>Sample initial values <span class="math inline">\(\theta_0,X_0\in \Theta\times X\)</span></p></li>
+<li>Iteration <span class="math inline">\(i+1\)</span> (i0), given <span class="math inline">\(\theta_i=\theta_i(\theta_0,X_0,...,X_i)\)</span> from iteration i
+<ul>
+<li>Sample <span class="math inline">\(X_{i+1}|(\theta_0,X_0,...,X_i)\sim P_{\theta_i}(X_i,\cdot)\)</span>.</li>
+<li>Compte <span class="math inline">\(\theta_{i+1}=\theta_{i+1}(\theta_0,X_0,...,X_{i+1})\)</span></li>
+</ul></li>
+</ul>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references">
+<div id="ref-Andrieu:2008kh">
+<p>Andrieu, Christophe, and Johannes Thoms. 2008. “A tutorial on adaptive MCMC.” <em>Statistics and Computing</em> 18 (4): 343–73.</p>
 </div>
 </div>
             </section>

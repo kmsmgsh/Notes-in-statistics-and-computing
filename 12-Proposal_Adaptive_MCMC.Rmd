@@ -287,7 +287,29 @@ $\sigma_x$的函数形式可以有多种方法进行选择，去得到更快的�
 
 
 
+## A tutorial on adaptive MCMC
 
+[@Andrieu:2008kh]
+
+- ergodic: It is guaranteed to eventually produce samples $\{X_i\}$ distributed according to $\pi$
+
+- The aim of this paper is to review the theoretical underpinnings and recent methodological advances in the area of computer algorithms that aim to "optimise" such parameterised MCMC transition probabilities in order to lead to computationally efficient and reliable procedures. 
+
+- Such as tempering type algorithms. 
+
+- Discuss the choice of a criterion to optimise.
+
+- Class of process called *Controlled Markov chains*
+
+
+
+Controlled Markov chain Monte Carlo
+
+- Sample initial values $\theta_0,X_0\in \Theta\times X$
+
+- Iteration $i+1$ (i\geq 0), given $\theta_i=\theta_i(\theta_0,X_0,...,X_i)$ from iteration i
+  - Sample $X_{i+1}|(\theta_0,X_0,...,X_i)\sim P_{\theta_i}(X_i,\cdot)$.
+  - Compte $\theta_{i+1}=\theta_{i+1}(\theta_0,X_0,...,X_{i+1})$
 
 
 

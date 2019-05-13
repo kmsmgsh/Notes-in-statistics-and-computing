@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>References | Notes on Statistics</title>
+  <title>Chapter 12 Advanced R | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="References | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 12 Advanced R | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 12 Advanced R | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="imputation.html">
-
+<link rel="prev" href="bayes-variable-selection.html">
+<link rel="next" href="imputation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -248,6 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
 <li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
 <li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
+<li class="chapter" data-level="12.0.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.0.3</b> Coercion</a></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>13</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -271,13 +272,53 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-
-<div id="refs" class="references">
-<div>
-<p>Andrieu, Christophe, and Johannes Thoms. 2008. “A tutorial on adaptive MCMC.” <em>Statistics and Computing</em> 18 (4): 343–73.</p>
+<div id="advanced-r" class="section level1">
+<h1><span class="header-section-number">Chapter 12</span> Advanced R</h1>
+<p>The book of Hardley Wickham
+## Fundmental</p>
+<div id="vector" class="section level3">
+<h3><span class="header-section-number">12.0.1</span> Vector</h3>
+<p>Vector: Basic structure: two flavours: atomic vectors and lists: The common properties:</p>
+<ul>
+<li>Type: typeof() 这个vector的type是啥</li>
+<li>Length, length() 这个vector有多少个元素</li>
+<li>Attributes, attributes() additional arbitrary metadata: 这是啥？额外的信息？</li>
+</ul>
+<p>所有的元素对于一个atomic vector 必须是一种类型，对比list，则每个元素可以是不同的类型。</p>
+<p>NB：is.vector()不检测一个对象是否是vector，而是仅当对象是一个除了名字以外没有attributes的vector的话，返回TRUE。用 is.atomic()||is.list(x)去检测是否一个对象确实是vector。</p>
+<div id="atomic-vectors" class="section level4">
+<h4><span class="header-section-number">12.0.1.1</span> Atomic vectors</h4>
+<p>有四类atomic vectors我将会仔细的讨论：logical, integer, double(也叫numeric), 和character. 有两类稀有的类型不会深入讨论：complex 和 raw。
+Atomic vectors经常使用c()进行创建，表示combine:</p>
+<pre class="sourceCode r"><code class="sourceCode r">db1_var=<span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">2.5</span>,<span class="fl">4.5</span>)
+<span class="co"># L表示整数，因为r默认数字的结构为numeric（double）</span>
+int_var=<span class="kw">c</span>(1L,6L,10L)
+<span class="co">#使用TRUE和FALSE(或者 T 和 F)用来创建一个逻辑vectors</span>
+log_var=<span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,T,F)
+chr_var=<span class="kw">c</span>(<span class="st">&quot;these are&quot;</span>,<span class="st">&quot;some strings&quot;</span>)</code></pre>
+<p>Atomic vector总是扁平的，甚至你用堆叠的<code>c()</code>
+Atomic vectors are always flat, even if you nect <code>c()</code>’s:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="dv">1</span>,<span class="kw">c</span>(<span class="dv">2</span>,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)))</code></pre>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#和这个一样</span>
+<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</code></pre>
+<pre><code>## [1] 1 2 3 4</code></pre>
 </div>
+</div>
+<div id="types-and-tests" class="section level3">
+<h3><span class="header-section-number">12.0.2</span> Types and tests:</h3>
+<p>给定一个vector，你能决定其类型，使用 <code>typeof()</code>,或者检查其是不是个特定的类型，使用“is” 函数：<code>is.character()</code>,<code>is.double()</code>,<code>is.logical()</code>,<code>is.integer()</code>,or, more generally, <code>is.atomic()</code>.
+注意<code>is.numeric()</code>是一般性的检查是否是“数字”的vector，并且返回<code>TRUE</code>如果是integer和double。虽然叫numeric但是不是检测double的。</p>
+</div>
+<div id="coercion" class="section level3">
+<h3><span class="header-section-number">12.0.3</span> Coercion</h3>
+<p>所有的atomic vector的元素必须是一种类型，所以如果你尝试组合不同类型的话，这些数据会被coerced 成为最复杂的那种类型，序是：logical,integer,double和character.</p>
+<p>比如说，组合一个character和一个integer可以得到一个character:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="dv">1</span>))</code></pre>
+<pre><code>##  chr [1:2] &quot;a&quot; &quot;1&quot;</code></pre>
+<p>所以这里coerced应该是强制转换的意思。一个逻辑vector强制转换成integer或者double的时候TRUE变成1，FALSE变成0.一个常用的技巧是和<code>sum()</code>以及<code>mean()</code>组合使用。</p>
+<p>类型强制转换一般自动产生，大部分数学函数会强制转换成double或者integer，大部分的逻辑操作符会强制转换为logical。如果coercion可能损失信息的时候，一般会得到一个警告信息。如果会产生confusion,可以用as系列函数<code>as.character()</code>, <code>as.double()</code>, <code>as.integer()</code>, or <code>as.logical()</code>.</p>
+
 </div>
 </div>
             </section>
@@ -285,8 +326,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="imputation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="bayes-variable-selection.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="imputation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

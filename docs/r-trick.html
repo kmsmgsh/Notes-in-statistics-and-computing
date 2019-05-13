@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-05-08">
+<meta name="date" content="2019-05-11">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -211,6 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#faq"><i class="fa fa-check"></i><b>9.5</b> FAQ</a></li>
 <li class="chapter" data-level="9.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#conclusion"><i class="fa fa-check"></i><b>9.6</b> Conclusion</a></li>
+<li class="chapter" data-level="9.7" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#a-tutorial-on-adaptive-mcmc"><i class="fa fa-check"></i><b>9.7</b> A tutorial on adaptive MCMC</a></li>
 </ul></li>
 <li class="chapter" data-level="10" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html"><i class="fa fa-check"></i><b>10</b> Hamiltonian Monte Carlo</a><ul>
 <li class="chapter" data-level="10.0.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#properties-of-hamiltonian-dynamics"><i class="fa fa-check"></i><b>10.0.1</b> Properties of Hamiltonian Dynamics</a></li>
@@ -240,7 +241,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.4.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#discretization-by-splitting-handling-constraints-and-other-applications"><i class="fa fa-check"></i><b>10.4.1</b> Discretization by Splitting: Handling constraints and Other Applications</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>11</b> Imputation</a></li>
+<li class="chapter" data-level="11" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>11</b> Bayes variable selection</a><ul>
+<li class="chapter" data-level="11.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>11.1</b> Prior Specification</a></li>
+<li class="chapter" data-level="11.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>11.2</b> Summaries the posterior distribution and model averaged inference</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
+<li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
+<li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>13</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -270,6 +279,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">options</span>(<span class="dt">scipen =</span> <span class="dv">200</span>)</code></pre>
 <p>scipen 表示在200个数字以内都不使用科学计数法</p>
+<ul>
+<li>显示位数：</li>
+</ul>
+<pre><code>options(digits=3)</code></pre>
 <ul>
 <li><p>Rmarkdown 不运行
 <code>eval=FALSE</code></p></li>

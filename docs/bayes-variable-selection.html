@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>References | Notes on Statistics</title>
+  <title>Chapter 11 Bayes variable selection | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="References | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 11 Bayes variable selection | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 11 Bayes variable selection | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -25,15 +25,15 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-05-11">
+<meta name="date" content="2019-05-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="imputation.html">
-
+<link rel="prev" href="hamiltonian-monte-carlo.html">
+<link rel="next" href="advanced-r.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -244,10 +244,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>11</b> Bayes variable selection</a><ul>
 <li class="chapter" data-level="11.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>11.1</b> Prior Specification</a></li>
 <li class="chapter" data-level="11.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>11.2</b> Summaries the posterior distribution and model averaged inference</a></li>
+<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
-<li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
-<li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
+<li class="chapter" data-level="12.1" data-path="advanced-r.html"><a href="advanced-r.html#fundmental"><i class="fa fa-check"></i><b>12.1</b> Fundmental</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.1.1</b> Vector</a></li>
+<li class="chapter" data-level="12.1.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.1.2</b> Types and tests:</a></li>
+<li class="chapter" data-level="12.1.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.1.3</b> Coercion</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>13</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -271,13 +275,93 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
-
-<div id="refs" class="references">
-<div>
-<p>Andrieu, Christophe, and Johannes Thoms. 2008. “A tutorial on adaptive MCMC.” <em>Statistics and Computing</em> 18 (4): 343–73.</p>
+<div id="bayes-variable-selection" class="section level1">
+<h1><span class="header-section-number">Chapter 11</span> Bayes variable selection</h1>
+<p>The model uncertainty problem with the <span class="math inline">\(2^p\)</span> competing models:</p>
+<p><span class="math display">\[
+M_{\gamma} : \boldsymbol{y}=\alpha \mathbf{1}_{n}+\boldsymbol{X}_{\gamma} \boldsymbol{\beta}_{\gamma}+\boldsymbol{\varepsilon}
+\]</span></p>
+<p>The Null model:</p>
+<p><span class="math display">\[
+M_{0} : y=\alpha 1_{n}+\varepsilon
+\]</span></p>
+<p>Assuming that one of the models in <span class="math inline">\(\mathcal M\)</span> is the true model, the posterior probability of any model is
+<span class="math display">\[
+\operatorname{Pr}\left(M_{\gamma^{*}} | \boldsymbol{y}\right)=\frac{m_{\gamma *}(\boldsymbol{y}) \operatorname{Pr}\left(M_{\gamma^{*}}\right)}{\sum_{\gamma} m_{\gamma}(\boldsymbol{y}) \operatorname{Pr}\left(M_{\gamma}\right)}
+\]</span>
+where <span class="math inline">\(Pr(M_\gamma)\)</span> is the prior probability of <span class="math inline">\(M_\gamma\)</span> and <span class="math inline">\(m_\gamma\)</span> is the integrated likelihood with respect to the prior <span class="math inline">\(\pi_\gamma\)</span>:
+<span class="math display">\[
+m_{\gamma}(\boldsymbol{y})=\int f_{\gamma}\left(\boldsymbol{y} | \boldsymbol{\beta}_{\gamma}, \alpha, \sigma\right) \pi_{\gamma}\left(\boldsymbol{\beta}_{\gamma}, \alpha, \sigma^{2}\right) d \boldsymbol{\beta}_{\gamma} d \alpha d \sigma^{2}
+\]</span>
+也就是把所有不确定因素积掉以后，y的分布函数,also called the (prior) marginal likelihood.</p>
+<p>For <span class="math inline">\(\gamma=0\)</span> this integrated lkelihood becomes:</p>
+<p><span class="math display">\[
+m_{0}(\boldsymbol{y})=\int f_{0}(\boldsymbol{y} | \alpha, \sigma) \pi_{0}\left(\alpha, \sigma^{2}\right) d \alpha d \sigma^{2}
+\]</span></p>
+<p>可以用Bayes factor替换 integrated likelihood function:</p>
+<p><span class="math display">\[
+\operatorname{Pr}\left(M_{\gamma^{*}} | \boldsymbol{y}\right)=\frac{B_{\gamma^{*}}(\boldsymbol{y}) \operatorname{Pr}\left(M_{\gamma^{*}}\right)}{\sum_{\gamma} B_{\gamma}(\boldsymbol{y}) \operatorname{Pr}\left(M_{\gamma}\right)}
+\]</span></p>
+<p>As stated in the introduction, we are mainly interested in software that implements the formal Bayesian answer which implies that we use the posterior distribution.</p>
+<p>Due to the following three aspects</p>
+<ul>
+<li><p>The priors that the package accomodates, that is, <span class="math inline">\(\pi_{\gamma}\left(\boldsymbol{\beta}_{\gamma}, \alpha, \sigma^{2}\right)\)</span> and <span class="math inline">\(Pr(M_\gamma)\)</span></p></li>
+<li><p>the tools provided to summarize the posterior distribution and obtain model averaged inference</p></li>
+<li><p>the numerical methods implemented to compute the posterior distribution</p></li>
+</ul>
+<div id="prior-specification" class="section level2">
+<h2><span class="header-section-number">11.1</span> Prior Specification</h2>
+<p>The two inputs that are needed to obtain the posterior distribution are <span class="math inline">\(\pi_\gamma\)</span> and <span class="math inline">\(Pr(M_r)\)</span> the <span class="math inline">\(2^p\)</span> prior distributions for the parameters within each model and the prior distribution over the model space, respectively.</p>
+<p>不失一般性，先验分布<span class="math inline">\(\pi_\gamma\)</span> 可以写成
+<span class="math display">\[
+\pi_{\gamma}\left(\boldsymbol{\beta}_{\gamma}, \alpha, \sigma^{2}\right)=\pi_{\gamma}\left(\boldsymbol{\beta}_{\gamma} | \alpha, \sigma^{2}\right) \pi_{\gamma}\left(\alpha, \sigma^{2}\right)
+\]</span>
+，也就是coefficient，intercept，和variance的先验，
+基于最方便的方法，基础Jeffreys’ prior is used for the parameters that are common to all models:</p>
+<p><span class="math display">\[
+\pi_{\gamma}\left(\alpha, \sigma^{2}\right)=\sigma^{-2}
+\]</span>
+对于<span class="math inline">\(\beta\)</span>,则要么使用正态，要么使用mixture正态，中心点在0. (“by reasons of similarity”,Jeffreys,1961) and scaled by <span class="math inline">\(\sigma^{2}\left(\boldsymbol{X}_{\gamma}^{t} \boldsymbol{X}_{\gamma}\right)^{-1}\)</span>, “a matrix suggested by the form of the information matrix.” times a factor g, normally called a “g-prior”. 目前的研究表明这样的方便的prior拥有一系列的最优的性质可以扩展到对超参数g做特殊的先验。 Among these properties are invariance under affine transformations of the covariates, several types of predictive matching and consistency ( Bayarri et al., 2002).</p>
+<p>The specification of g has inspired many interesting studies in the literature. Of these, we have collected the most popular one in Table1.</p>
+<p>Relatedd with the conventional priors, which inspired by asymptotically reproducing the popular Bayesian Information Criterion (Schwarz,1978). Raftery proposes using the same covariance matrix as the Unit Information Prior, but with mean the maximum likelihood estimator <span class="math inline">\(\hat\beta_\gamma\)</span> (instead of the zero mean of the conventional prior).</p>
+<p>Other priors specifically used in model uncertainty problems are the <em>spike and slab priors.</em>
+Assume that the components of <span class="math inline">\(\beta\)</span> are independent, each having a mixture of two distributions: one highly concentrated on zero (the spike) and the other one quite disperse (the slab). There are two different developments of this idea in the literature.</p>
+<p>There are two different developments of this idea. Original version is Mitchell and Beauchamp (1988), the spike is a degenerate distribution at zero so this fits with what we have called the formal approach.</p>
+<p>Another proposal by George and McCulloch (1993) which the spike is a continuous distribution with a small variance also received a lot of attention, perhaps for computational advantages.</p>
+<p>模型空间的prior,<span class="math inline">\(\mathcal M\)</span>, 一个非常受欢迎的起点是</p>
+<p><span class="math display">\[
+Pr(M_\gamma|\theta)=\theta^{p_\gamma}(1-\theta)^{p-p_\gamma}
+\]</span>
+where <span class="math inline">\(p_\gamma\)</span> is the number of covariates in <span class="math inline">\(M_\gamma\)</span> and the hyperparameter <span class="math inline">\(\theta\in(0,1)\)</span> has the interpretation of the common probability that a given variable is included (independently of all others).</p>
+<p>Among the most popular default choice for <span class="math inline">\(\theta\)</span> are</p>
+<ul>
+<li><p>Fixed <span class="math inline">\(\theta=1/2\)</span>, which assign equal prior probability to each model i.e. <span class="math inline">\(\operatorname{Pr}\left(M_{\gamma}\right)=1 / 2^{p}\)</span></p></li>
+<li><p>Random <span class="math inline">\(\theta \sim \operatorname{Unif}(0,1)\)</span>, giving euqal probability to each possible number of covariates or model size.</p></li>
+</ul>
+<p>一般来说，固定的<span class="math inline">\(\theta\)</span>会在多样性上表现非常差，在测试中，伪造的解释变量经常在结果中出现，然后lead to 更有信息的先验。这套个情况可以用随机的<span class="math inline">\(\theta\)</span>进行避免，第二个proposal 见Scott and Berger (2010.) Lay and Steel(2009) 考虑使用<span class="math inline">\(\theta\sim Beta(1,b)\)</span> 可以导出binomial-beta 先验 for the number of covariates in the model or the model size,W:
+<span class="math display">\[
+\operatorname{Pr}(W=w | b) \propto \left( \begin{array}{c}{p} \\ {w}\end{array}\right) \Gamma(1+w) \Gamma(b+p-w), w=0,1, \ldots, p
+\]</span>
+注意<span class="math inline">\(b=1\)</span> 时退化到uniform prior on <span class="math inline">\(\theta\)</span> and also on <span class="math inline">\(W\)</span>. Ley and Steel (2009), this setting is useful to incorporate prior information about the mean model size, say <span class="math inline">\(w^*\)</span>. This would translate into <span class="math inline">\(b=(p-w^*)/w^*\)</span>.</p>
 </div>
+<div id="summaries-the-posterior-distribution-and-model-averaged-inference" class="section level2">
+<h2><span class="header-section-number">11.2</span> Summaries the posterior distribution and model averaged inference</h2>
+<p>The simplest summary of the posterior model distribution is its mode</p>
+<p><span class="math display">\[
+\underset{\gamma}{\arg \max } \operatorname{Pr}\left(M_{\gamma} | \boldsymbol{y}\right)
+\]</span></p>
+<p>This model is the model most supported by the information (data and prior)</p>
+<p>This is normally called <em>HPM</em>(jighest posterior model) or MAP (maximum a posteriori) model.</p>
+<p>When p is moderate to large, posterior inclusion probabilities (PIP) are very useful.</p>
+<p><span class="math display">\[
+\operatorname{Pr}\left(\gamma_{i}=1 | \boldsymbol{y}\right)=\sum_{x_{i} \in M_{\gamma}} \operatorname{Pr}\left(M_{\gamma} | \boldsymbol{y}\right)
+\]</span>
+这个可以理解成每个变量解释response的重要性。</p>
+<p>这个概率也可以用于定义另外一个summary，叫median probability model(MPM) which is the model containing the covariates with inclusion probability larger than 0.5. This model in some case is optimal for prediction.</p>
+</div>
+<div id="numerical-methods" class="section level2">
+<h2><span class="header-section-number">11.3</span> Numerical Methods</h2>
+
 </div>
 </div>
             </section>
@@ -285,8 +369,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="imputation.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="hamiltonian-monte-carlo.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="advanced-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

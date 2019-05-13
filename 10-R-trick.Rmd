@@ -8,6 +8,11 @@ options(scipen = 200)
 ```
 scipen 表示在200个数字以内都不使用科学计数法
 
+
+- 显示位数：
+```
+options(digits=3)
+```
 - Rmarkdown 不运行
 ``` eval=FALSE ```
 

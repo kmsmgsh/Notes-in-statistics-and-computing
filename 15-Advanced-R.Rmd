@@ -1,0 +1,72 @@
+# Advanced R
+The book of Hardley Wickham
+## Fundmental
+
+### Vector
+
+Vector: Basic structure: two flavours: atomic vectors and lists: The common properties:
+
+- Type: typeof() 这个vector的type是啥
+- Length, length() 这个vector有多少个元素
+- Attributes, attributes() additional arbitrary metadata: 这是啥？额外的信息？
+
+所有的元素对于一个atomic vector 必须是一种类型，对比list，则每个元素可以是不同的类型。
+
+NB：is.vector()不检测一个对象是否是vector，而是仅当对象是一个除了名字以外没有attributes的vector的话，返回TRUE。用 is.atomic()||is.list(x)去检测是否一个对象确实是vector。
+
+#### Atomic vectors
+
+有四类atomic vectors我将会仔细的讨论：logical, integer, double(也叫numeric), 和character. 有两类稀有的类型不会深入讨论：complex 和 raw。
+Atomic vectors经常使用c()进行创建，表示combine:
+
+```{r,eval=FALSE}
+db1_var=c(1,2.5,4.5)
+# L表示整数，因为r默认数字的结构为numeric（double）
+int_var=c(1L,6L,10L)
+#使用TRUE和FALSE(或者 T 和 F)用来创建一个逻辑vectors
+log_var=c(TRUE,FALSE,T,F)
+chr_var=c("these are","some strings")
+```
+
+Atomic vector总是扁平的，甚至你用堆叠的`c()`
+Atomic vectors are always flat, even if you nect `c()`'s:
+
+```{r}
+c(1,c(2,c(3,4)))
+#和这个一样
+c(1,2,3,4)
+```
+
+### Types and tests:
+
+给定一个vector，你能决定其类型，使用 `typeof()`,或者检查其是不是个特定的类型，使用"is" 函数：`is.character()`,`is.double()`,`is.logical()`,`is.integer()`,or, more generally, `is.atomic()`.
+注意`is.numeric()`是一般性的检查是否是“数字”的vector，并且返回`TRUE`如果是integer和double。虽然叫numeric但是不是检测double的。
+
+### Coercion
+所有的atomic vector的元素必须是一种类型，所以如果你尝试组合不同类型的话，这些数据会被coerced 成为最复杂的那种类型，序是：logical,integer,double和character.
+
+比如说，组合一个character和一个integer可以得到一个character:
+
+```{R}
+str(c("a",1))
+```
+
+所以这里coerced应该是强制转换的意思。一个逻辑vector强制转换成integer或者double的时候TRUE变成1，FALSE变成0.一个常用的技巧是和`sum()`以及`mean()`组合使用。
+
+类型强制转换一般自动产生，大部分数学函数会强制转换成double或者integer，大部分的逻辑操作符会强制转换为logical。如果coercion可能损失信息的时候，一般会得到一个警告信息。如果会产生confusion,可以用as系列函数`as.character()`, `as.double()`, `as.integer()`, or `as.logical()`.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
