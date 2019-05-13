@@ -85,3 +85,12 @@ for (i in 1:100) {
   Sys.sleep(1 / 100)
 }
 ```
+
+
+一个比较完整应用:
+```
+ pb <- progress::progress_bar$new(
+    format = "MCMC running [:bar] :percent in :elapsed eta: :eta",
+    total = iter, clear = FALSE)
+
+```
