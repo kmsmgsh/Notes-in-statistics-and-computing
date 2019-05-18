@@ -1,6 +1,6 @@
 # Mathematical statistic Trick
 
-## Normal distribution as exponential family
+## Normal distribution as exponential family {#NormalForm}
 
 Theorem: If the density function with the form:
 $$

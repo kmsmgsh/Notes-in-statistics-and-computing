@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-05-11">
+<meta name="date" content="2019-05-16">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -34,13 +34,13 @@
   
 <link rel="prev" href="reversible-jump-mcmc.html">
 <link rel="next" href="hamiltonian-monte-carlo.html">
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<script src="libs/jquery/jquery.min.js"></script>
+<link href="libs/gitbook/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook/css/plugin-fontsettings.css" rel="stylesheet" />
 
 
 
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="e69d82e4b883e69d82e585ab.html"><a href="e69d82e4b883e69d82e585ab.html"><i class="fa fa-check"></i>杂七杂八</a></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html"><i class="fa fa-check"></i><b>2</b> Mathematical statistic Trick</a><ul>
-<li class="chapter" data-level="2.1" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#normal-distribution-as-exponential-family"><i class="fa fa-check"></i><b>2.1</b> Normal distribution as exponential family</a></li>
+<li class="chapter" data-level="2.1" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#NormalForm"><i class="fa fa-check"></i><b>2.1</b> Normal distribution as exponential family</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>3</b> Statistician Tool Box</a><ul>
 <li class="chapter" data-level="3.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>3.1</b> Matrix algebra</a><ul>
@@ -163,6 +163,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>6.2</b> The Gibbs Update</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="basicmcmc.html"><a href="basicmcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>6.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
 <li class="chapter" data-level="6.2.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>6.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
+<li class="chapter" data-level="6.2.3" data-path="basicmcmc.html"><a href="basicmcmc.html#gibbs-full-conditional-distibution"><i class="fa fa-check"></i><b>6.2.3</b> Gibbs Full conditional distibution</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="basicmcmc.html"><a href="basicmcmc.html#combining-updates"><i class="fa fa-check"></i><b>6.3</b> Combining Updates</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="basicmcmc.html"><a href="basicmcmc.html#composition"><i class="fa fa-check"></i><b>6.3.1</b> Composition</a></li>
@@ -244,10 +245,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>11</b> Bayes variable selection</a><ul>
 <li class="chapter" data-level="11.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>11.1</b> Prior Specification</a></li>
 <li class="chapter" data-level="11.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>11.2</b> Summaries the posterior distribution and model averaged inference</a></li>
+<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
-<li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
-<li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
+<li class="chapter" data-level="12.1" data-path="advanced-r.html"><a href="advanced-r.html#fundmental"><i class="fa fa-check"></i><b>12.1</b> Fundmental</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.1.1</b> Vector</a></li>
+<li class="chapter" data-level="12.1.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.1.2</b> Types and tests:</a></li>
+<li class="chapter" data-level="12.1.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.1.3</b> Coercion</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>13</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -356,6 +361,10 @@ Z_{i} \sim N\left(\frac{\sigma^{2}}{2} \nabla \log \pi\left(X_{n}\right), \sigma
 Here the extra term <span class="math inline">\(\frac{\sigma^2}{2}\nabla \log \pi (X_n)\)</span>, corresponding to the discrete-time approximation to the continuous-time Langevin diffusion for <span class="math inline">\(\pi\)</span>, is an attempt to move in the direction in which the (smooth) target density <span class="math inline">\(\pi\)</span> is increasing.</p>
 <p>In this case, under some speed and scale, <span class="math inline">\(A\left(\ell_{\mathrm{opt}}\right)=0.574\)</span> (as opposed to 0.234).</p>
 <p>This proves that the optimal proposal scaling <span class="math inline">\(\sigma\)</span> and the acceptance rate are both significantly larger for MALA than for RWM, indicating that MALA an improved algorithm with faster convergence. The catch, of course, is that the gradient of <span class="math inline">\(\pi\)</span> must be computed at each new state reached, which could be difficult and/or time-consuming. Thus, TWM is much more popular than MALA in practice.</p>
+<p>这个Langevin diffusion有点意思，感觉很奇怪。
+<span class="math inline">\(X_t\)</span>是一个随机过程，因为是一个Markov chain,作为，所以<span class="math inline">\(\dot{X}=\nabla \log \pi(X)+\sqrt{2} \dot{W}\)</span>,而 也就是用<span class="math inline">\(\dot{X}=\nabla \log \pi(X)+\sqrt{2} \dot{W}\)</span> 进行考虑。
+从随机微分方程角度，因为这个东西确实是一个随机过程，所以可以用那套定义来做。其中有个langevin equation就是这个，所以大概可能也许描述如下：</p>
+<p>如果我们有一个随机过程<span class="math inline">\(X(t)\)</span>，其平稳分布是<span class="math inline">\(\pi(\cdot)\)</span>,那这个平稳分布的langevin diffusion就应该是 <span class="math inline">\(\dot{X}=\nabla \log \pi(X)+\sqrt{2} \dot{W}\)</span>,而我们用MH算法构造的Markov Chain应该和这个随机过程<span class="math inline">\(X(t)\)</span>尽量靠近，那么在<span class="math inline">\(X_t\)</span>往其梯度方向移动就很靠近。</p>
 </div>
 <div id="numerical-examples" class="section level3">
 <h3><span class="header-section-number">9.2.5</span> Numerical Examples</h3>
@@ -553,13 +562,13 @@ Y_{n+1} \sim N\left(X_{n},\left[\frac{(2.38)^{2}}{d}\right] \Sigma_{n}\right)
 <a href="hamiltonian-monte-carlo.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook/js/app.min.js"></script>
+<script src="libs/gitbook/js/lunr.js"></script>
+<script src="libs/gitbook/js/plugin-search.js"></script>
+<script src="libs/gitbook/js/plugin-sharing.js"></script>
+<script src="libs/gitbook/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook/js/jquery.highlight.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({

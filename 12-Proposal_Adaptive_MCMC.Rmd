@@ -101,6 +101,15 @@ In this case, under some speed and scale, $A\left(\ell_{\mathrm{opt}}\right)=0.5
 
 This proves that the optimal proposal scaling $\sigma$ and the acceptance rate are both significantly larger for MALA than for RWM, indicating that MALA an improved algorithm with faster convergence. The catch, of course, is that the gradient of $\pi$ must be computed at each new state reached, which could be difficult and/or time-consuming. Thus, TWM is much more popular than MALA in practice.
 
+这个Langevin diffusion有点意思，感觉很奇怪。
+$X_t$是一个随机过程，因为是一个Markov chain,作为，所以$\dot{X}=\nabla \log \pi(X)+\sqrt{2} \dot{W}$,而 也就是用$\dot{X}=\nabla \log \pi(X)+\sqrt{2} \dot{W}$ 进行考虑。
+从随机微分方程角度，因为这个东西确实是一个随机过程，所以可以用那套定义来做。其中有个langevin equation就是这个，所以大概可能也许描述如下：
+
+如果我们有一个随机过程$X(t)$，其平稳分布是$\pi(\cdot)$,那这个平稳分布的langevin diffusion就应该是 $\dot{X}=\nabla \log \pi(X)+\sqrt{2} \dot{W}$,而我们用MH算法构造的Markov Chain应该和这个随机过程$X(t)$尽量靠近，那么在$X_t$往其梯度方向移动就很靠近。
+
+
+
+
 
 ### Numerical Examples
 

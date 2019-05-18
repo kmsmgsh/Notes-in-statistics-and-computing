@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-05-11">
+<meta name="date" content="2019-05-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="e69d82e4b883e69d82e585ab.html"><a href="e69d82e4b883e69d82e585ab.html"><i class="fa fa-check"></i>杂七杂八</a></li>
 <li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html"><i class="fa fa-check"></i><b>2</b> Mathematical statistic Trick</a><ul>
-<li class="chapter" data-level="2.1" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#normal-distribution-as-exponential-family"><i class="fa fa-check"></i><b>2.1</b> Normal distribution as exponential family</a></li>
+<li class="chapter" data-level="2.1" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#NormalForm"><i class="fa fa-check"></i><b>2.1</b> Normal distribution as exponential family</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>3</b> Statistician Tool Box</a><ul>
 <li class="chapter" data-level="3.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>3.1</b> Matrix algebra</a><ul>
@@ -163,6 +163,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>6.2</b> The Gibbs Update</a><ul>
 <li class="chapter" data-level="6.2.1" data-path="basicmcmc.html"><a href="basicmcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>6.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
 <li class="chapter" data-level="6.2.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>6.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
+<li class="chapter" data-level="6.2.3" data-path="basicmcmc.html"><a href="basicmcmc.html#gibbs-full-conditional-distibution"><i class="fa fa-check"></i><b>6.2.3</b> Gibbs Full conditional distibution</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="basicmcmc.html"><a href="basicmcmc.html#combining-updates"><i class="fa fa-check"></i><b>6.3</b> Combining Updates</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="basicmcmc.html"><a href="basicmcmc.html#composition"><i class="fa fa-check"></i><b>6.3.1</b> Composition</a></li>
@@ -244,10 +245,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>11</b> Bayes variable selection</a><ul>
 <li class="chapter" data-level="11.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>11.1</b> Prior Specification</a></li>
 <li class="chapter" data-level="11.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>11.2</b> Summaries the posterior distribution and model averaged inference</a></li>
+<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
-<li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
-<li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
+<li class="chapter" data-level="12.1" data-path="advanced-r.html"><a href="advanced-r.html#fundmental"><i class="fa fa-check"></i><b>12.1</b> Fundmental</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.1.1</b> Vector</a></li>
+<li class="chapter" data-level="12.1.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.1.2</b> Types and tests:</a></li>
+<li class="chapter" data-level="12.1.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.1.3</b> Coercion</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>13</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -375,6 +380,46 @@ r(x, y)=\frac{h\left(u^{*}, v\right) q\left(u^{*}, v, u\right)}{h(u, v) q\left(u
 <p><span class="math display">\[
 r(x, y)=\frac{h\left(u^{*}, v\right) q(u, v)}{h(u, v) q\left(v, u^{*}\right)}=\frac{g(v) q\left(v, u^{*}\right) q(u, v)}{g(v) q(v, u) q\left(v, u^{*}\right)}=1
 \]</span></p>
+</div>
+<div id="gibbs-full-conditional-distibution" class="section level3">
+<h3><span class="header-section-number">6.2.3</span> Gibbs Full conditional distibution</h3>
+<p>为了抽Gibbs，所以我们必须得搞到Full conditional distribution. 通常，我们都是把posterior写出来，然后用和每个系数相关的部分挑出来，看看能不能满足什么分布。而一个很自然的问题就是，为什么要那么做？这么做的理论依据是什么。<a href="http://personal.psu.edu/drh20/515/hw/MCMCexample.pdf">这篇课件</a> 给了一个相对详细的说明，简单来说就是，道理还是用条件概率公式<span class="math inline">\(\frac{f(\theta_1,\theta_2,y)}{f(\theta_1,y)}=f(\theta_1|\theta_2,y)\)</span>.但是呢，因为对normalizing constant不感兴趣，所以直接捡分母那块就搞定。</p>
+<p>例子如下：</p>
+<p><span class="math display">\[
+\begin{aligned} Y_{1}, \ldots, Y_{n} &amp; \stackrel{\mathrm{iid}}{\sim}  N\left(\mu, \tau^{-1}\right) \\ \mu &amp; \sim  N(0,1) \\ \tau &amp; \sim  \mathrm{Gamma}(2,1) \end{aligned}
+\]</span>
+一个标准的hierachical model。</p>
+<p>Likelihood如下：
+<span class="math display">\[
+L(\mu, \tau)=\prod_{i=1}^{n} f\left(Y_{i} | \mu, \tau\right)=\prod_{i=1}^{n} \frac{\sqrt{\tau}}{\sqrt{2 \pi}} \exp \left\{-\tau\left(Y_{i}-\mu\right)^{2} / 2\right\}=(2 \pi)^{-n / 2} \tau^{n / 2} \exp \left\{-\tau \sum_{i=1}^{n}\left(Y_{i}-\mu\right)^{2} / 2\right\}
+\]</span>
+注意这里Likelihood的形式是<span class="math inline">\(f(Y_i|\mu,\tau)\)</span>，是因为这样再乘上prior就是joint distribution了。所以乘上prior得到：</p>
+<p><span class="math display">\[
+p(\mathbf{Y}, \mu, \tau)=(\text { constant }) \times \tau^{n / 2} \exp \left\{-\tau \sum_{i=1}^{n}\left(Y_{i}-\mu\right)^{2} / 2\right\} \exp \left\{-\mu^{2} / 2\right\} \tau \exp ^{-\tau}
+\]</span></p>
+<p>如果<span class="math inline">\(\mathbf{Y}\)</span>是观测值，那要得到conditional density of <span class="math inline">\((\mu,\tau)\)</span> given <span class="math inline">\(\mathbf Y\)</span>.则通过条件概率公式，需要：
+<span class="math display">\[
+p(\mu, \tau | \mathbf{Y})=\frac{p(\mathbf{Y}, \mu, \tau)}{p(\mathbf{Y})}=\frac{p(\mathbf{Y}, \mu, \tau)}{\iint p\left(\mathbf{Y}, \mu^{*}, \tau^{*}\right) d \mu^{*} d \tau^{*}}
+\]</span>
+但是呢，分母对于我们的目标来讲并不重要，因为并不涉及我们关心的变量<span class="math inline">\((\mu,\tau)\)</span>，而<span class="math inline">\(\mathbf{Y}\)</span> 又是观测（数），所以分母就是一个normalising constant,不重要，所以就能写成：
+<span class="math display">\[
+p(\mu, \tau | \mathbf{Y}) \propto p(\mathbf{Y}, \mu, \tau).
+\]</span>
+现在我们去求我们关心的变量各自的full conditionals.</p>
+<p><span class="math display">\[
+p(\mu | \tau, \mathbf{Y})=\frac{p(\mu, \tau | \mathbf{Y})}{p(\tau | \mathbf{Y})}
+\]</span>
+，同样的，分母不关心，因为不涉及<span class="math inline">\(\mu\)</span>,所以作为一个关于<span class="math inline">\(\mu\)</span>的函数
+<span class="math display">\[
+p(\mu | \tau, \mathbf{Y}) \propto p(\mathbf{Y}, \mu, \tau) \propto \exp \left\{-\tau \sum_{i=1}^{n}\left(Y_{i}-\mu\right)^{2} / 2\right\} \exp \left\{-\mu^{2} / 2\right\}
+\]</span>
+同样的，作为<span class="math inline">\(\tau\)</span>的函数，full conditional for <span class="math inline">\(\tau\)</span>是：
+<span class="math display">\[
+p(\tau | \mu, \mathbf{Y}) \propto p(\mathbf{Y}, \mu, \tau)=\tau^{n / 2} \exp \left\{-\tau \sum_{i=1}^{n}\left(Y_{i}-\mu\right)^{2} / 2\right\} \tau \exp ^{-\tau}
+\]</span>
+.
+所以可以简单的说，full condition就是joint posterior只关心所求系数的形式。但是难点在于这个形式是什么分布，见 <a href="mathematical-statistic-trick.html#NormalForm">2.1</a>
+，这个定理就能断定一类函数形式是Normal distribution。</p>
 </div>
 </div>
 <div id="combining-updates" class="section level2">

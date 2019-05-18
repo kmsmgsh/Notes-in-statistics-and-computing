@@ -119,6 +119,54 @@ $$
 r(x, y)=\frac{h\left(u^{*}, v\right) q(u, v)}{h(u, v) q\left(v, u^{*}\right)}=\frac{g(v) q\left(v, u^{*}\right) q(u, v)}{g(v) q(v, u) q\left(v, u^{*}\right)}=1
 $$
 
+
+### Gibbs Full conditional distibution  
+
+为了抽Gibbs，所以我们必须得搞到Full conditional distribution. 通常，我们都是把posterior写出来，然后用和每个系数相关的部分挑出来，看看能不能满足什么分布。而一个很自然的问题就是，为什么要那么做？这么做的理论依据是什么。[这篇课件](http://personal.psu.edu/drh20/515/hw/MCMCexample.pdf) 给了一个相对详细的说明，简单来说就是，道理还是用条件概率公式$\frac{f(\theta_1,\theta_2,y)}{f(\theta_1,y)}=f(\theta_1|\theta_2,y)$.但是呢，因为对normalizing constant不感兴趣，所以直接捡分母那块就搞定。
+
+例子如下：
+
+$$
+\begin{aligned} Y_{1}, \ldots, Y_{n} & \stackrel{\mathrm{iid}}{\sim}  N\left(\mu, \tau^{-1}\right) \\ \mu & \sim  N(0,1) \\ \tau & \sim  \mathrm{Gamma}(2,1) \end{aligned}
+$$
+一个标准的hierachical model。
+
+Likelihood如下：
+$$
+L(\mu, \tau)=\prod_{i=1}^{n} f\left(Y_{i} | \mu, \tau\right)=\prod_{i=1}^{n} \frac{\sqrt{\tau}}{\sqrt{2 \pi}} \exp \left\{-\tau\left(Y_{i}-\mu\right)^{2} / 2\right\}=(2 \pi)^{-n / 2} \tau^{n / 2} \exp \left\{-\tau \sum_{i=1}^{n}\left(Y_{i}-\mu\right)^{2} / 2\right\}
+$$
+注意这里Likelihood的形式是$f(Y_i|\mu,\tau)$，是因为这样再乘上prior就是joint distribution了。所以乘上prior得到：
+
+$$
+p(\mathbf{Y}, \mu, \tau)=(\text { constant }) \times \tau^{n / 2} \exp \left\{-\tau \sum_{i=1}^{n}\left(Y_{i}-\mu\right)^{2} / 2\right\} \exp \left\{-\mu^{2} / 2\right\} \tau \exp ^{-\tau}
+$$
+
+如果$\mathbf{Y}$是观测值，那要得到conditional density of $(\mu,\tau)$ given $\mathbf Y$.则通过条件概率公式，需要：
+$$
+p(\mu, \tau | \mathbf{Y})=\frac{p(\mathbf{Y}, \mu, \tau)}{p(\mathbf{Y})}=\frac{p(\mathbf{Y}, \mu, \tau)}{\iint p\left(\mathbf{Y}, \mu^{*}, \tau^{*}\right) d \mu^{*} d \tau^{*}}
+$$
+但是呢，分母对于我们的目标来讲并不重要，因为并不涉及我们关心的变量$(\mu,\tau)$，而$\mathbf{Y}$ 又是观测（数），所以分母就是一个normalising constant,不重要，所以就能写成：
+$$
+p(\mu, \tau | \mathbf{Y}) \propto p(\mathbf{Y}, \mu, \tau).
+$$
+现在我们去求我们关心的变量各自的full conditionals.
+
+$$
+p(\mu | \tau, \mathbf{Y})=\frac{p(\mu, \tau | \mathbf{Y})}{p(\tau | \mathbf{Y})}
+$$
+，同样的，分母不关心，因为不涉及$\mu$,所以作为一个关于$\mu$的函数
+$$
+p(\mu | \tau, \mathbf{Y}) \propto p(\mathbf{Y}, \mu, \tau) \propto \exp \left\{-\tau \sum_{i=1}^{n}\left(Y_{i}-\mu\right)^{2} / 2\right\} \exp \left\{-\mu^{2} / 2\right\}
+$$
+同样的，作为$\tau$的函数，full conditional for $\tau$是：
+$$
+p(\tau | \mu, \mathbf{Y}) \propto p(\mathbf{Y}, \mu, \tau)=\tau^{n / 2} \exp \left\{-\tau \sum_{i=1}^{n}\left(Y_{i}-\mu\right)^{2} / 2\right\} \tau \exp ^{-\tau}
+$$
+.
+所以可以简单的说，full condition就是joint posterior只关心所求系数的形式。但是难点在于这个形式是什么分布，见 \@ref(NormalForm)
+，这个定理就能断定一类函数形式是Normal distribution。
+
+
 ## Combining Updates
 
 ### Composition
