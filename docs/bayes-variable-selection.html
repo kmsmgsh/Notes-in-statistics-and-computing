@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-05-14">
+<meta name="date" content="2019-06-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -245,14 +245,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>11</b> Bayes variable selection</a><ul>
 <li class="chapter" data-level="11.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>11.1</b> Prior Specification</a></li>
 <li class="chapter" data-level="11.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>11.2</b> Summaries the posterior distribution and model averaged inference</a></li>
-<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a></li>
+<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#empirical-bayes-by-marginal-maximum-likelihood"><i class="fa fa-check"></i><b>11.3.1</b> Empirical Bayes by Marginal Maximum Likelihood</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
 <li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
 <li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
 <li class="chapter" data-level="12.0.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.0.3</b> Coercion</a></li>
+<li class="chapter" data-level="12.1" data-path="advanced-r.html"><a href="advanced-r.html#data.frame"><i class="fa fa-check"></i><b>12.1</b> Data.frame</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="advanced-r.html"><a href="advanced-r.html#ordering-integer-subsetting"><i class="fa fa-check"></i><b>12.1.1</b> Ordering (integer subsetting)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="advanced-r.html"><a href="advanced-r.html#calling-a-function-given-a-list-of-arguments"><i class="fa fa-check"></i><b>12.1.2</b> Calling a function given a list of arguments</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>13</b> Imputation</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="numeric-derivatives.html"><a href="numeric-derivatives.html"><i class="fa fa-check"></i><b>13</b> Numeric Derivatives</a></li>
+<li class="chapter" data-level="14" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>14</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -360,7 +367,125 @@ where <span class="math inline">\(p_\gamma\)</span> is the number of covariates 
 </div>
 <div id="numerical-methods" class="section level2">
 <h2><span class="header-section-number">11.3</span> Numerical Methods</h2>
+<hr />
+<p>Bayes Lasso:</p>
+<p>目前已知问题和需要解决的问题：</p>
+<p>预计写作时间：19分钟</p>
+<p>首先，解决了一半的问题：<span class="math inline">\(\beta\)</span> 的先验问题。</p>
+<p>由<a href="%5Bhttp://www.math.chalmers.se/Stat/Grundutb/GU/MSA220/S16/bayeslasso.pdf%5D(http://www.math.chalmers.se/Stat/Grundutb/GU/MSA220/S16/bayeslasso.pdf)">Bayes Lasso的完整版notes(相对于论文)</a> 其中，Hierachical model部分，<span class="math inline">\(\beta|\tau_1^2,…,\tau^2_p\sim N_p(0_p,D_\tau)\)</span> 是成立的(根据原始式子推出来的)，但是和论文suggest的hierarchical representation of the full model:
+<span class="math display">\[
+\begin{aligned} \boldsymbol{y} | \mu, \boldsymbol{X}, \boldsymbol{\beta}, \sigma^{2} &amp; \sim N_{n}\left(\mu \mathbf{1}_{n}+\boldsymbol{X} \boldsymbol{\beta}, \sigma^{2} \boldsymbol{I}_{n}\right) \\ \boldsymbol{\beta} | \tau_{1}^{2}, \ldots, \tau_{p}^{2}, \sigma^{2} &amp; \sim N_{p}\left(\mathbf{0}_{p}, \sigma^{2} \boldsymbol{D}_{\tau}\right), \qquad \boldsymbol{D}_{\tau}=\operatorname{diag}\left(\tau_{1}^{2}, \ldots, \tau_{p}^{2}\right) \\ \tau_{1}^{2}, \ldots, \tau_{p}^{2} &amp; \sim \prod_{j=1}^{p} \frac{\lambda^{2}}{2} e^{-\lambda^{2} \tau_{j}^{2} / 2} d \tau_{j}^{2}, \quad \tau_{1}^{2}, \ldots, \tau_{p}^{2}&gt;0 \\ \sigma^{2} &amp; \sim \pi\left(\sigma^{2}\right) d \sigma^{2} \end{aligned}
+\]</span>
+有细微的差别：差了一个<span class="math inline">\(\sigma^2\)</span>. 在该notes中的描述则是，第一个形式是成立的，但是会有问题： “possibility of a non-unimodal posterior”,在Section 4 unimodal 问题里有详细描述，然后对<span class="math inline">\(\tau^2_1,…,\tau^2_p\)</span> 有其他先验的话会形成其他和Lasso有关的方法，在Section 6.</p>
+<hr />
+<blockquote>
+<p>为什么会有不含<span class="math inline">\(\sigma^2\)</span> 的形式呢？主要是因为来源于最初的方程式</p>
+</blockquote>
+<p><span class="math display">\[
+\frac{a}{2} e^{-a|z|}=\int_{0}^{\infty} \frac{1}{\sqrt{2 \pi s}} e^{-z^{2} /(2 s)} \frac{a^{2}}{2} e^{-a^{2} s / 2} d s, \quad a&gt;0
+\]</span></p>
+<p>如果把Laplace先验写成<span class="math inline">\(\pi(\boldsymbol{\beta})=\prod_{j=1}^{p} \frac{\lambda}{2} e^{-\lambda\left|\beta_{j}\right|}\)</span> 的话，那么<span class="math inline">\(a\)</span> 就是 <span class="math inline">\(\lambda\)</span> , <span class="math inline">\(\beta\)</span> 的密度很自然的与<span class="math inline">\(\sigma\)</span> 无关，是<span class="math inline">\(N(0,\tau_j^2)\)</span></p>
+<p>如果把Laplace先验写成<span class="math inline">\(\pi\left(\boldsymbol{\beta} | \sigma^{2}\right)=\prod_{j=1}^{p} \frac{\lambda}{2 \sqrt{\sigma^{2}}} e^{-\lambda\left|\beta_{j}\right| / \sqrt{\sigma^{2}}}\)</span> 的话，那么a就是<span class="math inline">\(\frac{\lambda}{\sqrt{\sigma^2}}\)</span> ，则 <span class="math inline">\(\tau_j\)</span> 的分布会带上 <span class="math inline">\(\sigma^2\)</span> , 因为，这两种情况都和Full model对不上号。。。。</p>
+<hr />
+<blockquote>
+<p>假设以上先不管，full mode成立，那么就可以写出来joint density</p>
+</blockquote>
+<p><span class="math display">\[
+\begin{array}{l}{f\left(\boldsymbol{y} | \mu, \boldsymbol{\beta}, \sigma^{2}\right) \pi\left(\sigma^{2}\right) \pi(\mu) \prod_{j=1}^{p} \pi\left(\beta_{j} | \tau_{j}^{2}, \sigma^{2}\right) \pi\left(\tau_{j}^{2}\right)=} \\ {\qquad \frac{1}{\left(2 \pi \sigma^{2}\right)^{n / 2}} e^{-\frac{1}{2 \sigma^{2}}\left(\boldsymbol{y}-\mu \mathbf{1}_{n}-\boldsymbol{X} \boldsymbol{\beta}\right)^{\top}\left(\boldsymbol{y}-\mu \mathbf{1}_{n}-\boldsymbol{X} \boldsymbol{\beta}\right)}} \\ { \times \frac{\gamma^{a}}{\Gamma(a)}\left(\sigma^{2}\right)^{-a-1} e^{-\gamma / \sigma^{2}} \prod_{j=1}^{p} \frac{1}{\left(2 \pi \sigma^{2} \tau_{j}^{2}\right)^{1 / 2}} e^{-\frac{1}{2 \sigma^{2} \tau_{j}^{2}} \beta_{j}^{2}} \frac{\lambda^{2}}{2} e^{-\lambda^{2} \tau_{j}^{2} / 2}}\end{array}
+\]</span></p>
+<p>这个很清晰，第一块是<span class="math inline">\(\boldsymbol y\)</span> 的Normal，第二块是<span class="math inline">\(\sigma^2\)</span> 的inverse-gamma，第三块是<span class="math inline">\(\beta_j\)</span> 的Normal hierachical prior with 超参数<span class="math inline">\(\tau_j\)</span> 服从$f()= e<sup>{-</sup>{2} _{j}^{2} / 2} $.</p>
+<blockquote>
+<p>19分钟写到这，没写完，再来19分钟</p>
+</blockquote>
+<p>然后就是用<span class="math inline">\(\overline y\)</span> 作为<span class="math inline">\(y\)</span> 的均值，重新写一下Normal里面关于Y和<span class="math inline">\(\mu\)</span> 的二次型如下：
+<span class="math display">\[
+\begin{aligned}\left(\boldsymbol{y}-\mu \mathbf{1}_{n}-\boldsymbol{X} \boldsymbol{\beta}\right)^{\top}\left(\boldsymbol{y}-\mu \mathbf{1}_{n}-\boldsymbol{X} \boldsymbol{\beta}\right) &amp;=\left(\overline{y} \mathbf{1}_{n}-\mu \mathbf{1}_{n}\right)^{\top}\left(\overline{y} \mathbf{1}_{n}-\mu \mathbf{1}_{n}\right)+(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})^{\top}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta}) \\ &amp;=n(\overline{y}-\boldsymbol{\mu})^{2}+(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})^{\top}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta}) \end{aligned}
+\]</span>
+所以就把关于<span class="math inline">\(\mu\)</span>的部分和关于<span class="math inline">\(y,X,\beta\)</span> 的部分分开了，可以看到，关于<span class="math inline">\(\mu\)</span>的部分还是一个二次型，配合前面的系数，可以凑成一个Normal的形式，有均值<span class="math inline">\(\overline y\)</span> 和方差<span class="math inline">\(\sigma^2/n\)</span>，然后把<span class="math inline">\(\mu\)</span>积掉，因为是正态，还分开了，所以积分就是1，相当于把这项拿走不影响其他项，得到一个新的Marginal only over <span class="math inline">\(\mu\)</span> 的joint density, which is proportional to
+<span class="math display">\[
+\frac{1}{\left(\sigma^{2}\right)^{(n-1) / 2}} e^{-\frac{1}{2 \sigma^{2}}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})^{\top}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})}\left(\sigma^{2}\right)^{-a-1} e^{-\gamma / \sigma^{2}} \prod_{j=1}^{p} \frac{1}{\left(\sigma^{2} \tau_{j}^{2}\right)^{1 / 2}} e^{-\frac{1}{2 \sigma^{2} \tau_{j}^{2}} \beta_{j}^{2}} e^{-\lambda^{2} \tau_{j}^{2} / 2}
+\]</span>
+This expression depends on <span class="math inline">\(\boldsymbol y\)</span> only through <span class="math inline">\(\tilde{\boldsymbol{y}}\)</span> . The conjugacy of the other parameters remains unaffected.</p>
+<hr />
+<blockquote>
+<p>然后就能构建Gibbs</p>
+</blockquote>
+<ul>
+<li><span class="math inline">\(\beta\)</span></li>
+</ul>
+<p><span class="math display">\[
+-\frac{1}{2 \sigma^{2}}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})^{\top}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})-\frac{1}{2 \sigma^{2}} \boldsymbol{\beta}^{\top} \boldsymbol{D}_{\tau}^{-1} \boldsymbol{\beta}=-\frac{1}{2 \sigma^{2}}\left\{\boldsymbol{\beta}^{\top}\left(\boldsymbol{X}^{\top} \boldsymbol{X}+\boldsymbol{D}_{\tau}^{-1}\right) \boldsymbol{\beta}-2 \tilde{\boldsymbol{y}}^{\top} \boldsymbol{X} \boldsymbol{\beta}+\tilde{\boldsymbol{y}}^{\top} \tilde{\boldsymbol{y}}\right\}
+\]</span></p>
+<p><span class="math inline">\(\beta\)</span> involve part is quadratic form with a linear form, which is proportional to Normal density.</p>
+<p>Letting <span class="math inline">\(\boldsymbol{A}=\boldsymbol{X}^{\top} \boldsymbol{X}+\boldsymbol{D}_{\tau}^{-1}\)</span> , Then the equation upon can be transformed to
+<span class="math display">\[
+\boldsymbol{\beta}^{\top} \boldsymbol{A} \boldsymbol{\beta}-2 \tilde{\boldsymbol{y}}^{\top} \boldsymbol{X} \boldsymbol{\beta}+\tilde{\boldsymbol{y}}^{\top} \tilde{\boldsymbol{y}}=\left(\boldsymbol{\beta}-\boldsymbol{A}^{-1} \boldsymbol{X}^{\top} \tilde{\boldsymbol{y}}\right)^{\top} \boldsymbol{A}\left(\boldsymbol{\beta}-\boldsymbol{A}^{-1} \boldsymbol{X}^{\top} \tilde{\boldsymbol{y}}\right)+\tilde{\boldsymbol{y}}^{\mathrm{T}}\left(\boldsymbol{I}_{n}-\boldsymbol{X} \boldsymbol{A}^{-1} \boldsymbol{X}^{\top}\right) \tilde{\boldsymbol{y}}
+\]</span>
+That is, <span class="math inline">\(\boldsymbol \beta\)</span> is conditionally multivariate normal with mean <span class="math inline">\(A^{-1} \boldsymbol{X}^{\top} \tilde{\boldsymbol{y}}\)</span> and variance <span class="math inline">\(\sigma^{2} \boldsymbol{A}^{-1}\)</span>.</p>
+<p>这块应该可以照常用，只要把<span class="math inline">\(\sigma^2\)</span> 那块的东西处理掉，</p>
+<ul>
+<li><span class="math inline">\(\sigma^2\)</span></li>
+</ul>
+<p>因为要建模，所以这块应该全部要换成Normal和建模的形式
+<span class="math display">\[
+\left(\sigma^{2}\right)^{-(n-1) / 2-p / 2-a-1} \exp \left\{-\frac{1}{\sigma^{2}}\left((\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})^{\mathrm{T}}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta}) / 2+\boldsymbol{\beta}^{\top} \boldsymbol{D}_{\tau}^{-1} \boldsymbol{\beta} / 2+\gamma\right)\right\}
+\]</span>
+这个是conditionally inverse gamma的形式，with shape <span class="math inline">\((n-1) / 2+p / 2+a\)</span> and scale parameter <span class="math inline">\((\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})^{\mathrm{T}}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta}) / 2+\boldsymbol{\beta}^{\top} \boldsymbol{D}_{\tau}^{-1} \boldsymbol{\beta} / 2+\gamma\)</span> .</p>
+<ul>
+<li><span class="math inline">\(\tau_j^2\)</span> for <span class="math inline">\(j=1,…,p\)</span></li>
+</ul>
+<p>Density is:
+<span class="math display">\[
+\left(\tau_{j}^{2}\right)^{-1 / 2} \exp \left\{-\frac{1}{2}\left(\frac{\beta_{j}^{2} / \sigma^{2}}{\tau_{j}^{2}}+\lambda^{2} \tau_{j}^{2}\right)\right\}
+\]</span>
+Proportional to the density of the reciprocal of an inverse Gaussian random variable.</p>
+<hr />
+<blockquote>
+<p>第四节，等等，怎么变成日常笔记了， The posterior distribution</p>
+</blockquote>
+<p>The joint posterior distribution of $$ and <span class="math inline">\(\sigma^2\)</span> is proportional to
+<span class="math display">\[
+\left(\sigma^{2}\right)^{-(n+p-1) / 2-a-1} \exp \left\{-\frac{1}{\sigma^{2}}\left((\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})^{\top}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta}) / 2+\gamma\right)-\frac{\lambda}{\sqrt{\sigma^{2}}} \sum_{j=1}^{p}\left|\beta_{j}\right|\right\}
+\]</span>
+从这里面来看，至少很像最小二乘+罚函数的形式。</p>
+<p>We may safety let <span class="math inline">\(a=0\)</span> .</p>
+<blockquote>
+<p>这句话没太懂：</p>
+</blockquote>
+<p>Assuming that the data do not admit a perfect linear fit (i.e. <span class="math inline">\(\tilde y\)</span> is not in the column space of <span class="math inline">\(\boldsymbol X\)</span> ), also let <span class="math inline">\(\gamma=0\)</span> .This corresponds to using the non-informative scale-invariant prior <span class="math inline">\(1/\sigma^2\)</span> on <span class="math inline">\(\sigma^2\)</span> .</p>
+<p><span class="math inline">\(\boldsymbol X\)</span> matrix is, of course, unitless because of its scaling.</p>
+<p>For comparison, the joint posterior distribution of $$ and <span class="math inline">\(\sigma^2\)</span> under prior (1), 也就是不涉及<span class="math inline">\(\sigma^2\)</span> 的prior，with some independent prior <span class="math inline">\(\pi(\sigma^2)\)</span> on <span class="math inline">\(\sigma^2\)</span>, is proportional to
+<span class="math display">\[
+\pi\left(\sigma^{2}\right)\left(\sigma^{2}\right)^{-(n-1) / 2} \exp \left\{-\frac{1}{2 \sigma^{2}}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})^{\mathrm{T}}(\tilde{\boldsymbol{y}}-\boldsymbol{X} \boldsymbol{\beta})-\lambda \sum_{j=1}^{p}\left|\beta_{j}\right|\right\}
+\]</span></p>
+<blockquote>
+<p>所以果然是为了合并同类项吗</p>
+</blockquote>
+<p>In this case, <span class="math inline">\(\lambda\)</span> has units that are the reciprocal of the units of the response, and any change in units will require a corresponding change in <span class="math inline">\(\lambda\)</span> to produce the equivalent Bayesian solution.</p>
+<p>这段话应该很重要，关于unit change的，类似于给<span class="math inline">\(\beta\)</span> 加了一个 rescaling ? 标记一下，这里值得重点研究一下:</p>
+<blockquote>
+<p>这个unit，和scaling究竟是什么情况？如果要挪用的话得用什么？因为毕竟没有我的模型里面没有<span class="math inline">\(\sigma^2\)</span>，能不能不管这个问题，得付出什么代价？要管的话应该用什么？</p>
+</blockquote>
+<p>然后第二个问题就是multi-modal的问题，下次来继续说。</p>
+<blockquote>
+<p>重新开始</p>
+</blockquote>
+<p>第二个模型可能会有多于一个极值点。 Taking <span class="math inline">\(p=1,n=10,X^TX=1,X^T\tilde y=5,\tilde y^Ty=26,\lambda=3\)</span>. The mode on the lower right is near the least-squares solution <span class="math inline">\(\beta=5,\sigma^2=1/8\)</span>, while the mode on the upper left is near the values <span class="math inline">\(\beta=0,\sigma^2=26/9\)</span> that would be estimated for the selected model in which <span class="math inline">\(\beta\)</span> is set to zero. The crease in the upper left mode along the line <span class="math inline">\(\beta=0\)</span> is a feature produced by the “sharp corners” of the <span class="math inline">\(L_1\)</span> penalty. Not surprisingly, the marginal density of <span class="math inline">\(\beta\)</span> is also bimodal. When <span class="math inline">\(p&gt;1\)</span>, it may be possible to have more than two modes, though we have not investigated this.</p>
+<p>所以这两个峰不是莫名其妙的两个峰，是分别是OLS的结果和，不取该<span class="math inline">\(\beta\)</span> 的结果。</p>
+<blockquote>
+<p>所以好像直接用Bayes Lasso会出问题，得改，但是设计<span class="math inline">\(\sigma^2\)</span> 感觉会变得很麻烦。。。</p>
+</blockquote>
+<p>多个峰值会导致计算和概念上的问题，这种情况下，单点的后验均值，中位数，或者最大值点是否能总结一个双峰后验的要素是有疑问的。一个更好的summary将会是分别测量每个峰值点</p>
+<blockquote>
+<p>下一步是选取<span class="math inline">\(\lambda\)</span> ，original的lasso是通过cross-validation,generalised cross-validation, and ideas based on Stein’s unbiased risk estimate. Bayesian Lasso offers some uniquely Bayesian alternatives: empirical Bayes via marginal (Type 2) maximum likelihood, and use of an appropriate hyperprior. 这是啥，不懂得看看</p>
+</blockquote>
+<div id="empirical-bayes-by-marginal-maximum-likelihood" class="section level3">
+<h3><span class="header-section-number">11.3.1</span> Empirical Bayes by Marginal Maximum Likelihood</h3>
+<blockquote>
+<p>Finish</p>
+</blockquote>
 
+</div>
 </div>
 </div>
             </section>

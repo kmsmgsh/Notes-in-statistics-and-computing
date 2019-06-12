@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-05-14">
+<meta name="date" content="2019-06-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="bayes-variable-selection.html">
-<link rel="next" href="imputation.html">
+<link rel="next" href="numeric-derivatives.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -245,14 +245,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>11</b> Bayes variable selection</a><ul>
 <li class="chapter" data-level="11.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>11.1</b> Prior Specification</a></li>
 <li class="chapter" data-level="11.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>11.2</b> Summaries the posterior distribution and model averaged inference</a></li>
-<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a></li>
+<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#empirical-bayes-by-marginal-maximum-likelihood"><i class="fa fa-check"></i><b>11.3.1</b> Empirical Bayes by Marginal Maximum Likelihood</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
 <li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
 <li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
 <li class="chapter" data-level="12.0.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.0.3</b> Coercion</a></li>
+<li class="chapter" data-level="12.1" data-path="advanced-r.html"><a href="advanced-r.html#data.frame"><i class="fa fa-check"></i><b>12.1</b> Data.frame</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="advanced-r.html"><a href="advanced-r.html#ordering-integer-subsetting"><i class="fa fa-check"></i><b>12.1.1</b> Ordering (integer subsetting)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="advanced-r.html"><a href="advanced-r.html#calling-a-function-given-a-list-of-arguments"><i class="fa fa-check"></i><b>12.1.2</b> Calling a function given a list of arguments</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>13</b> Imputation</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="numeric-derivatives.html"><a href="numeric-derivatives.html"><i class="fa fa-check"></i><b>13</b> Numeric Derivatives</a></li>
+<li class="chapter" data-level="14" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>14</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -320,7 +327,47 @@ Atomic vectors are always flat, even if you nect <code>c()</code>’s:</p>
 <pre><code>##  chr [1:2] &quot;a&quot; &quot;1&quot;</code></pre>
 <p>所以这里coerced应该是强制转换的意思。一个逻辑vector强制转换成integer或者double的时候TRUE变成1，FALSE变成0.一个常用的技巧是和<code>sum()</code>以及<code>mean()</code>组合使用。</p>
 <p>类型强制转换一般自动产生，大部分数学函数会强制转换成double或者integer，大部分的逻辑操作符会强制转换为logical。如果coercion可能损失信息的时候，一般会得到一个警告信息。如果会产生confusion,可以用as系列函数<code>as.character()</code>, <code>as.double()</code>, <code>as.integer()</code>, or <code>as.logical()</code>.</p>
+</div>
+<div id="data.frame" class="section level2">
+<h2><span class="header-section-number">12.1</span> Data.frame</h2>
+<pre><code>df=data.frame(x=1:3,y=c(&quot;a&quot;,&quot;b&quot;,&quot;c&quot;))
+str(df)</code></pre>
+<p>data.frame()’s default behaviour which turns strings into factors. Using stringAsFactors=FALSE to suppress this behaviour,</p>
+<p>Combine data frames using cbind() and rbind()
+<code>plyr::rbind.fill()</code></p>
+<div id="ordering-integer-subsetting" class="section level3">
+<h3><span class="header-section-number">12.1.1</span> Ordering (integer subsetting)</h3>
+<pre class="sourceCode r"><code class="sourceCode r">x=<span class="kw">c</span>(<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>,<span class="st">&quot;a&quot;</span>)
+x[<span class="kw">order</span>(x)]</code></pre>
+<pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df=<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">each=</span><span class="dv">2</span>),<span class="dt">y=</span><span class="dv">6</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">z=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>])
+df2=df[<span class="kw">sample</span>(<span class="kw">nrow</span>(df)),<span class="dv">3</span><span class="op">:</span><span class="dv">1</span>]
+df2[<span class="kw">order</span>(df2<span class="op">$</span>x),]</code></pre>
+<pre><code>##   z y x
+## 1 a 6 1
+## 2 b 5 1
+## 4 d 3 2
+## 3 c 4 2
+## 5 e 2 3
+## 6 f 1 3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df2[,<span class="kw">order</span>(<span class="kw">names</span>(df2))]</code></pre>
+<pre><code>##   x y z
+## 4 2 3 d
+## 1 1 6 a
+## 2 1 5 b
+## 3 2 4 c
+## 5 3 2 e
+## 6 3 1 f</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">df=<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">y=</span><span class="dv">3</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">z=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</code></pre>
+</div>
+<div id="calling-a-function-given-a-list-of-arguments" class="section level3">
+<h3><span class="header-section-number">12.1.2</span> Calling a function given a list of arguments</h3>
+<p>list of function arguments:</p>
+<pre><code>args=list(1:10, na.rm=TRUE)</code></pre>
+<p>which is equivalent to</p>
+<pre><code>mean(1:10,na.rm=TRUE)</code></pre>
 
+</div>
 </div>
 </div>
             </section>
@@ -329,7 +376,7 @@ Atomic vectors are always flat, even if you nect <code>c()</code>’s:</p>
         </div>
       </div>
 <a href="bayes-variable-selection.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="imputation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="numeric-derivatives.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 13 Imputation | Notes on Statistics</title>
+  <title>Chapter 14 Imputation | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 13 Imputation | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 14 Imputation | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 13 Imputation | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 14 Imputation | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -25,14 +25,14 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-05-14">
+<meta name="date" content="2019-06-12">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="advanced-r.html">
+<link rel="prev" href="numeric-derivatives.html">
 <link rel="next" href="references.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -245,14 +245,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>11</b> Bayes variable selection</a><ul>
 <li class="chapter" data-level="11.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>11.1</b> Prior Specification</a></li>
 <li class="chapter" data-level="11.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>11.2</b> Summaries the posterior distribution and model averaged inference</a></li>
-<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a></li>
+<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#empirical-bayes-by-marginal-maximum-likelihood"><i class="fa fa-check"></i><b>11.3.1</b> Empirical Bayes by Marginal Maximum Likelihood</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
 <li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
 <li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
 <li class="chapter" data-level="12.0.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.0.3</b> Coercion</a></li>
+<li class="chapter" data-level="12.1" data-path="advanced-r.html"><a href="advanced-r.html#data.frame"><i class="fa fa-check"></i><b>12.1</b> Data.frame</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="advanced-r.html"><a href="advanced-r.html#ordering-integer-subsetting"><i class="fa fa-check"></i><b>12.1.1</b> Ordering (integer subsetting)</a></li>
+<li class="chapter" data-level="12.1.2" data-path="advanced-r.html"><a href="advanced-r.html#calling-a-function-given-a-list-of-arguments"><i class="fa fa-check"></i><b>12.1.2</b> Calling a function given a list of arguments</a></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>13</b> Imputation</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="numeric-derivatives.html"><a href="numeric-derivatives.html"><i class="fa fa-check"></i><b>13</b> Numeric Derivatives</a></li>
+<li class="chapter" data-level="14" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>14</b> Imputation</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -275,7 +282,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="imputation" class="section level1">
-<h1><span class="header-section-number">Chapter 13</span> Imputation</h1>
+<h1><span class="header-section-number">Chapter 14</span> Imputation</h1>
 <p>处理缺失值问题。
 Multiple imputation method.</p>
 
@@ -285,7 +292,7 @@ Multiple imputation method.</p>
           </div>
         </div>
       </div>
-<a href="advanced-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="numeric-derivatives.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

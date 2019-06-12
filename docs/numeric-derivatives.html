@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 3 Statistician Tool Box | Notes on Statistics</title>
+  <title>Chapter 13 Numeric Derivatives | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 3 Statistician Tool Box | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 13 Numeric Derivatives | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Statistician Tool Box | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 13 Numeric Derivatives | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="mathematical-statistic-trick.html">
-<link rel="next" href="longitudinal-data-analysis.html">
+<link rel="prev" href="advanced-r.html">
+<link rel="next" href="imputation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -281,98 +281,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="statistician-tool-box" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Statistician Tool Box</h1>
-<div id="matrix" class="section level2">
-<h2><span class="header-section-number">3.1</span> Matrix algebra</h2>
-
-<div class="definition">
-<span id="def:unnamed-chunk-2" class="definition"><strong>Definition 3.1  </strong></span>定义：矩阵<span class="math inline">\(A(t)\)</span>的导数
-如果矩阵<span class="math inline">\(A(t)=\left(a_{i j}(t)\right)_{m \times n}\)</span> 的每一个元素<span class="math inline">\(a_{ij}(t)\)</span>是变量t的可微函数，则称A(t)可微，其导数（微商）定义为
+<div id="numeric-derivatives" class="section level1">
+<h1><span class="header-section-number">Chapter 13</span> Numeric Derivatives</h1>
+<p>Compute <span class="math inline">\(f&#39;(x)\)</span>, definition of the derivative, the limit as <span class="math inline">\(h\rightarrow 0\)</span> of
 <span class="math display">\[
-A^{\prime}(t)=\frac{\mathrm{d}}{\mathrm{d} t} A(t)=\left(\frac{\mathrm{d}}{\mathrm{d} t} a_{i j}(t)\right)_{m \times n}
-\]</span>
-</div>
-
-
-<div class="definition">
-<p><span id="def:unnamed-chunk-3" class="definition"><strong>Definition 3.2  </strong></span>定义：矩阵对矩阵的导数
-设 <span class="math inline">\(\boldsymbol{X}=\left(\xi_{i j}\right)_{m \times n}\)</span>, <span class="math inline">\(mn\)</span> 元函数 <span class="math inline">\(f(\boldsymbol{X})=f\left(\xi_{11}, \xi_{12}\cdots, \xi_{1 n}, \xi_{21}, \cdots, \xi_{m n} )\right.\)</span>,定义<span class="math inline">\(f(X)\)</span> 对矩阵<span class="math inline">\(X\)</span>的导数为</p>
-<span class="math display">\[\begin{equation}
-\frac{\mathrm{d} f}{\mathrm{d} \boldsymbol{X}}=\left(\frac{\partial f}{\partial \xi_{i j}}\right)_{m \times n}=
-\left[
- \begin{array}{ccc}
-{\frac{\partial f}{\partial \xi_{11}}} 
-&amp; {\dots} &amp; {\frac{\partial f}{\partial \xi_{1 n}}}
- \\ {\vdots} &amp; { } &amp; {\vdots} \\ 
-{\frac{\partial f}{\partial \xi_{m 1}}} &amp; {\cdots} &amp; {\frac{\partial f}{\partial \xi_{m n}}}
-
-\end{array}\right]
-\end{equation}\]</span>
-</div>
-
-<p>根据这个定义，能够直接证明以下两个最常见的结论
-<span class="math display">\[
-\frac{\partial x&#39;a}{\partial x}=a=\frac{\partial a&#39;x}{\partial x}
+f^{\prime}(x) \approx \frac{f(x+h)-f(x)}{h}
 \]</span></p>
+<p>The above procedure is almost guaranteed to produce inaccurate results. When the function <span class="math inline">\(f\)</span> is <strong>fiercely</strong> expensive to compute.</p>
+<p>There are two sources of error in this approach truncation error and roundoff error.</p>
+<p>The truncation error comes from higher terms in the Taylor series expansion:</p>
 <p><span class="math display">\[
-\frac{\partial x&#39;Ax}{\partial x}=(A+A&#39;)x
+f(x+h)=f(x)+h f^{\prime}(x)+\frac{1}{2} h^{2} f^{\prime \prime}(x)+\frac{1}{6} h^{3} f^{\prime \prime \prime}(x)+\cdots
 \]</span></p>
-<p>证明：
-将矩阵乘法<span class="math inline">\(x^TAx\)</span>打开得到
-<span class="math display">\[
-\begin{aligned} f(\boldsymbol{x})=&amp; \sum_{i=1}^{n} \sum_{j=1}^{n} a_{i j} \xi_{i} \xi_{j}=\\ &amp; \xi_{1} \sum_{j=1}^{n} a_{1 j} \xi_{j}+\cdots+\xi_{k} \sum_{j=1}^{n} a_{k j} \xi_{j}+\cdots+\xi_{n} \sum_{j=1}^{n} a_{n j} \xi_{j} \end{aligned}
-\]</span>
-且有
-<span class="math display">\[
-\begin{align}
-\frac{\partial f}{\partial \xi_{k}}=\xi_{1} a_{1 k}+\cdots+\xi_{k-1} a_{k-1, k}+\left(\sum_{j=1}^{n} a_{k j} \xi_{j}+\xi_{k} a_{k k}\right)+\\
-\xi_{k+1} a_{k+1, k}+\cdots+\xi_{n} a_{\# k}=\sum_{j=1}^{n} a_{i j} \xi_{j}+\sum_{i=1}^{n} a_{k} \xi_{i}
-\end{align}
-\]</span>
-所以有
-<span class="math display">\[
-\frac{d f}{d x}=\left[ \begin{array}{c}{\frac{\partial f}{\partial \xi_{1}}} \\ {\vdots} \\ {\frac{\partial f}{\partial \xi_{n}}}\end{array}\right]=\left[ \begin{array}{c}{\sum_{j=1}^{n} a_{1 j} \xi_{j}} \\ {\vdots} \\ {\sum_{j=1}^{n} a_{n j} \xi_{j}}\end{array}\right]+\left[ \begin{array}{c}{\sum_{i=1}^{n} a_{i 1} \xi_{i}} \\ {\vdots} \\ {\sum_{i=1}^{n} a_{i n} \xi_{i}}\end{array}\right]=\\ 
-\boldsymbol{A x}+\boldsymbol{A}^{\mathrm{T}} \boldsymbol{x}=\left(\boldsymbol{A}+\boldsymbol{A}^{\mathrm{T}}\right) \boldsymbol{x}
-\]</span></p>
-<div id="block-diagonal-matrices" class="section level3">
-<h3><span class="header-section-number">3.1.1</span> Block diagonal matrices</h3>
+<p>whence</p>
 <p><span class="math display">\[
-\mathbf{A}=\left[ \begin{array}{cccc}{\mathbf{A}_{1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}}\end{array}\right]
+\frac{f(x+h)-f(x)}{h}=f^{\prime}+\frac{1}{2} h f^{\prime \prime}+\cdots
 \]</span></p>
-<p>property:
-<span class="math display">\[
-\begin{aligned} \operatorname{det} \mathbf{A} &amp;=\operatorname{det} \mathbf{A}_{1} \times \cdots \times \operatorname{det} \mathbf{A}_{n} \\ \operatorname{tr} \mathbf{A} &amp;=\operatorname{tr} \mathbf{A}_{1}+\cdots+\operatorname{tr} \mathbf{A}_{n} \end{aligned}
-\]</span></p>
-<p>It’s inverse:</p>
-<p><span class="math display">\[
-\left( \begin{array}{cccc}{\mathbf{A}_{1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}}\end{array}\right)=\left( \begin{array}{cccc}{\mathbf{A}_{1}^{-1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}^{-1}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}^{-1}}\end{array}\right)
-\]</span></p>
-</div>
-</div>
-<div id="sumSquare" class="section level2">
-<h2><span class="header-section-number">3.2</span> 两个二次型相加</h2>
-<p>In vector formulation(Assuming <span class="math inline">\(\Sigma_1\)</span>,<span class="math inline">\(\Sigma_2\)</span> are symmetric)
-有：
-<span class="math display">\[
-\begin{array}{c}{-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{1}\right)^{T} \mathbf{\Sigma}_{1}^{-1}\left(\mathbf{x}-\mathbf{m}_{1}\right)} \\ {-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{2}\right)^{T} \mathbf{\Sigma}_{2}^{-1}\left(\mathbf{x}-\mathbf{m}_{2}\right)} \\ {=-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{c}\right)^{T} \mathbf{\Sigma}_{c}^{-1}\left(\mathbf{x}-\mathbf{m}_{c}\right)+C}\end{array}
-\]</span>
-其中：
-<span class="math display">\[
-\begin{aligned} \mathbf{\Sigma}_{c}^{-1}=&amp; \mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1} \\ \mathbf{m}_{c} &amp;=\left(\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\right)^{-1}\left(\mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \\ C &amp;=\frac{1}{2}\left(\mathbf{m}_{1}^{T} \mathbf{\Sigma}_{1}^{-1}+\mathbf{m}_{2}^{T} \mathbf{\Sigma}_{2}^{-1}\right)\left(\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\right)^{-1}\left(\mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \\ &amp;-\frac{1}{2}\left(\mathbf{m}_{1}^{T} \mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{m}_{2}^{T} \mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \end{aligned}
-\]</span></p>
-<p>而对于我需要的情况，简化<span class="math inline">\(m_1=0\)</span>,<span class="math inline">\(m_2=0\)</span></p>
-<p>那么就有，只需要<span class="math inline">\(\mathbf{\Sigma}_{c}^{-1}=\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\)</span>,同时<span class="math inline">\(m_c=0\)</span>.</p>
+<p>The roundoff error has various contributions. First is in <span class="math inline">\(h\)</span>:
+Suppose, by way ofo an example, that you are at a point <span class="math inline">\(x=10.3\)</span> and you blindly choose <span class="math inline">\(h=0.0001\)</span>. Neither <span class="math inline">\(x=10.3\)</span> nor <span class="math inline">\(x+h=10.30001\)</span> is a number with an exact representation in binary; each is therefore represented with some fractional error characteristic of the machine’s floating-point format, <span class="math inline">\(\epsilon_m\)</span>, whose value in single precision may be <span class="math inline">\(\sim 10^{-7}\)</span>. The error in the <strong>effective</strong> value of h, namely the difference between <span class="math inline">\(x+h\)</span> and <span class="math inline">\(x\)</span> as represented in the machine, is therefore on the order of <span class="math inline">\(\epsilon_m x\)</span>, which implies a fractional error in h of order <span class="math inline">\(\sim \epsilon_mx/h\sim10^{-2}\)</span>! By equation, this immediately implies at least the same large fractional error in the derivative.</p>
+<blockquote>
+<p>roundoff error: 舍入误差。假设点x=10.3,然后选取h=0.0001,但是在计算机里保存的既不是x=10.3也不是x+h=10.30001,每个数都会表示成另外一个有相对误差的，相对误差则由计算机的浮点格式,<span class="math inline">\(\epsilon_m\)</span>，所决定，单精度浮点数则在<span class="math inline">\(10^{-7}\)</span>. 在h有效值的误差，也就是x+h和x在计算机中表现的值的误差，则其阶为<span class="math inline">\(\epsilon_m x\)</span>,这个表明了h的相对误差的阶是<span class="math inline">\(\sim \epsilon_m x/h\sim 10^{-2}\)</span> ,就很高。</p>
+</blockquote>
+<p>这样，第一课就是，总选择h使得x+h和x的差是一个确定的表示数，this can usually be accomplished by the program steps:</p>
+<pre><code>temp=x+h
+h=temp-x</code></pre>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="mathematical-statistic-trick.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="longitudinal-data-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="advanced-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="imputation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
