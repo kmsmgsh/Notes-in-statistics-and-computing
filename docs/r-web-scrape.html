@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 3 Statistician Tool Box | Notes on Statistics</title>
+  <title>Chapter 15 R web scrape | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 3 Statistician Tool Box | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 15 R web scrape | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 3 Statistician Tool Box | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 15 R web scrape | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="mathematical-statistic-trick.html">
-<link rel="next" href="longitudinal-data-analysis.html">
+<link rel="prev" href="references.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -251,12 +251,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
-<li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
-<li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
-<li class="chapter" data-level="12.0.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.0.3</b> Coercion</a></li>
-<li class="chapter" data-level="12.1" data-path="advanced-r.html"><a href="advanced-r.html#data.frame"><i class="fa fa-check"></i><b>12.1</b> Data.frame</a><ul>
-<li class="chapter" data-level="12.1.1" data-path="advanced-r.html"><a href="advanced-r.html#ordering-integer-subsetting"><i class="fa fa-check"></i><b>12.1.1</b> Ordering (integer subsetting)</a></li>
-<li class="chapter" data-level="12.1.2" data-path="advanced-r.html"><a href="advanced-r.html#calling-a-function-given-a-list-of-arguments"><i class="fa fa-check"></i><b>12.1.2</b> Calling a function given a list of arguments</a></li>
+<li class="chapter" data-level="12.1" data-path="advanced-r.html"><a href="advanced-r.html#fundmental"><i class="fa fa-check"></i><b>12.1</b> Fundmental</a><ul>
+<li class="chapter" data-level="12.1.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.1.1</b> Vector</a></li>
+<li class="chapter" data-level="12.1.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.1.2</b> Types and tests:</a></li>
+<li class="chapter" data-level="12.1.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.1.3</b> Coercion</a></li>
+</ul></li>
+<li class="chapter" data-level="12.2" data-path="advanced-r.html"><a href="advanced-r.html#data.frame"><i class="fa fa-check"></i><b>12.2</b> Data.frame</a><ul>
+<li class="chapter" data-level="12.2.1" data-path="advanced-r.html"><a href="advanced-r.html#ordering-integer-subsetting"><i class="fa fa-check"></i><b>12.2.1</b> Ordering (integer subsetting)</a></li>
+<li class="chapter" data-level="12.2.2" data-path="advanced-r.html"><a href="advanced-r.html#calling-a-function-given-a-list-of-arguments"><i class="fa fa-check"></i><b>12.2.2</b> Calling a function given a list of arguments</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="13" data-path="numeric-derivatives.html"><a href="numeric-derivatives.html"><i class="fa fa-check"></i><b>13</b> Numeric Derivatives</a></li>
@@ -283,98 +285,81 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="statistician-tool-box" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Statistician Tool Box</h1>
-<div id="matrix" class="section level2">
-<h2><span class="header-section-number">3.1</span> Matrix algebra</h2>
+<div id="r-web-scrape" class="section level1">
+<h1><span class="header-section-number">Chapter 15</span> R web scrape</h1>
+<p>Web scrape用</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
+lego_movie &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;http://www.imdb.com/title/tt1490017/&quot;</span>)
 
-<div class="definition">
-<span id="def:unnamed-chunk-39" class="definition"><strong>Definition 3.1  </strong></span>定义：矩阵<span class="math inline">\(A(t)\)</span>的导数
-如果矩阵<span class="math inline">\(A(t)=\left(a_{i j}(t)\right)_{m \times n}\)</span> 的每一个元素<span class="math inline">\(a_{ij}(t)\)</span>是变量t的可微函数，则称A(t)可微，其导数（微商）定义为
-<span class="math display">\[
-A^{\prime}(t)=\frac{\mathrm{d}}{\mathrm{d} t} A(t)=\left(\frac{\mathrm{d}}{\mathrm{d} t} a_{i j}(t)\right)_{m \times n}
-\]</span>
-</div>
+rating &lt;-<span class="st"> </span>lego_movie <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;strong span&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 这个&quot;strong span&quot;是指什么意思？</span>
+<span class="st">  </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">as.numeric</span>()
+rating</code></pre>
+<pre><code>## [1] 7.8</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&gt; [1] 7.8</span></code></pre>
+<p>上述的问题回答是由于：</p>
+<pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="kw">rep</span>(<span class="st">&quot;pic/scrape_2.png&quot;</span>, <span class="dv">1</span>))</code></pre>
+<p>含有7.8的html元素就是strong 下面的span的元素。</p>
+<p>根据这篇<a href="https://www.datacamp.com/community/tutorials/r-web-scraping-rvest">tutorial</a>
+提取class=&quot;&quot;中的元素可以用如下代码</p>
+<pre><code> html_nodes(&#39;.pagination-page&#39;)</code></pre>
+<p>学这段写一下：</p>
+<pre class="sourceCode r"><code class="sourceCode r">a=<span class="kw">read_html</span>(<span class="st">&quot;https://d.cosx.org/d/420739-r&quot;</span>)
+<span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostMention&quot;</span>)</code></pre>
+<pre><code>## {xml_nodeset (27)}
+##  [1] &lt;a href=&quot;https://d.cosx.org/d/420739/1&quot; class=&quot;PostMention&quot; data-id ...
+##  [2] &lt;a href=&quot;https://d.cosx.org/d/420739/1&quot; class=&quot;PostMention&quot; data-id ...
+##  [3] &lt;a href=&quot;https://d.cosx.org/d/420739/2&quot; class=&quot;PostMention&quot; data-id ...
+##  [4] &lt;a href=&quot;https://d.cosx.org/d/420739/3&quot; class=&quot;PostMention&quot; data-id ...
+##  [5] &lt;a href=&quot;https://d.cosx.org/d/420739/3&quot; class=&quot;PostMention&quot; data-id ...
+##  [6] &lt;a href=&quot;https://d.cosx.org/d/420739/6&quot; class=&quot;PostMention&quot; data-id ...
+##  [7] &lt;a href=&quot;https://d.cosx.org/d/420739/6&quot; class=&quot;PostMention&quot; data-id ...
+##  [8] &lt;a href=&quot;https://d.cosx.org/d/420739/7&quot; class=&quot;PostMention&quot; data-id ...
+##  [9] &lt;a href=&quot;https://d.cosx.org/d/420739/8&quot; class=&quot;PostMention&quot; data-id ...
+## [10] &lt;a href=&quot;https://d.cosx.org/d/420739/7&quot; class=&quot;PostMention&quot; data-id ...
+## [11] &lt;a href=&quot;https://d.cosx.org/d/420739/10&quot; class=&quot;PostMention&quot; data-i ...
+## [12] &lt;a href=&quot;https://d.cosx.org/d/420739/7&quot; class=&quot;PostMention&quot; data-id ...
+## [13] &lt;a href=&quot;https://d.cosx.org/d/420739/9&quot; class=&quot;PostMention&quot; data-id ...
+## [14] &lt;a href=&quot;https://d.cosx.org/d/420739/9&quot; class=&quot;PostMention&quot; data-id ...
+## [15] &lt;a href=&quot;https://d.cosx.org/d/420739/9&quot; class=&quot;PostMention&quot; data-id ...
+## [16] &lt;a href=&quot;https://d.cosx.org/d/420739/18&quot; class=&quot;PostMention&quot; data-i ...
+## [17] &lt;a href=&quot;https://d.cosx.org/d/420739/12&quot; class=&quot;PostMention&quot; data-i ...
+## [18] &lt;a href=&quot;https://d.cosx.org/d/420739/27&quot; class=&quot;PostMention&quot; data-i ...
+## [19] &lt;a href=&quot;https://d.cosx.org/d/420739/25&quot; class=&quot;PostMention&quot; data-i ...
+## [20] &lt;a href=&quot;https://d.cosx.org/d/420739/13&quot; class=&quot;PostMention&quot; data-i ...
+## ...</code></pre>
+<p>就得到分开的有PostMention类的元素</p>
+<pre class="sourceCode r"><code class="sourceCode r">PostMentionUser=<span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostMention&quot;</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()
+<span class="kw">head</span>(PostMentionUser)</code></pre>
+<pre><code>## [1] &quot;yihui&quot;  &quot;yihui&quot;  &quot;tctcab&quot; &quot;yihui&quot;  &quot;yihui&quot;  &quot;Jiena&quot;</code></pre>
+<p>得到PostMention里面的元素，<a href="mailto:应该是回复中带@的部分">应该是回复中带@的部分</a>？</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">html_nodes</span>(a,<span class="st">&quot;.Post-body&quot;</span>)<span class="op">%&gt;%</span>
+<span class="st">  </span><span class="kw">html_text</span>()-&gt;body
+<span class="kw">head</span>(body)</code></pre>
+<pre><code>## [1] &quot;\n                    我现在已经不太参与邮件列表里的讨论了，不过我还是想看看里面最热门的讨论大概都是关于什么话题的。要是有人有兴趣，邮件列表的数据可以从网页上爬，比如 https://stat.ethz.ch/pipermail/r-devel/ 按 Thread 或 Subject 排列的页面爬一下就知道每个主题下面的回帖数量。最终我想要的数据就三列：主题、链接、回帖数量。如：\n\nsubject, link, count\n\&quot;[R] Open a file which name contains a tilde\&quot;, \&quot;https://stat.ethz.ch/pipermail/r-devel/2019-June/077961.html\&quot;, 18if(\&quot;undefined\&quot;!==typeof hljs)hljs._ha();else if(\&quot;undefined\&quot;===typeof hljsLoading){hljsLoading=1;var a=document.getElementsByTagName(\&quot;head\&quot;)[0],e=document.createElement(\&quot;link\&quot;);e.type=\&quot;text/css\&quot;;e.rel=\&quot;stylesheet\&quot;;e.href=\&quot;//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css\&quot;;a.appendChild(e);e=document.createElement(\&quot;script\&quot;);e.type=\&quot;text/javascript\&quot;;e.onload=function(){var d={},f=0;hljs._hb=function(b){b.removeAttribute(\&quot;data-hljs\&quot;);var c=b.innerHTML;c in d?b.innerHTML=d[c]:(7&lt;++f&amp;&amp;(d={},f=0),hljs.highlightBlock(b.firstChild),d[c]=b.innerHTML)};hljs._ha=function(){for(var b=document.querySelectorAll(\&quot;pre[data-hljs]\&quot;),c=b.length;0&lt;c;)hljs._hb(b.item(--c))};hljs._ha()};e.async=!0;e.src=\&quot;//uploads.cosx.org/static/hljs/highlight.pack.js\&quot;;a.appendChild(e)}上面是开发者列表，还有普通用户列表：https://stat.ethz.ch/pipermail/r-help/\n\n我之所以想看这个数据是因为我有个猜测想验证一下：凭我的肉眼观察，我感觉多数“热门”讨论都是极其琐碎无聊的事情，根本不值得费那么多口舌（比如上面那个例子）。为了防止我看歪了，我想看一眼全局数据。希望有壮士能写个脚本。其实第一次本地爬完之后，以后可以在 Travis 上定期爬新的数据，把数据自动更新到 Github 或什么地方。\n                &quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+## [2] &quot;\n                    yihui \n\n用xml2做了一个:Rmarkdown效果\n\n这种结构比较标准的html还是挺好处理的\n\n不过我只爬了一个月，仔细一看同一个thread在多个月里都会出现，要合并也可以，不过数据清理已经超出了这个爬虫的功能范围哈哈哈，暂时在此收手了。\n                &quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+## [3] &quot;\n                    yihui \n爬好了（从97年4月到目前的数据），戳这：https://github.com/jienagu/tidyverse_examples/blob/master/web_scraping_r_devel.R \n结果(已经排序好了)如下：\n&gt; head(everything2)\n                                                   link                                                          Link_url count\n1                  [Rd] [RFC] A case for freezing CRAN      https://stat.ethz.ch/pipermail/r-devel/2014-March/068548.html    64\n2                                   [Rd] CRAN policies      https://stat.ethz.ch/pipermail/r-devel/2012-March/063678.html    51\n3                 [Rd] surprising behaviour of names&lt;-      https://stat.ethz.ch/pipermail/r-devel/2009-March/052522.html    49\n4                           [Rd] legitimate use of :::     https://stat.ethz.ch/pipermail/r-devel/2013-August/067180.html    45\n5 [Rd] Computer algebra in R - would that be an idea??       https://stat.ethz.ch/pipermail/r-devel/2005-July/033940.html    40\n6                                  [Rd] if(--as-cran)?  https://stat.ethz.ch/pipermail/r-devel/2012-September/064760.html    39if(\&quot;undefined\&quot;!==typeof hljs)hljs._ha();else if(\&quot;undefined\&quot;===typeof hljsLoading){hljsLoading=1;var a=document.getElementsByTagName(\&quot;head\&quot;)[0],e=document.createElement(\&quot;link\&quot;);e.type=\&quot;text/css\&quot;;e.rel=\&quot;stylesheet\&quot;;e.href=\&quot;//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css\&quot;;a.appendChild(e);e=document.createElement(\&quot;script\&quot;);e.type=\&quot;text/javascript\&quot;;e.onload=function(){var d={},f=0;hljs._hb=function(b){b.removeAttribute(\&quot;data-hljs\&quot;);var c=b.innerHTML;c in d?b.innerHTML=d[c]:(7&lt;++f&amp;&amp;(d={},f=0),hljs.highlightBlock(b.firstChild),d[c]=b.innerHTML)};hljs._ha=function(){for(var b=document.querySelectorAll(\&quot;pre[data-hljs]\&quot;),c=b.length;0&lt;c;)hljs._hb(b.item(--c))};hljs._ha()};e.async=!0;e.src=\&quot;//uploads.cosx.org/static/hljs/highlight.pack.js\&quot;;a.appendChild(e)}&quot;                                                                                                                                                                                                                                                                                                                                                                        
+## [4] &quot;\n                    tctcab 不错不错！好了，那就请别的壮士继续背这口锅吧，一是把历史数据爬完，二是在数据里加一列，就是帖子的时间（年月即可）。数据弄好后，如果有相邻月份的帖子标题相同，那就把前一个月的计数加到后一个月的计数上。\n                &quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+## [5] &quot;\n                    yihui \n年月并没有在xml里出现，不过那个thread的地址里有年月信息，要整合也不難，\n\n既然都做到这步了那就顺便走完吧，屁股没擦干净留给别人总不大好哈哈哈\n                &quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+## [6] &quot;\n                    yihui \n\n研究了一下合并帖子，觉得并不简单，因为：\n    - 同一个串下面标题有可能不一致\n    -  不同串有可能名字一样\n\n尝试了合并标题一样的帖子，但不一定对。比如04,06,07年都有个名为“[Rd] Wish list”的串\n\n另外就是抓取的时候一不留神就连接错误，所以我先把thread.html下载到本地再提取信息，速度也快了不少（8分钟到19秒）\n\n结果：\n\nRmarkdown效果\n\n合并串之后可以看出结果跟Jiena 的前十名还是有点细微差别：\n\n# A tibble: 10 x 4\n   title                          link                            reps year_mon  \n   &lt;chr&gt;                          &lt;chr&gt;                          &lt;int&gt; &lt;chr&gt;     \n 1 \&quot;[Rd] [RFC] A case for freezi… https://stat.ethz.ch/pipermai…    69 2014-March\n 2 \&quot;[Rd] Wish list\\n\&quot;             https://stat.ethz.ch/pipermai…    62 2007-Janu…\n 3 \&quot;[Rd] CRAN policies\\n\&quot;         https://stat.ethz.ch/pipermai…    51 2012-March\n 4 \&quot;[Rd] legitimate use of :::\\n\&quot; https://stat.ethz.ch/pipermai…    48 2014-May  \n 5 \&quot;[Rd] NEWS.md support on CRAN… https://stat.ethz.ch/pipermai…    48 2015-May  \n 6 \&quot;[Rd] surprising behaviour of… https://stat.ethz.ch/pipermai…    48 2009-March\n 7 \&quot;[Rd] declaring package depen… https://stat.ethz.ch/pipermai…    42 2013-Sept…\n 8 \&quot;[Rd] if(--as-cran)?\\n\&quot;        https://stat.ethz.ch/pipermai…    42 2012-Sept…\n 9 \&quot;[Rd] Bias in R&#39;s random inte… https://stat.ethz.ch/pipermai…    37 2018-Sept…\n10 \&quot;[Rd] R 3.0, Rtools3.0,l Wind… https://stat.ethz.ch/pipermai…    36 2013-Aprilif(\&quot;undefined\&quot;!==typeof hljs)hljs._ha();else if(\&quot;undefined\&quot;===typeof hljsLoading){hljsLoading=1;var a=document.getElementsByTagName(\&quot;head\&quot;)[0],e=document.createElement(\&quot;link\&quot;);e.type=\&quot;text/css\&quot;;e.rel=\&quot;stylesheet\&quot;;e.href=\&quot;//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css\&quot;;a.appendChild(e);e=document.createElement(\&quot;script\&quot;);e.type=\&quot;text/javascript\&quot;;e.onload=function(){var d={},f=0;hljs._hb=function(b){b.removeAttribute(\&quot;data-hljs\&quot;);var c=b.innerHTML;c in d?b.innerHTML=d[c]:(7&lt;++f&amp;&amp;(d={},f=0),hljs.highlightBlock(b.firstChild),d[c]=b.innerHTML)};hljs._ha=function(){for(var b=document.querySelectorAll(\&quot;pre[data-hljs]\&quot;),c=b.length;0&lt;c;)hljs._hb(b.item(--c))};hljs._ha()};e.async=!0;e.src=\&quot;//uploads.cosx.org/static/hljs/highlight.pack.js\&quot;;a.appendChild(e)}&quot;</code></pre>
+<p>就得到回帖的内容，</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostUser&quot;</span>)</code></pre>
+<pre><code>## {xml_nodeset (0)}</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">html_nodes</span>(a,<span class="st">&quot;.username&quot;</span>)</code></pre>
+<pre><code>## {xml_nodeset (0)}</code></pre>
+<p>但是这个咋就不对。。。。奇怪。
+<img src="pic/scrape_3.png" /><!-- -->
+是因为元素叠起来的缘故吗？应该不是奇奇怪怪的，明天再看。</p>
 
-
-<div class="definition">
-<p><span id="def:unnamed-chunk-40" class="definition"><strong>Definition 3.2  </strong></span>定义：矩阵对矩阵的导数
-设 <span class="math inline">\(\boldsymbol{X}=\left(\xi_{i j}\right)_{m \times n}\)</span>, <span class="math inline">\(mn\)</span> 元函数 <span class="math inline">\(f(\boldsymbol{X})=f\left(\xi_{11}, \xi_{12}\cdots, \xi_{1 n}, \xi_{21}, \cdots, \xi_{m n} )\right.\)</span>,定义<span class="math inline">\(f(X)\)</span> 对矩阵<span class="math inline">\(X\)</span>的导数为</p>
-<span class="math display">\[\begin{equation}
-\frac{\mathrm{d} f}{\mathrm{d} \boldsymbol{X}}=\left(\frac{\partial f}{\partial \xi_{i j}}\right)_{m \times n}=
-\left[
- \begin{array}{ccc}
-{\frac{\partial f}{\partial \xi_{11}}} 
-&amp; {\dots} &amp; {\frac{\partial f}{\partial \xi_{1 n}}}
- \\ {\vdots} &amp; { } &amp; {\vdots} \\ 
-{\frac{\partial f}{\partial \xi_{m 1}}} &amp; {\cdots} &amp; {\frac{\partial f}{\partial \xi_{m n}}}
-
-\end{array}\right]
-\end{equation}\]</span>
-</div>
-
-<p>根据这个定义，能够直接证明以下两个最常见的结论
-<span class="math display">\[
-\frac{\partial x&#39;a}{\partial x}=a=\frac{\partial a&#39;x}{\partial x}
-\]</span></p>
-<p><span class="math display">\[
-\frac{\partial x&#39;Ax}{\partial x}=(A+A&#39;)x
-\]</span></p>
-<p>证明：
-将矩阵乘法<span class="math inline">\(x^TAx\)</span>打开得到
-<span class="math display">\[
-\begin{aligned} f(\boldsymbol{x})=&amp; \sum_{i=1}^{n} \sum_{j=1}^{n} a_{i j} \xi_{i} \xi_{j}=\\ &amp; \xi_{1} \sum_{j=1}^{n} a_{1 j} \xi_{j}+\cdots+\xi_{k} \sum_{j=1}^{n} a_{k j} \xi_{j}+\cdots+\xi_{n} \sum_{j=1}^{n} a_{n j} \xi_{j} \end{aligned}
-\]</span>
-且有
-<span class="math display">\[
-\begin{align}
-\frac{\partial f}{\partial \xi_{k}}=\xi_{1} a_{1 k}+\cdots+\xi_{k-1} a_{k-1, k}+\left(\sum_{j=1}^{n} a_{k j} \xi_{j}+\xi_{k} a_{k k}\right)+\\
-\xi_{k+1} a_{k+1, k}+\cdots+\xi_{n} a_{\# k}=\sum_{j=1}^{n} a_{i j} \xi_{j}+\sum_{i=1}^{n} a_{k} \xi_{i}
-\end{align}
-\]</span>
-所以有
-<span class="math display">\[
-\frac{d f}{d x}=\left[ \begin{array}{c}{\frac{\partial f}{\partial \xi_{1}}} \\ {\vdots} \\ {\frac{\partial f}{\partial \xi_{n}}}\end{array}\right]=\left[ \begin{array}{c}{\sum_{j=1}^{n} a_{1 j} \xi_{j}} \\ {\vdots} \\ {\sum_{j=1}^{n} a_{n j} \xi_{j}}\end{array}\right]+\left[ \begin{array}{c}{\sum_{i=1}^{n} a_{i 1} \xi_{i}} \\ {\vdots} \\ {\sum_{i=1}^{n} a_{i n} \xi_{i}}\end{array}\right]=\\ 
-\boldsymbol{A x}+\boldsymbol{A}^{\mathrm{T}} \boldsymbol{x}=\left(\boldsymbol{A}+\boldsymbol{A}^{\mathrm{T}}\right) \boldsymbol{x}
-\]</span></p>
-<div id="block-diagonal-matrices" class="section level3">
-<h3><span class="header-section-number">3.1.1</span> Block diagonal matrices</h3>
-<p><span class="math display">\[
-\mathbf{A}=\left[ \begin{array}{cccc}{\mathbf{A}_{1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}}\end{array}\right]
-\]</span></p>
-<p>property:
-<span class="math display">\[
-\begin{aligned} \operatorname{det} \mathbf{A} &amp;=\operatorname{det} \mathbf{A}_{1} \times \cdots \times \operatorname{det} \mathbf{A}_{n} \\ \operatorname{tr} \mathbf{A} &amp;=\operatorname{tr} \mathbf{A}_{1}+\cdots+\operatorname{tr} \mathbf{A}_{n} \end{aligned}
-\]</span></p>
-<p>It’s inverse:</p>
-<p><span class="math display">\[
-\left( \begin{array}{cccc}{\mathbf{A}_{1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}}\end{array}\right)=\left( \begin{array}{cccc}{\mathbf{A}_{1}^{-1}} &amp; {0} &amp; {\cdots} &amp; {0} \\ {0} &amp; {\mathbf{A}_{2}^{-1}} &amp; {\cdots} &amp; {0} \\ {\vdots} &amp; {\vdots} &amp; {\ddots} &amp; {\vdots} \\ {0} &amp; {0} &amp; {\cdots} &amp; {\mathbf{A}_{n}^{-1}}\end{array}\right)
-\]</span></p>
-</div>
-</div>
-<div id="sumSquare" class="section level2">
-<h2><span class="header-section-number">3.2</span> 两个二次型相加</h2>
-<p>In vector formulation(Assuming <span class="math inline">\(\Sigma_1\)</span>,<span class="math inline">\(\Sigma_2\)</span> are symmetric)
-有：
-<span class="math display">\[
-\begin{array}{c}{-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{1}\right)^{T} \mathbf{\Sigma}_{1}^{-1}\left(\mathbf{x}-\mathbf{m}_{1}\right)} \\ {-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{2}\right)^{T} \mathbf{\Sigma}_{2}^{-1}\left(\mathbf{x}-\mathbf{m}_{2}\right)} \\ {=-\frac{1}{2}\left(\mathbf{x}-\mathbf{m}_{c}\right)^{T} \mathbf{\Sigma}_{c}^{-1}\left(\mathbf{x}-\mathbf{m}_{c}\right)+C}\end{array}
-\]</span>
-其中：
-<span class="math display">\[
-\begin{aligned} \mathbf{\Sigma}_{c}^{-1}=&amp; \mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1} \\ \mathbf{m}_{c} &amp;=\left(\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\right)^{-1}\left(\mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \\ C &amp;=\frac{1}{2}\left(\mathbf{m}_{1}^{T} \mathbf{\Sigma}_{1}^{-1}+\mathbf{m}_{2}^{T} \mathbf{\Sigma}_{2}^{-1}\right)\left(\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\right)^{-1}\left(\mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \\ &amp;-\frac{1}{2}\left(\mathbf{m}_{1}^{T} \mathbf{\Sigma}_{1}^{-1} \mathbf{m}_{1}+\mathbf{m}_{2}^{T} \mathbf{\Sigma}_{2}^{-1} \mathbf{m}_{2}\right) \end{aligned}
-\]</span></p>
-<p>而对于我需要的情况，简化<span class="math inline">\(m_1=0\)</span>,<span class="math inline">\(m_2=0\)</span></p>
-<p>那么就有，只需要<span class="math inline">\(\mathbf{\Sigma}_{c}^{-1}=\mathbf{\Sigma}_{1}^{-1}+\mathbf{\Sigma}_{2}^{-1}\)</span>,同时<span class="math inline">\(m_c=0\)</span>.</p>
-
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="mathematical-statistic-trick.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="longitudinal-data-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="references.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

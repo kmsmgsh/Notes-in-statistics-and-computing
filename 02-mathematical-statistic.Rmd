@@ -10,3 +10,28 @@ $$
 Then, we have $X\sim N\left(\left(B A^{-1}\right)^{T}, A^{-1}\right)$
 
 可以配合\@ref(sumSquare) 食用更佳
+
+## 密度变换公式：
+设随机变量 $X$ 有概率密度函数 $f(x)$, $x\in(a, b)$ ($a, b$ 可以为 $\infty$), 而 $y = g(x)$ 在 $x \in (a, b)$ 上是严格单调的连
+续函数，存在唯一的反函数 $x = h(y)$, $y \in (\alpha, \beta)$ 并且 $h′(y)$ 存在且
+连续，那么 $Y = g(X)$ 也是连续型随机变量且有概率密度函数
+$$
+p(y)=f(h(y))\left|h^{\prime}(y)\right|, \quad y \in(\alpha, \beta)
+$$
+
+## Probability mass function:
+就是离散的的分布嘛，记差了还行
+![Probmass](https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Discrete_probability_distrib.svg/440px-Discrete_probability_distrib.svg.png)
+
+
+
+## Vector to diagonal matrix:
+
+(source)[https://mathoverflow.net/questions/55820/vector-to-diagonal-matrix]
+Let $E_i$ be the $n\times n$ matrix with a 1 on position (i,i) and zeros else where.
+Similarly let $e_i$ be a row vector with 1 on position (1,i) and zero else where, then:
+$$
+D=\sum_{i=1}^{n} E_{i} v e_{i}
+$$
+D is the diagonal matrix with its entry is vector $v$.
+
