@@ -1,0 +1,86 @@
+# Rcpp
+
+根据实验，见jmcmBoost项目里面的试验，代码是：
+```
+// [[Rcpp::export]]
+void ReceiveAlist(Rcpp::List theta0)
+{
+  double beta0=Rcpp::as<double>(theta0["beta"]);
+  double gamma0=Rcpp::as<double>(theta0["gamma"]);
+  double xi0=Rcpp::as<double>(theta0["xi"]);
+  cout<<beta0<<endl;
+    cout<<gamma0<<endl;
+      cout<<xi0<<endl;
+}
+
+
+/*** R
+ReceiveAlist(list(beta=c(0,1),gamma=c(1,1),xi=c(1,2)))
+ReceiveAlist(list(beta=1,gamma=1,xi=1))
+*/
+```
+第一个报错，第二个可以正确输出。
+因为as<double>的数据类型必须是一个scala，不能给一个Numeric Vector
+所以问题是如何把这个转换成一个c++的变量
+
+```
+Sys.setenv("PKG_CXXFLAGS"="-std=c++11")
+```
+要用auto打印std::vector的话得这样，是c++11标准
+
+理论上应该是用一个c++的STL的vector容器来搞
+为啥那本书里面没有，好奇怪
+所以进过谷歌,stackexchange的[问题](https://stackoverflow.com/questions/37328978/convert-rvector-to-stdvector) 所以解决方案是::
+```
+ std::vector<double> b = as<std::vector<double> >(a)
+```
+于是代码就改成如下：
+```
+void ReceiveAlist(Rcpp::List theta0)
+{
+  std::vector<double> beta= Rcpp::as<std::vector<double> >(theta0["beta"]);
+  //double beta0=Rcpp::as<double>(theta0["beta"]);
+  std::vector<double> gamma= Rcpp::as<std::vector<double> >(theta0["gamma"]);
+  //double gamma0=Rcpp::as<double>(theta0["gamma"]);
+  std::vector<double> xi= Rcpp::as<std::vector<double> >(theta0["xi"]);
+  //double xi0=Rcpp::as<double>(theta0["xi"]);
+  //cout<<beta0<<endl;
+    //cout<<gamma0<<endl;
+    //  cout<<xi0<<endl;
+      for (auto i: beta)
+        std::cout << i << ' ';
+      std::cout<<endl;
+      for (auto i: gamma)
+        std::cout << i << ' ';
+      std::cout<<endl;
+      for (auto i: xi)
+        std::cout << i << ' ';
+      std::cout<<endl;
+}
+```
+然后结合之前的
+
+```
+Rcpp::List Jmcmoutput2(NumericVector x){
+    Rcpp::List a=Rcpp::List::create( // with static names
+    Rcpp::CharacterVector::create("cc", "dd"),
+    Rcpp::CharacterVector::create("ee", "ff")
+  );
+  
+  double cc=0;
+  Rcpp::NumericVector a0=x[1];
+  double a2= Rcpp::as<double>(a0);
+  return Rcpp::List::create(Rcpp::Named("beta")   = Rcpp::wrap(cc),
+                            Rcpp::Named("gamma")   = Rcpp::wrap(a2),
+                            Rcpp::Named("lambda")   = x
+                            );
+}
+```
+
+这就能返回一个R的数据结构list，接口的问题就基本上解决了。
+
+
+
+
+
+

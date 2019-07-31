@@ -94,3 +94,37 @@ for (i in 1:100) {
     total = iter, clear = FALSE)
 
 ```
+
+
+-[Benchmark](https://www.alexejgossmann.com/benchmarking_r/)
+
+其中的试例代码：
+```
+benchmark("lm" = {
+            X <- matrix(rnorm(1000), 100, 10)
+            y <- X %*% sample(1:10, 10) + rnorm(100)
+            b <- lm(y ~ X + 0)$coef
+          },
+          "pseudoinverse" = {
+            X <- matrix(rnorm(1000), 100, 10)
+            y <- X %*% sample(1:10, 10) + rnorm(100)
+            b <- solve(t(X) %*% X) %*% t(X) %*% y
+          },
+          "linear system" = {
+            X <- matrix(rnorm(1000), 100, 10)
+            y <- X %*% sample(1:10, 10) + rnorm(100)
+            b <- solve(t(X) %*% X, t(X) %*% y)
+          },
+          replications = 1000,
+          columns = c("test", "replications", "elapsed",
+                      "relative", "user.self", "sys.self"))
+
+```
+
+可以很简单的改成我的代码：
+```
+benchmark("Rvec2tril"=BayesJMCM::vec2tril(phiiVec)
+          "Rcppvec2tril"=vec2trilcpp(phiiVec)
+         )
+```
+

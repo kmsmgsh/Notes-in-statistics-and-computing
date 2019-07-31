@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>References | Notes on Statistics</title>
+  <title>Chapter 16 Guide to Scientific Computing in C++ | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="References | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 16 Guide to Scientific Computing in C++ | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="References | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 16 Guide to Scientific Computing in C++ | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="imputation.html">
-<link rel="next" href="r-web-scrape.html">
+<link rel="prev" href="r-web-scrape.html">
+<link rel="next" href="rcpp.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -308,17 +308,362 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="references" class="section level1 unnumbered">
-<h1>References</h1>
+<div id="guide-to-scientific-computing-in-c" class="section level1">
+<h1><span class="header-section-number">Chapter 16</span> Guide to Scientific Computing in C++</h1>
+<div id="basics" class="section level2">
+<h2><span class="header-section-number">16.1</span> Basics</h2>
+<ul>
+<li>first compile in command line:
+<code>g++ -o HelloWorld HelloWorld.cpp</code>
+也可以直接编译HelloWorld.cpp,默认的输出名字是a.out</li>
+</ul>
+<pre><code>g++ HelloWorld.cpp</code></pre>
+<ul>
+<li>compile flag:
+让编译器保留debug信息，然后不优化代码，这样能进行debug，用“-g” flag</li>
+</ul>
+<pre><code>g++ -g -o HelloWorld HelloWorld.cpp</code></pre>
+<p>让编译器链接library</p>
+<pre><code>g++ -lm -o HelloWorld HelloWorld.cpp</code></pre>
+</div>
+<div id="basics-in-c" class="section level2">
+<h2><span class="header-section-number">16.2</span> Basics in C++</h2>
+<p>Assert语句进行简单的error抛出：</p>
+<pre><code>#include &lt;iostream&gt; #include &lt;cassert&gt; #include &lt;cmath&gt;
+int main(int argc, char * argv[]) {
+  double a; std::cout &lt;&lt; &quot;Enter a non-negative number\n&quot;; 
+  std::cin &gt;&gt; a; assert(a &gt;= 0.0); 
+  std::cout &lt;&lt; &quot;The square root of &quot;&lt;&lt; a; 
+  std::cout &lt;&lt; &quot; is &quot; &lt;&lt; sqrt(a) &lt;&lt; &quot;\n&quot;; 
+  return 0;
+}</code></pre>
+</div>
+<div id="redirect-console-output-to-file" class="section level2">
+<h2><span class="header-section-number">16.3</span> Redirect Console Output to File</h2>
+<ul>
+<li>Require additional header file <code>fstream</code>: include</li>
+<li>Declare an output stream variable <code>write_output</code> as <code>std::ofstream</code></li>
+<li>Specify filename <code>Output.dat</code></li>
+<li>Check the file is opened successfully: use assert</li>
+<li>Use <code>write_output</code> instead of <code>std::cout</code> :</li>
+<li>Close the file handle.</li>
+</ul>
+<p>In order to finish these job, the code is</p>
+<pre><code>#include &lt;cassert&gt; 
+#include &lt;iostream&gt; 
+#include &lt;fstream&gt;
+int main(int argc, char * argv[]) {
+  double x[3] = {0.0, 1.0, 0.0}; 
+  double y[3] = {0.0, 0.0, 1.0}; 
+  std::ofstream write_output(&quot;Output.dat&quot;); 
+  assert(write_output.is_open()); 
+  for (int i=0; i&lt;3; i++) { 
+  write_output &lt;&lt; x[i] &lt;&lt; &quot; &quot; &lt;&lt; y[i] &lt;&lt; &quot;\n&quot;; 
+  } 
+  write_output.close(); 
+  return 0;
+}</code></pre>
+<p>In scientific computing, the precision is crucial, they can be set as:</p>
+<pre><code>#include &lt;iostream&gt; 
+#include &lt;fstream&gt;
 
+int main(int argc, char * argv[])
+{
+  double x = 1.8364238; std::ofstream write_output(&quot;Output.dat&quot;); 
+  write_output.precision(3); // 3 sig figs 
+  write_output &lt;&lt; x &lt;&lt; &quot;\n&quot;; 
+
+  write_output.precision(5); // 5 sig figs 
+  write_output &lt;&lt; x &lt;&lt; &quot;\n&quot;; 
+
+  write_output.precision(10); // 10 sig figs 
+  write_output &lt;&lt; x &lt;&lt; &quot;\n&quot;; 
+
+  write_output.close(); 
+  return 0;
+}</code></pre>
+<p>It’s similar for read file in stream with cout, just change <code>cout</code> to <code>std::ifstream read_file</code>.</p>
+<p>The example code in the book is:</p>
+<pre><code>#include &lt;cassert&gt; 
+#include &lt;iostream&gt; #include &lt;fstream&gt;
+
+int main(int argc, char * argv[]) 
+{
+  double x[6], y[6]; 
+  std::ifstream read_file(&quot;Output.dat&quot;); 
+  assert(read_file.is_open()); 
+  for (int i=0; i&lt;6; i++) 
+  { 
+    read_file &gt;&gt; x[i] &gt;&gt; y[i]; 
+  } 
+  read_file.close(); 
+  return 0;
+}
+</code></pre>
+<p>This is the simplest code that just loop the given length as 6, we want read until it is end. Then we need write until get <code>read_file.oef()</code>, so we use while instead of for.</p>
+<pre><code>while(!read_file.oef())</code></pre>
+<div id="reading-from-the-command-line" class="section level3">
+<h3><span class="header-section-number">16.3.1</span> Reading from the Command Line</h3>
+<p>感觉这是命令行管道的东西的感觉。</p>
+<p>User want to set some parameters when executing the code.</p>
+<p>Remind of the definition of main function</p>
+<pre><code>int main(int argc, char * argv[])</code></pre>
+<p>The argc and argv function will be used to finish this purpose.</p>
+<ul>
+<li>Addition header <code>filecstdlib</code> and function <code>atoi</code> and <code>atof</code> will be sued.</li>
+</ul>
+<pre><code>#include &lt;iostream&gt; 
+#include &lt;cstdlib&gt;
+int main(int argc, char *argv[]) 
+{
+  std::cout &lt;&lt; &quot;Number of command line arguments = &quot; &lt;&lt; argc &lt;&lt; &quot;\n&quot;; 
+  for (int i=0; i&lt;argc; i++) 
+  {
+    std::cout &lt;&lt; &quot;Argument &quot; &lt;&lt; i &lt;&lt; &quot; = &quot; &lt;&lt; argv[i];
+    std::cout &lt;&lt; &quot;\n&quot;; 
+  }
+  std::string program_name = argv[0];
+  int number_of_nodes = atoi(argv[1]); 
+  double conductivity = atof(argv[2]); 
+  std::cout &lt;&lt; &quot;Program name = &quot; &lt;&lt; program_name &lt;&lt; &quot;\n&quot;; 
+  std::cout &lt;&lt; &quot;Number of nodes = &quot; &lt;&lt; number_of_nodes; 
+  std::cout &lt;&lt; &quot;\n&quot;; 
+  std::cout &lt;&lt; &quot;Conductivity = &quot; &lt;&lt; conductivity &lt;&lt; &quot;\n&quot;;
+  return 0;
+}</code></pre>
+<p>运行如上程序</p>
+<pre><code>./CommandLineCode 100 5.0</code></pre>
+<p>在这个函数里，那一整行命令行的东西都作为参数被参数argv传进去了。而argc是统计有多少个分割的元素</p>
+</div>
+</div>
+<div id="pointer" class="section level2">
+<h2><span class="header-section-number">16.4</span> Pointer</h2>
+<ul>
+<li><p>Pointer Aliasing 注意同一块区域操作，比如A=A*B（都是矩阵）时，如果直接算会出问题，因为算后面的会依赖前面的值。</p></li>
+<li>Safe Dynamic allocation: 可能会出现没有足够多的内存进行分配，要么是因为数组下标越界或者为负数，要么是因为没有足够多的物理内存。可以通过抛出异常</li>
+</ul>
+<pre><code>double *p_x;
+p_x=new double[10000];
+assert(p_x!=NULL)</code></pre>
+<p>进行检测。</p>
+<ul>
+<li>Every new Has a delete
+在动态分配内存的时候要注意，所有分配的内存都需要被释放。当在循环内部使用动态分配内存的时候，这个问题尤其值得注意。比如：</li>
+</ul>
+<pre><code>for (int i=0; i&lt;10000; i++) 
+{ 
+  double ** A; 
+  A = new double * [50]; 
+  for (int j=0; j&lt;50; j++) 
+  {
+    A[j] = new double [50]; 
+  } 
+}</code></pre>
+<p>这样每次运行这样的代码，新的内存就会被分配。但是不会释放。于是每次运行这段程序，就有一块内存不再可用。如果没有垃圾处理机制的话，内存就会很快被占满。</p>
+</div>
+<div id="functions" class="section level2">
+<h2><span class="header-section-number">16.5</span> Functions</h2>
+<div id="use-of-pointers-as-function-arguments." class="section level3">
+<h3><span class="header-section-number">16.5.1</span> Use of Pointers as function arguments.</h3>
+<p>100页完成。明天继续100页看完。</p>
+</div>
+</div>
+<div id="classess" class="section level2">
+<h2><span class="header-section-number">16.6</span> Classess</h2>
+<div id="header-files" class="section level3">
+<h3><span class="header-section-number">16.6.1</span> Header Files</h3>
+<p>应该对引入头文件非常小心。如果include了多次会造成问题。特别是在多个cpp文件上工作时，不经意间就会造成一些问题。为了防止多次included，需要如下的代码：
+如果没有被定义，则定义。也就是加一个if语句
+使用宏<code>#ifndef</code>如果没有被定义，然后通过<code>#endif</code>结束：</p>
+<pre><code>#ifndef EXAMPLECLASSHEADERDEF // only if macro
+                              // EXAMPLECLASSHEADERDEF not
+                              // defined execute lines of 
+                              // code until #endif 
+                              // statement
+
+#define EXAMPLECLASSHEADERDEF // define the macro 
+                              // EXAMPLECLASSHEADERDEF.
+                              // Ensures that this code is 
+                              // only compiled once, no 
+                              // matter how many times it 
+                              // is included 
+class ExampleClass 
+{ 
+  lines of code // 
+  body of header file 
+};
+#endif // need one of these for every #ifndef statement
+</code></pre>
+</div>
+</div>
+<div id="using-makefiles-to-compile-multiple-files" class="section level2">
+<h2><span class="header-section-number">16.7</span> Using Makefiles to Compile Multiple Files</h2>
+<p>P94 of <em>Guide to Scientific Computing in C++</em></p>
+<p>目的：We would rather not compile all of these classes separately every time one file is modified slightly.</p>
+<pre><code>Class1.o : Class1.cpp Class1.hpp
+        g++ -c -O Class1.cpp
+
+Class1.o : Class1.cpp Class1.hpp 
+          g++ -c -O Class1.cpp 
+Class2.o : Class2.cpp Class2.hpp
+          g++ -c -O Class2.cpp 
+UseClasses.o : UseClasses.cpp Class1.hpp Class2.hpp
+          g++ -c -O UseClasses.cpp 
+UseClasses : Class1.o Class2.o UseClasses.o
+          g++ -O -o UseClasses Class1.o Class2.o UseClasses.o</code></pre>
+<p>定义一个类：</p>
+<pre><code>#ifndef COMPLEXNUMBERHEADERDEF 
+#define COMPLEXNUMBERHEADERDEF
+//&gt;&gt;&gt;&gt;&gt;如果没定义的话，就定义
+#include &lt;iostream&gt;
+
+class ComplexNumber { 
+private:
+  double mRealPart; 
+  //real part
+  double mImaginaryPart; 
+  //imaginary part大概是虚数部分？
+public:
+  ComplexNumber(); //初始化函数，让实部和虚部为0
+  ComplexNumber(double x, double y); 
+  double CalculateModulus() const; // 返回一个双精度浮点数包含了这个复数的模
+  double CalculateArgument() const;// 
+  ComplexNumber CalculatePower(double n) const; 
+  ComplexNumber&amp; operator=(const ComplexNumber&amp; z); //这个是&amp;的要注意，做了运算符重载？
+  ComplexNumber operator-() const; 
+  ComplexNumber operator+(const ComplexNumber&amp; z) const; 
+  ComplexNumber operator-(const ComplexNumber&amp; z) const; 
+  friend std::ostream&amp; operator&lt;&lt;(std::ostream&amp; output, 
+                                  const ComplexNumber&amp; z);
+
+}; 
+
+#endif</code></pre>
+<p>一个新的东西：</p>
+<pre><code>ComplexNumber&amp; ComplexNumber::
+               operator=(const ComplexNumber&amp; z)
+{
+    mRealPart = z.mRealPart; 
+    mImaginaryPart = z.mImaginaryPart; 
+    return * this;
+}</code></pre>
+<p>这里面出现了两个&amp;，需要看一眼是啥意思：
+这里是运算符重载，重载了“=”运算符
+用了 const 保证这个赋值时是拷贝而不是alter重名
+所以返回的是这个类自己的地址。
+然后因为是赋值，所以指向了给定值，然后给了一个const，所以不会被改变。
+下面的“-”的重载就没用取地址和指针，这个“-”是取符号不是“减”。</p>
+<pre><code>ComplexNumber ComplexNumber::operator-() const 
+{
+  ComplexNumber w;
+  w.mRealPart = -mRealPart;
+  w.mImaginaryPart = -mImaginaryPart;
+  return w; 
+}</code></pre>
+<p>然后
+是加运算符</p>
+<pre><code>// Overloading the binary + operator 
+ComplexNumber ComplexNumber::operator+(const ComplexNumber&amp; z) const 
+{
+    ComplexNumber w;
+    w.mRealPart = mRealPart + z.mRealPart;
+    w.mImaginaryPart = mImaginaryPart + z.mImaginaryPart;
+    return w; 
+}</code></pre>
+<p>这里的参数又用了const ComplexNumber&amp; z
+Point &amp;pt2=pt1; 定义了pt2为pt1的引用。通过这样的定义，pt1和pt2表示同一对象。
+所以大部分都是引用的感觉。。。</p>
+<p>所以上面是引用了z，所以是z的正常调用（而且不能更改z），然后把值丢到一个新的w里面。
+这叫常引用，可以不开辟新的内存空间，而又不会影响原值。</p>
+</div>
+<div id="section-16.8" class="section level2">
+<h2><span class="header-section-number">16.8</span> 类的继承</h2>
+<pre><code>#ifndef EBOOKHEADERDEF 
+#define EBOOKHEADERDEF
+
+#include &lt;string&gt; 
+#include &quot;Book.hpp&quot; 
+class Ebook: public Book 
+{ 
+public:
+  Ebook();
+  std::string hiddenUrl; 
+}; 
+#endif</code></pre>
+<p>这是继承的基础语法
+新的东西是覆盖了初始构造函数的新构造函数Ebook()，和一个std::string的类成员hiddenUrl.</p>
+<p><a href="https://www.cnblogs.com/qlwy/archive/2011/08/25/2153584.html">三种继承的解释</a></p>
+<div id="-run-time-polymorphism" class="section level3">
+<h3><span class="header-section-number">16.8.1</span> 继承类的实时多态 Run-Time Polymorphism</h3>
+<pre><code>#ifndef GUESTDEF 
+#define GUESTDEF
+
+#include &lt;string&gt;
+
+class Guest 
+{ 
+public:
+  std::string name, roomType, arrivalDate;
+  int numberOfNights;
+  double telephoneBill;
+  virtual double CalculateBill(); 
+ };
+
+#endif
+</code></pre>
+<p>关注点在virtual关键字，是告诉编译器这个方法可能被继承的类覆盖了。
+这就是虚函数了。。</p>
+</div>
+</div>
+<div id="section-16.9" class="section level2">
+<h2><span class="header-section-number">16.9</span> 模板</h2>
+<p><a href="https://www.cnblogs.com/JMLiu/p/7928425.html">函数返回引用和返回值的区别</a>，关键就是有没有多搞一个零时变量。</p>
+<p>一个简单的模板的例子:</p>
+<pre><code>#include &lt;iostream&gt;
+
+template&lt;class T&gt; T GetMaximum(T number1, T number2); 
+
+int main(int argc, char * argv[])
+{ 
+    std::cout &lt;&lt; GetMaximum&lt;int&gt;(10, -2) &lt;&lt; &quot;\n&quot;; 
+    std::cout &lt;&lt; GetMaximum&lt;double&gt;(-4.6, 3.5) &lt;&lt; &quot;\n&quot;; return 0; 
+}
+
+template&lt;class T&gt; T GetMaximum(T number1, T number2) 
+{ 
+    T result; 
+    if (number1 &gt; number2) 
+    { 
+        result = number1; 
+    } 
+    else 
+    { 
+        //number1 &lt;= number2 
+        result = number2; 
+    }
+    return result;
+}</code></pre>
+<p>相当于T是占位符，然后使用的时候用尖括号&lt;&gt;把类型告诉程序。</p>
+<div id="brief-survey-of-the-standard-template-library" class="section level3">
+<h3><span class="header-section-number">16.9.1</span> Brief Survey of the Standard Template Library</h3>
+<div id="vector-1" class="section level4">
+<h4><span class="header-section-number">16.9.1.1</span> Vector</h4>
+</div>
+</div>
+</div>
+<div id="class-for-linear-algebra" class="section level2">
+<h2><span class="header-section-number">16.10</span> Class for linear algebra</h2>
+<p>每个new 需要匹配一个 delete.</p>
+
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="imputation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="r-web-scrape.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="r-web-scrape.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rcpp.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
