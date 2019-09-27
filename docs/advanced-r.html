@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-07-31">
+<meta name="date" content="2019-09-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -138,6 +138,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#section-2.2"><i class="fa fa-check"></i><b>2.2</b> 密度变换公式：</a></li>
 <li class="chapter" data-level="2.3" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#probability-mass-function"><i class="fa fa-check"></i><b>2.3</b> Probability mass function:</a></li>
 <li class="chapter" data-level="2.4" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#vector-to-diagonal-matrix"><i class="fa fa-check"></i><b>2.4</b> Vector to diagonal matrix:</a></li>
+<li class="chapter" data-level="2.5" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#gaussian-integral-trick"><i class="fa fa-check"></i><b>2.5</b> Gaussian Integral Trick</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>3</b> Statistician Tool Box</a><ul>
 <li class="chapter" data-level="3.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>3.1</b> Matrix algebra</a><ul>
@@ -287,7 +288,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="16.10" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#class-for-linear-algebra"><i class="fa fa-check"></i><b>16.10</b> Class for linear algebra</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>17</b> Rcpp</a></li>
+<li class="chapter" data-level="17" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>17</b> Rcpp</a><ul>
+<li class="chapter" data-level="17.1" data-path="rcpp.html"><a href="rcpp.html#rarmadillo"><i class="fa fa-check"></i><b>17.1</b> 一个R操作对应的armadillo操作的文档：</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="statistical-computing.html"><a href="statistical-computing.html"><i class="fa fa-check"></i><b>18</b> Statistical Computing</a><ul>
+<li class="chapter" data-level="18.1" data-path="statistical-computing.html"><a href="statistical-computing.html#generate-multivariate-normal-samples"><i class="fa fa-check"></i><b>18.1</b> Generate Multivariate Normal samples</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="statistic-term.html"><a href="statistic-term.html"><i class="fa fa-check"></i><b>19</b> Statistic term</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -373,18 +380,18 @@ df2[<span class="kw">order</span>(df2<span class="op">$</span>x),]</code></pre>
 <pre><code>##   z y x
 ## 2 b 5 1
 ## 1 a 6 1
-## 4 d 3 2
 ## 3 c 4 2
+## 4 d 3 2
 ## 6 f 1 3
 ## 5 e 2 3</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df2[,<span class="kw">order</span>(<span class="kw">names</span>(df2))]</code></pre>
 <pre><code>##   x y z
-## 4 2 3 d
-## 3 2 4 c
 ## 6 3 1 f
 ## 2 1 5 b
+## 5 3 2 e
+## 3 2 4 c
 ## 1 1 6 a
-## 5 3 2 e</code></pre>
+## 4 2 3 d</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">df=<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">y=</span><span class="dv">3</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">z=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</code></pre>
 </div>
 <div id="calling-a-function-given-a-list-of-arguments" class="section level3">

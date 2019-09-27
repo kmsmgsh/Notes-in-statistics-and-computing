@@ -35,3 +35,21 @@ D=\sum_{i=1}^{n} E_{i} v e_{i}
 $$
 D is the diagonal matrix with its entry is vector $v$.
 
+
+
+## Gaussian Integral Trick
+
+From the blog [Gaussian integral Trick](http://blog.shakirm.com/2015/08/machine-learning-trick-of-the-day-2-gaussian-integral-trick/) , there are many aspects in this blog, here is the most useful for me part:
+$$
+\int \exp \left(-a y^{2}+x y\right) d y=\sqrt{\frac{\pi}{a}} \exp \left(\frac{1}{4 a} x^{2}\right)
+$$
+
+Using this technique, we can prove the "Objective Bayesian Methods for Model Selection: Introduction and Comparison" example under difficulty 3 that vague proper prior usually gives bad answers. Vague parameters usually have strongly influence on the Bayes factor.
+
+
+
+
+
+
+
+

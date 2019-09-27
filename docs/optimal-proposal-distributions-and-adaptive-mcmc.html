@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-07-31">
+<meta name="date" content="2019-09-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -138,6 +138,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#section-2.2"><i class="fa fa-check"></i><b>2.2</b> 密度变换公式：</a></li>
 <li class="chapter" data-level="2.3" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#probability-mass-function"><i class="fa fa-check"></i><b>2.3</b> Probability mass function:</a></li>
 <li class="chapter" data-level="2.4" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#vector-to-diagonal-matrix"><i class="fa fa-check"></i><b>2.4</b> Vector to diagonal matrix:</a></li>
+<li class="chapter" data-level="2.5" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#gaussian-integral-trick"><i class="fa fa-check"></i><b>2.5</b> Gaussian Integral Trick</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>3</b> Statistician Tool Box</a><ul>
 <li class="chapter" data-level="3.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>3.1</b> Matrix algebra</a><ul>
@@ -287,7 +288,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="16.10" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#class-for-linear-algebra"><i class="fa fa-check"></i><b>16.10</b> Class for linear algebra</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>17</b> Rcpp</a></li>
+<li class="chapter" data-level="17" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>17</b> Rcpp</a><ul>
+<li class="chapter" data-level="17.1" data-path="rcpp.html"><a href="rcpp.html#rarmadillo"><i class="fa fa-check"></i><b>17.1</b> 一个R操作对应的armadillo操作的文档：</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="statistical-computing.html"><a href="statistical-computing.html"><i class="fa fa-check"></i><b>18</b> Statistical Computing</a><ul>
+<li class="chapter" data-level="18.1" data-path="statistical-computing.html"><a href="statistical-computing.html#generate-multivariate-normal-samples"><i class="fa fa-check"></i><b>18.1</b> Generate Multivariate Normal samples</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="statistic-term.html"><a href="statistic-term.html"><i class="fa fa-check"></i><b>19</b> Statistic term</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -403,7 +410,7 @@ Here the extra term <span class="math inline">\(\frac{\sigma^2}{2}\nabla \log \p
 <p>Consider the case as <span class="math inline">\(d=10\)</span>. Target density <span class="math inline">\(\pi\)</span> is ten-dimensional normal with some covariance matrix <span class="math inline">\(\Sigma\)</span>.</p>
 <p>Let M be the <span class="math inline">\(d\times d\)</span> matrix having diagonal elements 1, and off-diagonal elements given by the product of the row and column number divided by <span class="math inline">\(d^2\)</span>, that is, <span class="math inline">\(m_{ii}=1\)</span>, and <span class="math inline">\(m_{ij}=ij/d^2\)</span> for <span class="math inline">\(j\neq i\)</span>. Then let <span class="math inline">\(\Sigma^{-1}=M^2\)</span>. Then let <span class="math inline">\(\Sigma^{-1}=M^{2}\)</span> (since M is symmetrix, <span class="math inline">\(\Sigma\)</span> is positive-definite), and let the target density <span class="math inline">\(\pi\)</span> be that of <span class="math inline">\(N(0,\Sigma)\)</span>.</p>
 <p>The result of arthor is</p>
-<p><img src="pic/MHAtable.png" /><!-- --></p>
+<p><img src="pic/MHAtable.png" width="274" /></p>
 <p>This result showed that if the sigma is too small (0.1), or too large(3.0), the result will be poor. The best medium select is with accept rate around 0.234.</p>
 <p>Then this confirms that, when scaling the increment covariance as <span class="math inline">\(\sigma I_d\)</span>, it is optimal to find <span class="math inline">\(\sigma\)</span> to make the acceptance rate close to 0.234.</p>
 </div>

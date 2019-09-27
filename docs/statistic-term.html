@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 5 统计图形笔记 | Notes on Statistics</title>
+  <title>Chapter 19 Statistic term | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 5 统计图形笔记 | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 19 Statistic term | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 5 统计图形笔记 | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 19 Statistic term | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="longitudinal-data-analysis.html">
-<link rel="next" href="basicmcmc.html">
+<link rel="prev" href="statistical-computing.html">
+
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -315,32 +315,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="section-5" class="section level1">
-<h1><span class="header-section-number">Chapter 5</span> 统计图形笔记</h1>
-<p>使用 <code>palette()</code> 进行批量获得色彩
-比如说</p>
-<pre class="sourceCode r"><code class="sourceCode r">x=<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)
-<span class="kw">plot</span>(x,x,<span class="dt">type=</span><span class="st">&#39;l&#39;</span>,<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>) {
-  <span class="kw">lines</span>(x,i<span class="op">*</span>x,<span class="dt">type =</span> <span class="st">&#39;l&#39;</span>,<span class="dt">col=</span><span class="kw">palette</span>()[i])
-}</code></pre>
-<p><img src="Notes_in_statistics_and_computing_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
-<p>可以使用<code>adjustcolor(palette()[i], alpha.f = 0.5)</code> 给上述色彩增加透明度
-例如:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(x,x,<span class="dt">type=</span><span class="st">&#39;l&#39;</span>,<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))
-<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>) {
-  <span class="kw">lines</span>(x,i<span class="op">*</span>x,<span class="dt">type =</span> <span class="st">&#39;l&#39;</span>,<span class="dt">col=</span><span class="kw">adjustcolor</span>(<span class="kw">palette</span>()[i], <span class="dt">alpha.f =</span> <span class="fl">0.3</span>))
-}</code></pre>
-<p><img src="Notes_in_statistics_and_computing_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div id="statistic-term" class="section level1">
+<h1><span class="header-section-number">Chapter 19</span> Statistic term</h1>
+<ul>
+<li>over-dispersion
+来自于<a href="https://en.wikipedia.org/wiki/Overdispersion">wikipedia</a>, over-dispersion(过散布)的意思是，观测数据的高阶矩（一般指二阶，也就是方差），比模型的高阶矩大。
+维基中说的更多更细。回忆如下：
+对于任意数据，分析过程经常拿一个参数模型进行拟合，而参数模型需要满足一定的条件。最简单的就是模型的均值要等于观测数据的均值。而对于一些简单的模型，高阶矩不一定和均值一样会相等。而对于观测数据的方差大于模型的方差，那就叫过散布。反过来则是under-dispersion。</li>
+</ul>
+<p>比如说对于泊松模型，模型就只有一个参数，均值和方差都用<span class="math inline">\(\lambda\)</span>建模。而实际情况中均值很难等于方差。如果使用泊松模型对数据建模，产生了过散布，则这样就需要使用更复杂的模型，比如Poisson mixture model。</p>
+<ul>
+<li>Saturated-model</li>
+</ul>
+<p>来自于<a href="https://stats.stackexchange.com/questions/283/what-is-a-saturated-model">stack-exchange</a>
+简单的用一句话来说就是估计参数个数接近观测个数的模型就称之为 saturated-model.</p>
+<ul>
+<li>Inclusion Probability</li>
+</ul>
+<p>也叫<a href="https://en.wikipedia.org/wiki/Sampling_probability">Sample probability</a>
+在有限总体中抽样，一个元素的sampling probability(inclusion probability)，被一次抽样抽出来的概率。</p>
 
+<div id="refs" class="references">
+<div>
+<p>Andrieu, Christophe, and Johannes Thoms. 2008. “A tutorial on adaptive MCMC.” <em>Statistics and Computing</em> 18 (4): 343–73.</p>
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="longitudinal-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="basicmcmc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="statistical-computing.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

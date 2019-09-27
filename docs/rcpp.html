@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-07-31">
+<meta name="date" content="2019-09-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
   
   
 <link rel="prev" href="guide-to-scientific-computing-in-c.html">
-
+<link rel="next" href="statistical-computing.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -138,6 +138,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#section-2.2"><i class="fa fa-check"></i><b>2.2</b> 密度变换公式：</a></li>
 <li class="chapter" data-level="2.3" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#probability-mass-function"><i class="fa fa-check"></i><b>2.3</b> Probability mass function:</a></li>
 <li class="chapter" data-level="2.4" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#vector-to-diagonal-matrix"><i class="fa fa-check"></i><b>2.4</b> Vector to diagonal matrix:</a></li>
+<li class="chapter" data-level="2.5" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#gaussian-integral-trick"><i class="fa fa-check"></i><b>2.5</b> Gaussian Integral Trick</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>3</b> Statistician Tool Box</a><ul>
 <li class="chapter" data-level="3.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>3.1</b> Matrix algebra</a><ul>
@@ -287,7 +288,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="16.10" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#class-for-linear-algebra"><i class="fa fa-check"></i><b>16.10</b> Class for linear algebra</a></li>
 </ul></li>
-<li class="chapter" data-level="17" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>17</b> Rcpp</a></li>
+<li class="chapter" data-level="17" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>17</b> Rcpp</a><ul>
+<li class="chapter" data-level="17.1" data-path="rcpp.html"><a href="rcpp.html#rarmadillo"><i class="fa fa-check"></i><b>17.1</b> 一个R操作对应的armadillo操作的文档：</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="statistical-computing.html"><a href="statistical-computing.html"><i class="fa fa-check"></i><b>18</b> Statistical Computing</a><ul>
+<li class="chapter" data-level="18.1" data-path="statistical-computing.html"><a href="statistical-computing.html#generate-multivariate-normal-samples"><i class="fa fa-check"></i><b>18.1</b> Generate Multivariate Normal samples</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="statistic-term.html"><a href="statistic-term.html"><i class="fa fa-check"></i><b>19</b> Statistic term</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -374,11 +381,57 @@ ReceiveAlist(list(beta=1,gamma=1,xi=1))
                             );
 }</code></pre>
 <p>这就能返回一个R的数据结构list，接口的问题就基本上解决了。</p>
+<div id="rarmadillo" class="section level2">
+<h2><span class="header-section-number">17.1</span> 一个R操作对应的armadillo操作的文档：</h2>
+<p><a href="https://github.com/petewerner/misc/wiki/RcppArmadillo-cheatsheet#cbind_mat" class="uri">https://github.com/petewerner/misc/wiki/RcppArmadillo-cheatsheet#cbind_mat</a></p>
+<ul>
+<li>rbind/cbind，由vector组成matrix：</li>
+</ul>
+<p>cbind:</p>
+<pre><code>//[[Rcpp::export]]
+arma::mat armadillo_joint_rows_test(arma::vec x1,arma::vec x2)
+{
+  return arma::join_rows(x1,x2);
+}</code></pre>
+<p>rbind</p>
+<pre><code>//[[Rcpp::export]]
+arma::mat armadillo_joint_cols_test(arma::vec x1,arma::vec x2)
+{
+  return arma::join_cols(x1,x2);
+}</code></pre>
+<p>值得注意的是这两个函数的r和c是反的，大概是bind函数是把“row”bind或者把“column”bind,而join函数是把内容以“row”或者“column”方向进行join。</p>
+<ul>
+<li>c++中用引用的一个坑</li>
+</ul>
+<hr />
+<p>引用在定义时必须初始化，否则编译时便会报错。如果类（自定义类型）的成员是引用类型，需要注意一些问题。</p>
+<p>不能有默认构造函数，必须提供构造函数
+凡是有引用类型的成员变量的类，不能有缺省构造函数。默认构造函数没有对引用成员提供默认的初始化机制，也因此造成引用未初始化的编译错误。</p>
+<p>构造函数的形参必须为引用类型
+暂时还不知道该怎么解释，牵涉到引用的机制。</p>
+<p>初始化必须在成员初始化链表内完成
+不能直接在构造函数里初始化，必须用到初始化列表，且形参也必须是引用类型。构造函数分为初始化和计算两个阶段，前者对应成员初始化链表，后者对应构造函数函数体。引用必须在初始化阶段，也即在成员初始化链表中完成，否则编译时会报错（引用未初始化）。</p>
+<table style="width:32%;">
+<colgroup>
+<col width="31%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left">上面那段话来自：
+版权声明：本文为CSDN博主「lazyq7」的原创文章，遵循CC 4.0 by-sa版权协议，转载请附上原文出处链接及本声明。
+原文链接：<a href="https://blog.csdn.net/lazyq7/article/details/48186291" class="uri">https://blog.csdn.net/lazyq7/article/details/48186291</a></td>
+</tr>
+</tbody>
+</table>
+<p>开发记录之抽象类和子类实现。
+对c++版的BayesJMCM的解析
+类jmcm_evaluator里面对抽象类prior的引用是写成</p>
+<pre><code>class prior&amp; prior_beta</code></pre>
+<p>是一个引用。
+在测试文档中，如果使用统一的初始化函数，则会出现class prior的子类的实现mvn_prior的作用域只是在初始化函数内部，所以，返回jmcm_mcd_evaluator的实例中，就不包括prior的实例。
+则这个引用绑定的类实例，在当初始化函数返回以后就被释放了，所以引用就失效了。这时候再调用这个引用，r就崩溃了。
+所以在接口函数里面，得手动初始化prior然后保留实例。</p>
 
-<div id="refs" class="references">
-<div>
-<p>Andrieu, Christophe, and Johannes Thoms. 2008. “A tutorial on adaptive MCMC.” <em>Statistics and Computing</em> 18 (4): 343–73.</p>
-</div>
 </div>
 </div>
             </section>
@@ -386,8 +439,8 @@ ReceiveAlist(list(beta=1,gamma=1,xi=1))
           </div>
         </div>
       </div>
-<a href="guide-to-scientific-computing-in-c.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="guide-to-scientific-computing-in-c.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="statistical-computing.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
