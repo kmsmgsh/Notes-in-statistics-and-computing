@@ -5,11 +5,11 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 15 R web scrape | Notes on Statistics</title>
+  <title>Chapter 16 R web scrape | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
   <meta name="generator" content="bookdown  and GitBook 2.6.7">
 
-  <meta property="og:title" content="Chapter 15 R web scrape | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 16 R web scrape | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,7 +17,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 15 R web scrape | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 16 R web scrape | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -25,14 +25,14 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-09-23">
+<meta name="date" content="2019-10-23">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="references.html">
+<link rel="prev" href="simulation-approach-for-computing-the-marginal-likelihood.html">
 <link rel="next" href="guide-to-scientific-computing-in-c.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -139,45 +139,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.3" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#probability-mass-function"><i class="fa fa-check"></i><b>2.3</b> Probability mass function:</a></li>
 <li class="chapter" data-level="2.4" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#vector-to-diagonal-matrix"><i class="fa fa-check"></i><b>2.4</b> Vector to diagonal matrix:</a></li>
 <li class="chapter" data-level="2.5" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#gaussian-integral-trick"><i class="fa fa-check"></i><b>2.5</b> Gaussian Integral Trick</a></li>
+<li class="chapter" data-level="2.6" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#asymptotic-issues"><i class="fa fa-check"></i><b>2.6</b> Asymptotic issues</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>3</b> Statistician Tool Box</a><ul>
-<li class="chapter" data-level="3.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>3.1</b> Matrix algebra</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>3.1.1</b> Block diagonal matrices</a></li>
+<li class="chapter" data-level="3" data-path="general-notes.html"><a href="general-notes.html"><i class="fa fa-check"></i><b>3</b> General Notes</a><ul>
+<li class="chapter" data-level="3.1" data-path="general-notes.html"><a href="general-notes.html#section-3.1"><i class="fa fa-check"></i><b>3.1</b> 台湾教授彭明辉教授的研究生手册</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="general-notes.html"><a href="general-notes.html#section-3.1.1"><i class="fa fa-check"></i><b>3.1.1</b> 读论文的要求</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#sumSquare"><i class="fa fa-check"></i><b>3.2</b> 两个二次型相加</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>4</b> Longitudinal data analysis</a><ul>
-<li class="chapter" data-level="4.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>4.1</b> Linear mixed model</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#condition-mean-vs-marginal-mean"><i class="fa fa-check"></i><b>4.1.1</b> Condition Mean vs Marginal mean</a></li>
-<li class="chapter" data-level="4.1.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#restricted-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>4.1.2</b> Restricted maximum likelihood estimation</a></li>
-<li class="chapter" data-level="4.1.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#prediction"><i class="fa fa-check"></i><b>4.1.3</b> Prediction</a></li>
+<li class="chapter" data-level="4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>4</b> Statistician Tool Box</a><ul>
+<li class="chapter" data-level="4.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>4.1</b> Matrix algebra</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>4.1.1</b> Block diagonal matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#generalised-linear-mixed-models"><i class="fa fa-check"></i><b>4.2</b> Generalised linear mixed models</a><ul>
-<li class="chapter" data-level="4.2.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#expFam"><i class="fa fa-check"></i><b>4.2.1</b> Exponential distribution family</a></li>
-<li class="chapter" data-level="4.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>4.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
-<li class="chapter" data-level="4.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>4.2.3</b> GLMMs</a></li>
+<li class="chapter" data-level="4.2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#sumSquare"><i class="fa fa-check"></i><b>4.2</b> 两个二次型相加</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>4.3</b> The Bayesian analysis approach for covariance modelling</a></li>
+<li class="chapter" data-level="5" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Longitudinal data analysis</a><ul>
+<li class="chapter" data-level="5.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>5.1</b> Linear mixed model</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#condition-mean-vs-marginal-mean"><i class="fa fa-check"></i><b>5.1.1</b> Condition Mean vs Marginal mean</a></li>
+<li class="chapter" data-level="5.1.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#restricted-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>5.1.2</b> Restricted maximum likelihood estimation</a></li>
+<li class="chapter" data-level="5.1.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#prediction"><i class="fa fa-check"></i><b>5.1.3</b> Prediction</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="section-5.html"><a href="section-5.html"><i class="fa fa-check"></i><b>5</b> 统计图形笔记</a></li>
-<li class="chapter" data-level="6" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>6</b> BasicMCMC</a><ul>
-<li class="chapter" data-level="6.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>6.1</b> Metropolis-Hastings Update</a><ul>
-<li class="chapter" data-level="6.1.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-update"><i class="fa fa-check"></i><b>6.1.1</b> Metropolis Update</a></li>
+<li class="chapter" data-level="5.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#generalised-linear-mixed-models"><i class="fa fa-check"></i><b>5.2</b> Generalised linear mixed models</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#expFam"><i class="fa fa-check"></i><b>5.2.1</b> Exponential distribution family</a></li>
+<li class="chapter" data-level="5.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>5.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
+<li class="chapter" data-level="5.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>5.2.3</b> GLMMs</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>6.2</b> The Gibbs Update</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="basicmcmc.html"><a href="basicmcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>6.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
-<li class="chapter" data-level="6.2.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>6.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
-<li class="chapter" data-level="6.2.3" data-path="basicmcmc.html"><a href="basicmcmc.html#gibbs-full-conditional-distibution"><i class="fa fa-check"></i><b>6.2.3</b> Gibbs Full conditional distibution</a></li>
+<li class="chapter" data-level="5.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>5.3</b> The Bayesian analysis approach for covariance modelling</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="basicmcmc.html"><a href="basicmcmc.html#combining-updates"><i class="fa fa-check"></i><b>6.3</b> Combining Updates</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="basicmcmc.html"><a href="basicmcmc.html#composition"><i class="fa fa-check"></i><b>6.3.1</b> Composition</a></li>
-<li class="chapter" data-level="6.3.2" data-path="basicmcmc.html"><a href="basicmcmc.html#palindromic-composition"><i class="fa fa-check"></i><b>6.3.2</b> Palindromic Composition</a></li>
-<li class="chapter" data-level="6.3.3" data-path="basicmcmc.html"><a href="basicmcmc.html#state-independent-mixing"><i class="fa fa-check"></i><b>6.3.3</b> State-Independent Mixing</a></li>
-<li class="chapter" data-level="6.3.4" data-path="basicmcmc.html"><a href="basicmcmc.html#subsampling"><i class="fa fa-check"></i><b>6.3.4</b> Subsampling</a></li>
+<li class="chapter" data-level="6" data-path="section-6.html"><a href="section-6.html"><i class="fa fa-check"></i><b>6</b> 统计图形笔记</a></li>
+<li class="chapter" data-level="7" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>7</b> BasicMCMC</a><ul>
+<li class="chapter" data-level="7.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>7.1</b> Metropolis-Hastings Update</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-update"><i class="fa fa-check"></i><b>7.1.1</b> Metropolis Update</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="basicmcmc.html"><a href="basicmcmc.html#a-metropolis-example"><i class="fa fa-check"></i><b>6.4</b> A Metropolis Example</a></li>
+<li class="chapter" data-level="7.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>7.2</b> The Gibbs Update</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="basicmcmc.html"><a href="basicmcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>7.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
+<li class="chapter" data-level="7.2.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>7.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
+<li class="chapter" data-level="7.2.3" data-path="basicmcmc.html"><a href="basicmcmc.html#gibbs-full-conditional-distibution"><i class="fa fa-check"></i><b>7.2.3</b> Gibbs Full conditional distibution</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="r-trick.html"><a href="r-trick.html"><i class="fa fa-check"></i><b>7</b> R trick</a></li>
+<li class="chapter" data-level="7.3" data-path="basicmcmc.html"><a href="basicmcmc.html#combining-updates"><i class="fa fa-check"></i><b>7.3</b> Combining Updates</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="basicmcmc.html"><a href="basicmcmc.html#composition"><i class="fa fa-check"></i><b>7.3.1</b> Composition</a></li>
+<li class="chapter" data-level="7.3.2" data-path="basicmcmc.html"><a href="basicmcmc.html#palindromic-composition"><i class="fa fa-check"></i><b>7.3.2</b> Palindromic Composition</a></li>
+<li class="chapter" data-level="7.3.3" data-path="basicmcmc.html"><a href="basicmcmc.html#state-independent-mixing"><i class="fa fa-check"></i><b>7.3.3</b> State-Independent Mixing</a></li>
+<li class="chapter" data-level="7.3.4" data-path="basicmcmc.html"><a href="basicmcmc.html#subsampling"><i class="fa fa-check"></i><b>7.3.4</b> Subsampling</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="basicmcmc.html"><a href="basicmcmc.html#a-metropolis-example"><i class="fa fa-check"></i><b>7.4</b> A Metropolis Example</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html"><i class="fa fa-check"></i><b>8</b> Reversible Jump MCMC</a><ul>
 <li class="chapter" data-level="8.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#introduction"><i class="fa fa-check"></i><b>8.1</b> Introduction</a><ul>
 <li class="chapter" data-level="8.1.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#from-metropolis-hastings-to-reversible-jump"><i class="fa fa-check"></i><b>8.1.1</b> From Metropolis-Hastings to Reversible Jump</a></li>
@@ -252,6 +257,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a><ul>
 <li class="chapter" data-level="11.3.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#empirical-bayes-by-marginal-maximum-likelihood"><i class="fa fa-check"></i><b>11.3.1</b> Empirical Bayes by Marginal Maximum Likelihood</a></li>
 </ul></li>
+<li class="chapter" data-level="11.4" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#bayesian-asymptotically-analysis"><i class="fa fa-check"></i><b>11.4</b> Bayesian asymptotically analysis</a></li>
+<li class="chapter" data-level="11.5" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#bayes-factor"><i class="fa fa-check"></i><b>11.5</b> Bayes factor</a><ul>
+<li class="chapter" data-level="11.5.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#marginal-density-"><i class="fa fa-check"></i><b>11.5.1</b> Marginal density 居然可以这么来使</a></li>
+<li class="chapter" data-level="11.5.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#section-11.5.2"><i class="fa fa-check"></i><b>11.5.2</b> 几个需要可能研究的玩意</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
 <li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
@@ -264,37 +274,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="13" data-path="numeric-derivatives.html"><a href="numeric-derivatives.html"><i class="fa fa-check"></i><b>13</b> Numeric Derivatives</a></li>
 <li class="chapter" data-level="14" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>14</b> Imputation</a></li>
+<li class="chapter" data-level="15" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html"><i class="fa fa-check"></i><b>15</b> Simulation approach for computing the marginal likelihood</a><ul>
+<li class="chapter" data-level="15.1" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#laplace-metropolis-approximation"><i class="fa fa-check"></i><b>15.1</b> Laplace-Metropolis approximation</a></li>
+<li class="chapter" data-level="15.2" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#laplace-metropolis-approximation-1"><i class="fa fa-check"></i><b>15.2</b> Laplace-Metropolis approximation</a></li>
+<li class="chapter" data-level="15.3" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#chibs-estimator-from-gibbss-sampling"><i class="fa fa-check"></i><b>15.3</b> Chib’s estimator from Gibbs’s sampling</a></li>
+<li class="chapter" data-level="15.4" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#example-seemingly-unrelated-regression-model-with-informative-prior."><i class="fa fa-check"></i><b>15.4</b> Example: Seemingly unrelated regression model with informative prior.</a></li>
+<li class="chapter" data-level="15.5" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#bridge-sampling-methods"><i class="fa fa-check"></i><b>15.5</b> Bridge sampling methods</a></li>
+<li class="chapter" data-level="15.6" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#the-savage-dickey-density-ratio-approach"><i class="fa fa-check"></i><b>15.6</b> The savage-Dickey density ratio approach</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="r-web-scrape.html"><a href="r-web-scrape.html"><i class="fa fa-check"></i><b>16</b> R web scrape</a></li>
+<li class="chapter" data-level="17" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html"><i class="fa fa-check"></i><b>17</b> Guide to Scientific Computing in C++</a><ul>
+<li class="chapter" data-level="17.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#basics"><i class="fa fa-check"></i><b>17.1</b> Basics</a></li>
+<li class="chapter" data-level="17.2" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#basics-in-c"><i class="fa fa-check"></i><b>17.2</b> Basics in C++</a></li>
+<li class="chapter" data-level="17.3" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#redirect-console-output-to-file"><i class="fa fa-check"></i><b>17.3</b> Redirect Console Output to File</a><ul>
+<li class="chapter" data-level="17.3.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#reading-from-the-command-line"><i class="fa fa-check"></i><b>17.3.1</b> Reading from the Command Line</a></li>
+</ul></li>
+<li class="chapter" data-level="17.4" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#pointer"><i class="fa fa-check"></i><b>17.4</b> Pointer</a></li>
+<li class="chapter" data-level="17.5" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#functions"><i class="fa fa-check"></i><b>17.5</b> Functions</a><ul>
+<li class="chapter" data-level="17.5.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#use-of-pointers-as-function-arguments."><i class="fa fa-check"></i><b>17.5.1</b> Use of Pointers as function arguments.</a></li>
+</ul></li>
+<li class="chapter" data-level="17.6" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#classess"><i class="fa fa-check"></i><b>17.6</b> Classess</a><ul>
+<li class="chapter" data-level="17.6.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#header-files"><i class="fa fa-check"></i><b>17.6.1</b> Header Files</a></li>
+</ul></li>
+<li class="chapter" data-level="17.7" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#using-makefiles-to-compile-multiple-files"><i class="fa fa-check"></i><b>17.7</b> Using Makefiles to Compile Multiple Files</a></li>
+<li class="chapter" data-level="17.8" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#section-17.8"><i class="fa fa-check"></i><b>17.8</b> 类的继承</a><ul>
+<li class="chapter" data-level="17.8.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#-run-time-polymorphism"><i class="fa fa-check"></i><b>17.8.1</b> 继承类的实时多态 Run-Time Polymorphism</a></li>
+</ul></li>
+<li class="chapter" data-level="17.9" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#section-17.9"><i class="fa fa-check"></i><b>17.9</b> 模板</a><ul>
+<li class="chapter" data-level="17.9.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#brief-survey-of-the-standard-template-library"><i class="fa fa-check"></i><b>17.9.1</b> Brief Survey of the Standard Template Library</a></li>
+</ul></li>
+<li class="chapter" data-level="17.10" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#class-for-linear-algebra"><i class="fa fa-check"></i><b>17.10</b> Class for linear algebra</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>18</b> Rcpp</a><ul>
+<li class="chapter" data-level="18.1" data-path="rcpp.html"><a href="rcpp.html#rarmadillo"><i class="fa fa-check"></i><b>18.1</b> 一个R操作对应的armadillo操作的文档：</a></li>
+</ul></li>
+<li class="chapter" data-level="19" data-path="statistical-computing.html"><a href="statistical-computing.html"><i class="fa fa-check"></i><b>19</b> Statistical Computing</a><ul>
+<li class="chapter" data-level="19.1" data-path="statistical-computing.html"><a href="statistical-computing.html#generate-multivariate-normal-samples"><i class="fa fa-check"></i><b>19.1</b> Generate Multivariate Normal samples</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="r-trick.html"><a href="r-trick.html"><i class="fa fa-check"></i><b>20</b> R trick</a></li>
+<li class="chapter" data-level="21" data-path="statistic-term.html"><a href="statistic-term.html"><i class="fa fa-check"></i><b>21</b> Statistic term</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
-<li class="chapter" data-level="15" data-path="r-web-scrape.html"><a href="r-web-scrape.html"><i class="fa fa-check"></i><b>15</b> R web scrape</a></li>
-<li class="chapter" data-level="16" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html"><i class="fa fa-check"></i><b>16</b> Guide to Scientific Computing in C++</a><ul>
-<li class="chapter" data-level="16.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#basics"><i class="fa fa-check"></i><b>16.1</b> Basics</a></li>
-<li class="chapter" data-level="16.2" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#basics-in-c"><i class="fa fa-check"></i><b>16.2</b> Basics in C++</a></li>
-<li class="chapter" data-level="16.3" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#redirect-console-output-to-file"><i class="fa fa-check"></i><b>16.3</b> Redirect Console Output to File</a><ul>
-<li class="chapter" data-level="16.3.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#reading-from-the-command-line"><i class="fa fa-check"></i><b>16.3.1</b> Reading from the Command Line</a></li>
-</ul></li>
-<li class="chapter" data-level="16.4" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#pointer"><i class="fa fa-check"></i><b>16.4</b> Pointer</a></li>
-<li class="chapter" data-level="16.5" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#functions"><i class="fa fa-check"></i><b>16.5</b> Functions</a><ul>
-<li class="chapter" data-level="16.5.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#use-of-pointers-as-function-arguments."><i class="fa fa-check"></i><b>16.5.1</b> Use of Pointers as function arguments.</a></li>
-</ul></li>
-<li class="chapter" data-level="16.6" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#classess"><i class="fa fa-check"></i><b>16.6</b> Classess</a><ul>
-<li class="chapter" data-level="16.6.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#header-files"><i class="fa fa-check"></i><b>16.6.1</b> Header Files</a></li>
-</ul></li>
-<li class="chapter" data-level="16.7" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#using-makefiles-to-compile-multiple-files"><i class="fa fa-check"></i><b>16.7</b> Using Makefiles to Compile Multiple Files</a></li>
-<li class="chapter" data-level="16.8" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#section-16.8"><i class="fa fa-check"></i><b>16.8</b> 类的继承</a><ul>
-<li class="chapter" data-level="16.8.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#-run-time-polymorphism"><i class="fa fa-check"></i><b>16.8.1</b> 继承类的实时多态 Run-Time Polymorphism</a></li>
-</ul></li>
-<li class="chapter" data-level="16.9" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#section-16.9"><i class="fa fa-check"></i><b>16.9</b> 模板</a><ul>
-<li class="chapter" data-level="16.9.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#brief-survey-of-the-standard-template-library"><i class="fa fa-check"></i><b>16.9.1</b> Brief Survey of the Standard Template Library</a></li>
-</ul></li>
-<li class="chapter" data-level="16.10" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#class-for-linear-algebra"><i class="fa fa-check"></i><b>16.10</b> Class for linear algebra</a></li>
-</ul></li>
-<li class="chapter" data-level="17" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>17</b> Rcpp</a><ul>
-<li class="chapter" data-level="17.1" data-path="rcpp.html"><a href="rcpp.html#rarmadillo"><i class="fa fa-check"></i><b>17.1</b> 一个R操作对应的armadillo操作的文档：</a></li>
-</ul></li>
-<li class="chapter" data-level="18" data-path="statistical-computing.html"><a href="statistical-computing.html"><i class="fa fa-check"></i><b>18</b> Statistical Computing</a><ul>
-<li class="chapter" data-level="18.1" data-path="statistical-computing.html"><a href="statistical-computing.html#generate-multivariate-normal-samples"><i class="fa fa-check"></i><b>18.1</b> Generate Multivariate Normal samples</a></li>
-</ul></li>
-<li class="chapter" data-level="19" data-path="statistic-term.html"><a href="statistic-term.html"><i class="fa fa-check"></i><b>19</b> Statistic term</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -316,12 +335,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="r-web-scrape" class="section level1">
-<h1><span class="header-section-number">Chapter 15</span> R web scrape</h1>
+<h1><span class="header-section-number">Chapter 16</span> R web scrape</h1>
 <p>Web scrape用</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)</code></pre>
-<pre><code>## Warning: package &#39;rvest&#39; was built under R version 3.5.2</code></pre>
-<pre><code>## Loading required package: xml2</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">lego_movie &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;http://www.imdb.com/title/tt1490017/&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
+lego_movie &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;http://www.imdb.com/title/tt1490017/&quot;</span>)
 
 rating &lt;-<span class="st"> </span>lego_movie <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;strong span&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 这个&quot;strong span&quot;是指什么意思？</span>
@@ -339,50 +356,18 @@ rating</code></pre>
 <p>学这段写一下：</p>
 <pre class="sourceCode r"><code class="sourceCode r">a=<span class="kw">read_html</span>(<span class="st">&quot;https://d.cosx.org/d/420739-r&quot;</span>)
 <span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostMention&quot;</span>)</code></pre>
-<pre><code>## {xml_nodeset (27)}
-##  [1] &lt;a href=&quot;https://d.cosx.org/d/420739/1&quot; class=&quot;PostMention&quot; data-id ...
-##  [2] &lt;a href=&quot;https://d.cosx.org/d/420739/1&quot; class=&quot;PostMention&quot; data-id ...
-##  [3] &lt;a href=&quot;https://d.cosx.org/d/420739/2&quot; class=&quot;PostMention&quot; data-id ...
-##  [4] &lt;a href=&quot;https://d.cosx.org/d/420739/3&quot; class=&quot;PostMention&quot; data-id ...
-##  [5] &lt;a href=&quot;https://d.cosx.org/d/420739/3&quot; class=&quot;PostMention&quot; data-id ...
-##  [6] &lt;a href=&quot;https://d.cosx.org/d/420739/6&quot; class=&quot;PostMention&quot; data-id ...
-##  [7] &lt;a href=&quot;https://d.cosx.org/d/420739/6&quot; class=&quot;PostMention&quot; data-id ...
-##  [8] &lt;a href=&quot;https://d.cosx.org/d/420739/7&quot; class=&quot;PostMention&quot; data-id ...
-##  [9] &lt;a href=&quot;https://d.cosx.org/d/420739/8&quot; class=&quot;PostMention&quot; data-id ...
-## [10] &lt;a href=&quot;https://d.cosx.org/d/420739/7&quot; class=&quot;PostMention&quot; data-id ...
-## [11] &lt;a href=&quot;https://d.cosx.org/d/420739/10&quot; class=&quot;PostMention&quot; data-i ...
-## [12] &lt;a href=&quot;https://d.cosx.org/d/420739/7&quot; class=&quot;PostMention&quot; data-id ...
-## [13] &lt;a href=&quot;https://d.cosx.org/d/420739/9&quot; class=&quot;PostMention&quot; data-id ...
-## [14] &lt;a href=&quot;https://d.cosx.org/d/420739/9&quot; class=&quot;PostMention&quot; data-id ...
-## [15] &lt;a href=&quot;https://d.cosx.org/d/420739/9&quot; class=&quot;PostMention&quot; data-id ...
-## [16] &lt;a href=&quot;https://d.cosx.org/d/420739/18&quot; class=&quot;PostMention&quot; data-i ...
-## [17] &lt;a href=&quot;https://d.cosx.org/d/420739/12&quot; class=&quot;PostMention&quot; data-i ...
-## [18] &lt;a href=&quot;https://d.cosx.org/d/420739/27&quot; class=&quot;PostMention&quot; data-i ...
-## [19] &lt;a href=&quot;https://d.cosx.org/d/420739/25&quot; class=&quot;PostMention&quot; data-i ...
-## [20] &lt;a href=&quot;https://d.cosx.org/d/420739/13&quot; class=&quot;PostMention&quot; data-i ...
-## ...</code></pre>
 <p>就得到分开的有PostMention类的元素</p>
 <pre class="sourceCode r"><code class="sourceCode r">PostMentionUser=<span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostMention&quot;</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()
 <span class="kw">head</span>(PostMentionUser)</code></pre>
-<pre><code>## [1] &quot;yihui&quot;  &quot;yihui&quot;  &quot;tctcab&quot; &quot;yihui&quot;  &quot;yihui&quot;  &quot;Jiena&quot;</code></pre>
 <p>得到PostMention里面的元素，<a href="mailto:应该是回复中带@的部分">应该是回复中带@的部分</a>？</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">html_nodes</span>(a,<span class="st">&quot;.Post-body&quot;</span>)<span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">html_text</span>()-&gt;body
 <span class="kw">head</span>(body)</code></pre>
-<pre><code>## [1] &quot;\n                    我现在已经不太参与邮件列表里的讨论了，不过我还是想看看里面最热门的讨论大概都是关于什么话题的。要是有人有兴趣，邮件列表的数据可以从网页上爬，比如 https://stat.ethz.ch/pipermail/r-devel/ 按 Thread 或 Subject 排列的页面爬一下就知道每个主题下面的回帖数量。最终我想要的数据就三列：主题、链接、回帖数量。如：\n\nsubject, link, count\n\&quot;[R] Open a file which name contains a tilde\&quot;, \&quot;https://stat.ethz.ch/pipermail/r-devel/2019-June/077961.html\&quot;, 18if(\&quot;undefined\&quot;!==typeof hljs)hljs._ha();else if(\&quot;undefined\&quot;===typeof hljsLoading){hljsLoading=1;var a=document.getElementsByTagName(\&quot;head\&quot;)[0],e=document.createElement(\&quot;link\&quot;);e.type=\&quot;text/css\&quot;;e.rel=\&quot;stylesheet\&quot;;e.href=\&quot;//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css\&quot;;a.appendChild(e);e=document.createElement(\&quot;script\&quot;);e.type=\&quot;text/javascript\&quot;;e.onload=function(){var d={},f=0;hljs._hb=function(b){b.removeAttribute(\&quot;data-hljs\&quot;);var c=b.innerHTML;c in d?b.innerHTML=d[c]:(7&lt;++f&amp;&amp;(d={},f=0),hljs.highlightBlock(b.firstChild),d[c]=b.innerHTML)};hljs._ha=function(){for(var b=document.querySelectorAll(\&quot;pre[data-hljs]\&quot;),c=b.length;0&lt;c;)hljs._hb(b.item(--c))};hljs._ha()};e.async=!0;e.src=\&quot;//uploads.cosx.org/static/hljs/highlight.pack.js\&quot;;a.appendChild(e)}上面是开发者列表，还有普通用户列表：https://stat.ethz.ch/pipermail/r-help/\n\n我之所以想看这个数据是因为我有个猜测想验证一下：凭我的肉眼观察，我感觉多数“热门”讨论都是极其琐碎无聊的事情，根本不值得费那么多口舌（比如上面那个例子）。为了防止我看歪了，我想看一眼全局数据。希望有壮士能写个脚本。其实第一次本地爬完之后，以后可以在 Travis 上定期爬新的数据，把数据自动更新到 Github 或什么地方。\n                &quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
-## [2] &quot;\n                    yihui \n\n用xml2做了一个:Rmarkdown效果\n\n这种结构比较标准的html还是挺好处理的\n\n不过我只爬了一个月，仔细一看同一个thread在多个月里都会出现，要合并也可以，不过数据清理已经超出了这个爬虫的功能范围哈哈哈，暂时在此收手了。\n                &quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-## [3] &quot;\n                    yihui \n爬好了（从97年4月到目前的数据），戳这：https://github.com/jienagu/tidyverse_examples/blob/master/web_scraping_r_devel.R \n结果(已经排序好了)如下：\n&gt; head(everything2)\n                                                   link                                                          Link_url count\n1                  [Rd] [RFC] A case for freezing CRAN      https://stat.ethz.ch/pipermail/r-devel/2014-March/068548.html    64\n2                                   [Rd] CRAN policies      https://stat.ethz.ch/pipermail/r-devel/2012-March/063678.html    51\n3                 [Rd] surprising behaviour of names&lt;-      https://stat.ethz.ch/pipermail/r-devel/2009-March/052522.html    49\n4                           [Rd] legitimate use of :::     https://stat.ethz.ch/pipermail/r-devel/2013-August/067180.html    45\n5 [Rd] Computer algebra in R - would that be an idea??       https://stat.ethz.ch/pipermail/r-devel/2005-July/033940.html    40\n6                                  [Rd] if(--as-cran)?  https://stat.ethz.ch/pipermail/r-devel/2012-September/064760.html    39if(\&quot;undefined\&quot;!==typeof hljs)hljs._ha();else if(\&quot;undefined\&quot;===typeof hljsLoading){hljsLoading=1;var a=document.getElementsByTagName(\&quot;head\&quot;)[0],e=document.createElement(\&quot;link\&quot;);e.type=\&quot;text/css\&quot;;e.rel=\&quot;stylesheet\&quot;;e.href=\&quot;//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css\&quot;;a.appendChild(e);e=document.createElement(\&quot;script\&quot;);e.type=\&quot;text/javascript\&quot;;e.onload=function(){var d={},f=0;hljs._hb=function(b){b.removeAttribute(\&quot;data-hljs\&quot;);var c=b.innerHTML;c in d?b.innerHTML=d[c]:(7&lt;++f&amp;&amp;(d={},f=0),hljs.highlightBlock(b.firstChild),d[c]=b.innerHTML)};hljs._ha=function(){for(var b=document.querySelectorAll(\&quot;pre[data-hljs]\&quot;),c=b.length;0&lt;c;)hljs._hb(b.item(--c))};hljs._ha()};e.async=!0;e.src=\&quot;//uploads.cosx.org/static/hljs/highlight.pack.js\&quot;;a.appendChild(e)}&quot;                                                                                                                                                                                                                                                                                                                                                                        
-## [4] &quot;\n                    tctcab 不错不错！好了，那就请别的壮士继续背这口锅吧，一是把历史数据爬完，二是在数据里加一列，就是帖子的时间（年月即可）。数据弄好后，如果有相邻月份的帖子标题相同，那就把前一个月的计数加到后一个月的计数上。\n                &quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
-## [5] &quot;\n                    yihui \n年月并没有在xml里出现，不过那个thread的地址里有年月信息，要整合也不難，\n\n既然都做到这步了那就顺便走完吧，屁股没擦干净留给别人总不大好哈哈哈\n                &quot;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
-## [6] &quot;\n                    yihui \n\n研究了一下合并帖子，觉得并不简单，因为：\n    - 同一个串下面标题有可能不一致\n    -  不同串有可能名字一样\n\n尝试了合并标题一样的帖子，但不一定对。比如04,06,07年都有个名为“[Rd] Wish list”的串\n\n另外就是抓取的时候一不留神就连接错误，所以我先把thread.html下载到本地再提取信息，速度也快了不少（8分钟到19秒）\n\n结果：\n\nRmarkdown效果\n\n合并串之后可以看出结果跟Jiena 的前十名还是有点细微差别：\n\n# A tibble: 10 x 4\n   title                          link                            reps year_mon  \n   &lt;chr&gt;                          &lt;chr&gt;                          &lt;int&gt; &lt;chr&gt;     \n 1 \&quot;[Rd] [RFC] A case for freezi… https://stat.ethz.ch/pipermai…    69 2014-March\n 2 \&quot;[Rd] Wish list\\n\&quot;             https://stat.ethz.ch/pipermai…    62 2007-Janu…\n 3 \&quot;[Rd] CRAN policies\\n\&quot;         https://stat.ethz.ch/pipermai…    51 2012-March\n 4 \&quot;[Rd] legitimate use of :::\\n\&quot; https://stat.ethz.ch/pipermai…    48 2014-May  \n 5 \&quot;[Rd] NEWS.md support on CRAN… https://stat.ethz.ch/pipermai…    48 2015-May  \n 6 \&quot;[Rd] surprising behaviour of… https://stat.ethz.ch/pipermai…    48 2009-March\n 7 \&quot;[Rd] declaring package depen… https://stat.ethz.ch/pipermai…    42 2013-Sept…\n 8 \&quot;[Rd] if(--as-cran)?\\n\&quot;        https://stat.ethz.ch/pipermai…    42 2012-Sept…\n 9 \&quot;[Rd] Bias in R&#39;s random inte… https://stat.ethz.ch/pipermai…    37 2018-Sept…\n10 \&quot;[Rd] R 3.0, Rtools3.0,l Wind… https://stat.ethz.ch/pipermai…    36 2013-Aprilif(\&quot;undefined\&quot;!==typeof hljs)hljs._ha();else if(\&quot;undefined\&quot;===typeof hljsLoading){hljsLoading=1;var a=document.getElementsByTagName(\&quot;head\&quot;)[0],e=document.createElement(\&quot;link\&quot;);e.type=\&quot;text/css\&quot;;e.rel=\&quot;stylesheet\&quot;;e.href=\&quot;//cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css\&quot;;a.appendChild(e);e=document.createElement(\&quot;script\&quot;);e.type=\&quot;text/javascript\&quot;;e.onload=function(){var d={},f=0;hljs._hb=function(b){b.removeAttribute(\&quot;data-hljs\&quot;);var c=b.innerHTML;c in d?b.innerHTML=d[c]:(7&lt;++f&amp;&amp;(d={},f=0),hljs.highlightBlock(b.firstChild),d[c]=b.innerHTML)};hljs._ha=function(){for(var b=document.querySelectorAll(\&quot;pre[data-hljs]\&quot;),c=b.length;0&lt;c;)hljs._hb(b.item(--c))};hljs._ha()};e.async=!0;e.src=\&quot;//uploads.cosx.org/static/hljs/highlight.pack.js\&quot;;a.appendChild(e)}&quot;</code></pre>
 <p>就得到回帖的内容，</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostUser&quot;</span>)</code></pre>
-<pre><code>## {xml_nodeset (0)}</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">html_nodes</span>(a,<span class="st">&quot;.username&quot;</span>)</code></pre>
-<pre><code>## {xml_nodeset (0)}</code></pre>
-<p>但是这个咋就不对。。。。奇怪。
-<img src="pic/scrape_3.png" width="1279" />
-是因为元素叠起来的缘故吗？应该不是奇奇怪怪的，明天再看。</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostUser&quot;</span>)
+<span class="kw">html_nodes</span>(a,<span class="st">&quot;.username&quot;</span>)</code></pre>
+<p>但是这个咋就不对。。。。奇怪。</p>
+<p>是因为元素叠起来的缘故吗？应该不是奇奇怪怪的，明天再看。</p>
 
 </div>
             </section>
@@ -390,7 +375,7 @@ rating</code></pre>
           </div>
         </div>
       </div>
-<a href="references.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simulation-approach-for-computing-the-marginal-likelihood.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="guide-to-scientific-computing-in-c.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

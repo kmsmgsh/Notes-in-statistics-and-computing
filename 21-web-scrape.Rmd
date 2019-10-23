@@ -28,30 +28,30 @@ knitr::include_graphics(rep("pic/scrape_2.png", 1))
 
 
 学这段写一下：
-```{R}
+```{R,eval=FALSE}
 a=read_html("https://d.cosx.org/d/420739-r")
 html_nodes(a,".PostMention")
 ```
 就得到分开的有PostMention类的元素
-```{r}
+```{r,eval=FALSE}
 PostMentionUser=html_nodes(a,".PostMention")%>% html_text()
 head(PostMentionUser)
 ```
 得到PostMention里面的元素，应该是回复中带@的部分？
 
-```{R}
+```{R,eval=FALSE}
 html_nodes(a,".Post-body")%>%
   html_text()->body
 head(body)
 ```
 就得到回帖的内容，
 
-```{r}
+```{r,eval=FALSE}
 html_nodes(a,".PostUser")
 html_nodes(a,".username")
 ```
 但是这个咋就不对。。。。奇怪。
-```{r,echo=FALSE}
+```{r,echo=FALSE,eval=FALSE}
 knitr::include_graphics(rep("pic/scrape_3.png", 1))
 ```
 是因为元素叠起来的缘故吗？应该不是奇奇怪怪的，明天再看。

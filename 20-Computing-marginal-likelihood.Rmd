@@ -1,0 +1,283 @@
+# Simulation approach for computing the marginal likelihood
+
+This is the Chapter 6 of [@ando2010bayesian].
+Because the previous part is kind of farmiliar and most of its content can be covered by other paper can be found in Bayesian variable selection and Bayes factor, so not independent summarise. This chapter is mostly out of my knowledge boundary so I will record here.
+
+THe simplest way is using the result of MCMC to calculate the marginal density by numerical integral：
+$$
+P\left(\boldsymbol{X}_{n} | M\right)=\frac{1}{L} \sum_{j=1}^{L} f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}^{(j)}\right)
+$$
+
+ "Unfortunately, this estimate is usually quite a poor approximation."(McCulloch and Rossi 1992)
+
+- Laplace-Metropolis estimator (Lewos and Raftery,1997), also called candidate formula (Chib,1995)
+
+- Harmonic mean estimator (Newton and Raftery,1994)
+
+- Gelfand and Dey's estimator (Gelfand and Dey,1994)
+
+- bridge sampling estimator (Meng and Wong,1996)
+
+Recent book cana be refer:
+Carlin and Louis (2000), Chen et al. (2000), Gamerman and Lopes(2006).
+
+This marginal likelihood will not consider the average for differenciating several models.
+
+
+## Laplace-Metropolis approximation
+
+First will review the Laplace method for integral.
+
+Let $h(\theta)$ be a smooth, positive function of the p-dimensional vector $\mathbb \theta=(\theta_1,...,\theta_p)^T$, and $q(\boldsymbol{\theta}, n)$ be a smooth function of n and $\theta$. 
+The problem is solving the following integral:
+$$
+U=\int h(\boldsymbol{\theta}) \exp \{s(\boldsymbol{\theta}, n)\} d \boldsymbol{\theta}
+$$
+
+There are some key assumptions to use in Laplace's method:
+
+- $s(\boldsymbol{\theta}, n)$ has a unique global maximum $\hat{\boldsymbol \theta}_n$ in the interior of the parameter space $\mathbf \Theta$ and also not be too close to the boundary of $\mathbf \Theta$.
+- $s(\boldsymbol{\theta}, n)$ is thrice continuously differentiable as a function of $\theta$ on $\mathbf \Theta$
+- The function $h(\theta)$ is sufficiently smooth, i.e.,it is continuously differentiable, bounded and positive on $\mathbf \Theta$. Also, the first-order partial derivatives of $h(\theta)$ are bounded on $\mathbf \Theta$.
+- The negative of the Hessian matrix of $n^{-1} s(\boldsymbol{\theta}, n)$,
+$$
+S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)=-\left.\frac{1}{n} \frac{\partial^{2}\{s(\boldsymbol{\theta}, n)\}}{\partial \boldsymbol{\theta} \partial \boldsymbol{\theta}^{T}}\right|_{\boldsymbol{\theta}=\hat{\boldsymbol{\theta}}_{n}}
+$$
+is positive definite. Also, the smallest eigenvalue of $n \times S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)$ should tend to infinity as $n\rightarrow \infty$ so that the quadratic approximation of $s(\theta,n)$ is accurate.
+
+Under the regularity conditions, the Laplace approximation of the integral upon can be showed as follows.
+
+First order derivarive of the function $s(\boldsymbol{\theta}, n)$ evaluated at the mode $\hat{\boldsymbol{\theta}}_{n}$ equals to zero.
+Using Taylor expansion of both $h(\boldsymbol \theta)$ and $s(\boldsymbol{\theta}, n)$ about $\hat{\boldsymbol \theta}_n$.
+
+$$
+\begin{aligned} U \approx & \int\left[\left\{h\left(\hat{\boldsymbol{\theta}}_{n}\right)+\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T} \frac{\partial h\left(\hat{\boldsymbol{\theta}}_{n}\right)}{\partial \boldsymbol{\theta}}+\cdots\right\}\right.\\ &\left.\times \exp \left\{s\left(\hat{\boldsymbol{\theta}}_{n}, n\right)-\frac{n}{2}\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T} S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T}\right\}\right] d \boldsymbol{\theta} \\=& \exp \left\{s\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\right\} \int\left\{h\left(\hat{\boldsymbol{\theta}}_{n}\right)+\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T} \frac{\partial h\left(\hat{\boldsymbol{\theta}}_{n}\right)}{\partial \boldsymbol{\theta}}+\cdots\right\} \\ & \times \exp \left\{-\frac{n}{2}\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T} S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T}\right\} d \boldsymbol{\theta} \end{aligned}
+$$
+That is, just open the two part of each function in integral part.
+Where $S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)$ is the negative of the Hessian matrix of $s(\boldsymbol{\theta}, n)$.
+Noting that
+$$
+\exp \left\{-\frac{n}{2}\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T} S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)\right\}
+$$
+is the kernel of the normal distribution with mean $\hat{\boldsymbol \theta}_n$ and variance matrix $n^{-1} S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)^{-1}$, the second term in the brackets vanishes:
+$$
+\begin{aligned} & \int\left\{\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T} \frac{\partial h\left(\hat{\boldsymbol{\theta}}_{n}\right)}{\partial \boldsymbol{\theta}}\right\} \exp \left\{-\frac{n}{2}\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T} S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)\right\} d \boldsymbol{\theta} \\=&\left[\frac{\partial h\left(\hat{\boldsymbol{\theta}}_{n}\right)}{\partial \boldsymbol{\theta}}\right]^{T} \int\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right) \exp \left\{-\frac{n}{2}\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)^{T} S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\left(\boldsymbol{\theta}-\hat{\boldsymbol{\theta}}_{n}\right)\right\} d \boldsymbol{\theta} \\=& \mathbf{0} \end{aligned}
+$$
+Therefore, the integral can be approximated as
+$$
+U \approx \exp \left\{s\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\right\} h\left(\hat{\boldsymbol{\theta}}_{n}\right) \frac{(2 \pi)^{\frac{p}{2}}}{n^{\frac{p}{2}}\left|S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\right|^{1 / 2}} \times(1+o(1))
+$$
+The order of the second term in the brackets is $o(1)$, which comes from the regularity condition of the Laplace method. Therefore, one can show that $U \approx \hat{U}\{1+o(1)\}$ with 
+$$
+\hat{U}=\exp \left\{s\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\right\} h\left(\hat{\boldsymbol{\theta}}_{n}\right) \frac{(2 \pi)^{\frac{p}{2}}}{n^{\frac{p}{2}}\left|S\left(\hat{\boldsymbol{\theta}}_{n}, n\right)\right|^{1 / 2}}
+$$
+.
+
+
+## Laplace-Metropolis approximation
+
+If we have a set of $L$ sample values $\left\{\boldsymbol{\theta}^{(1)}, \ldots, \boldsymbol{\theta}^{(L)}\right\}$ from the posterior distribution, the posterior mode can be estimated by
+$$
+\begin{aligned} \hat{\boldsymbol{\theta}} & \approx \max _{j} \pi\left(\boldsymbol{\theta}^{(j)} | \boldsymbol{X}_{n}\right) \\ &=\max _{j} f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}^{(j)}\right) \pi\left(\boldsymbol{\theta}^{(j)}\right) \end{aligned}
+$$
+Posterior covariance matrix can be estimated by
+$$
+\hat{V}_{n} \approx \frac{1}{L} \sum_{j=1}^{n}\left\{\left(\boldsymbol{\theta}^{(j)}-\overline{\boldsymbol{\theta}}\right)^{T}\left(\boldsymbol{\theta}^{(j)}-\overline{\boldsymbol{\theta}}\right)\right\}
+$$
+then the Laplace approximation to the marginal likelihood can be obtained by
+$$
+P\left(\boldsymbol{X}_{n}\right) \approx f\left(\boldsymbol{X}_{n} | \hat{\boldsymbol{\theta}}\right) \pi(\hat{\boldsymbol{\theta}}) \times(2 \pi)^{p / 2}\left|\hat{V}_{n}\right|^{1 / 2}.
+$$
+
+__Example__ 
+
+由于之前的multinomial probit models没看所以这里的一些细节看不懂了。
+
+所以回到前文的multinomial probit models:
+
+Suppose there are J categories and that $\boldsymbol{y}_{\alpha}=\left(y_{1 \alpha}, \ldots, y_{J \alpha}\right)^{T}$ is a multinomial vector, with $y_{j\alpha}=1$ if an individual $\alpha$ chooses alternative j, and $y_{j\alpha}=0$ otherwise. Let $\boldsymbol{z}_{\alpha}=\left(y_{1 \alpha}, \ldots, y_{J \alpha}\right)^{T}$ be the unobserved utility vector of an individual $\alpha$. Each individual chosoes the alternatvie yielding maximum utility
+$$
+y_{j \alpha}=1 \quad \text { such that } \quad u_{j \alpha}=\operatorname{argmax}_{k} u_{k \alpha}
+$$
+假设中间变量$\boldsymbol{u}_{\alpha}=\left(u_{1 \alpha}, \dots, u_{J \alpha}\right)^{T}$ 是p个predictor的线性函数和随机误差之和
+$$
+\boldsymbol{u}_{\alpha}=W_{\alpha} \boldsymbol{\beta}+\boldsymbol{\varepsilon}_{\alpha}, \quad \boldsymbol{\varepsilon}_{\alpha} \sim N(\mathbf{0}, \Omega)
+$$
+可以发现，如果等式两边同时加一个任意常数不影响等式的成立，这就会影响模型的一致性。这个问题一般解决方案是用最后一个等式减在等式两边得到(p-1)个等式。这样我们就能得到
+$$
+\boldsymbol{z}_{\alpha}=X_{\alpha} \boldsymbol{\beta}+\boldsymbol{\varepsilon}_{\alpha}, \quad \boldsymbol{\varepsilon}_{\alpha} \sim N(\mathbf{0}, \Sigma)
+$$
+with
+$$
+X_{\alpha}=\left(\begin{array}{c}{\boldsymbol{w}_{1 \alpha}^{T}-\boldsymbol{w}_{J \alpha}^{T}} \\ {\vdots} \\ {\boldsymbol{w}_{J-1, \alpha}^{T}-\boldsymbol{w}_{J \alpha}^{T}}\end{array}\right) \quad \text { and } \quad \boldsymbol{z}_{n}=\left(\begin{array}{c}{u_{1 \alpha}-u_{J \alpha}} \\ {\vdots} \\ {u_{J-1 \alpha}-u_{J \alpha}}\end{array}\right)
+$$
+The covariance matrix of the new error term is
+$$
+\Sigma=[I,-1] \Omega[I,-1]^{T}
+$$
+The multinomial choice probability vector of an individual $\alpha$ is then given as the $(J-1)$-dimensional multivariate normal integrals
+$$
+\operatorname{Pr}\left(y_{j \alpha}=1 | X_{\alpha}, \boldsymbol{\beta}, \Sigma\right)=\int_{S_{j}} \frac{1}{(2 \pi)^{(J-1) / 2}|\Sigma|^{-1 / 2}} \exp \left[-\frac{1}{2} \boldsymbol{\varepsilon}_{\alpha}^{T} \Sigma^{-1} \boldsymbol{\varepsilon}_{\alpha}\right] d \varepsilon_{\alpha}
+$$
+where the sets $S_j$ are given by
+$$
+S_{j}=\cap_{k \neq j}\left\{\varepsilon_{j \alpha}-\varepsilon_{k \alpha}>\left(\boldsymbol{x}_{k \alpha}-\boldsymbol{x}_{j \alpha}\right)^{T} \boldsymbol{\beta}\right\} \cap\left\{\varepsilon_{j \alpha}>-\boldsymbol{x}_{j \alpha}^{T} \boldsymbol{\beta}\right\}
+$$
+所以这个积分区域就等价于对于给定种类j，这个j对应的观测比其他观测的结果都高，而且对应概率大于0.
+Thus the likelihood function for the multinomial probit model is then
+$$
+f\left(\boldsymbol{y}_{n} | X_{n}, \boldsymbol{\beta}, \Sigma\right)=\prod_{\alpha=1}^{n}\left[\prod_{j=1}^{J} \operatorname{Pr}\left(y_{j \alpha}=1 | X_{\alpha}, \boldsymbol{\beta}, \Sigma\right)^{y_{j \alpha}}\right]
+$$
+The individual's choice $y_{j\alpha}=1$ can be re-expressed in terms of the utility differentials $z_\alpha$ as follows:
+$$
+y_{j \alpha}=\left\{\begin{array}{ll}{1} & {\text { if } \quad z_{j \alpha}=\max _{k} z_{k \alpha}>0} \\ {0} & {\text { if } \quad \max _{k} z_{k \alpha}<0}\end{array}\right.
+$$
+
+## Chib's estimator from Gibbs's sampling
+
+Chib(1995) noted that
+$$
+\log P\left(\boldsymbol{X}_{n}\right)=\log f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}\right)+\log \pi(\boldsymbol{\theta})-\log \pi\left(\boldsymbol{\theta} | \boldsymbol{X}_{n}\right)
+$$
+for any value of $\theta$. 
+
+The three terms on the right hand side of equation upon are analytically available, the marginal likelihood can be evaluated easily. The value of $\theta$ is usually chosen as a point of high posterior density, to maximize the accuracy of this approximation.
+
+Chib的算法可以处理一些joint posterior distribution of $\theta$ 并不可用的时候。比如说当$\theta$ 可以分为多个块，然后条件分布可用但是joint possterior distribution不可用的情况。 
+$$
+\pi\left(\boldsymbol{\theta} | \boldsymbol{X}_{n}\right)=\pi\left(\boldsymbol{\theta}_{1} | \boldsymbol{X}_{n}, \boldsymbol{\theta}_{2}\right) \pi\left(\boldsymbol{\theta}_{2} | \boldsymbol{X}_{n}\right)
+$$
+
+where the $\hat{\pi}\left(\boldsymbol{\theta}_{2} | \boldsymbol{X}_{n}\right)=\frac{1}{L} \sum_{j=1}^{L} \pi\left(\boldsymbol{\theta}_{2} | \boldsymbol{X}_{n}, \boldsymbol{\theta}_{1}^{(j)}\right)$.
+
+Then the estimator of the marginal likelihood as
+$$
+\begin{array}{l}{\log P\left(\boldsymbol{X}_{n}\right)} \\ {\approx \log f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}_{1}^{*}, \boldsymbol{\theta}_{2}^{*}\right)+\log \pi\left(\boldsymbol{\theta}_{1}^{*}, \boldsymbol{\theta}_{2}^{*}\right)-\log \pi\left(\boldsymbol{\theta}_{1}^{*} | \boldsymbol{X}_{n}, \boldsymbol{\theta}_{2}^{*}\right)-\log \hat{\pi}\left(\boldsymbol{\theta}_{2}^{*} | \boldsymbol{X}_{n}\right)}\end{array}
+$$
+
+For B blocks case can be obtained by similar approaches.
+
+$$
+\log P\left(\boldsymbol{X}_{n}\right) \approx \log f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}^{*}\right)+\log \pi\left(\boldsymbol{\theta}^{*}\right)-\sum_{k=1}^{B} \log \hat{\pi}\left(\boldsymbol{\theta}_{k}^{*} | \boldsymbol{X}_{n}, \boldsymbol{\theta}_{k+1}^{*}, \ldots, \boldsymbol{\theta}_{B}^{*}\right)
+$$
+
+## Example: Seemingly unrelated regression model with informative prior.
+
+The SUR model can be expressed as the form:
+$$
+\boldsymbol{y}_{n}=X_{n} \boldsymbol{\beta}+\boldsymbol{\varepsilon}, \boldsymbol{\varepsilon} \sim N(\mathbf{0}, \Sigma \otimes I)
+$$
+The likelihood function of the SUR model is given in the form:
+$$
+\begin{array}{l}{f\left(\boldsymbol{Y}_{n} | X_{n}, \boldsymbol{\beta}, \Sigma\right)} \\ {=\frac{1}{(2 \pi)^{n m / 2}|\Sigma|^{n / 2}} \exp \left[-\frac{1}{2}\left(\boldsymbol{y}_{n}-X_{n} \boldsymbol{\beta}\right)(\Sigma \otimes I)^{-1}\left(\boldsymbol{y}_{n}-X_{n} \boldsymbol{\beta}\right)\right]}\end{array}
+$$
+.
+
+There is no conjugate prior for SUR model.
+Set the prior as: $\pi_{2}(\boldsymbol{\beta}, \Sigma)=\pi_{2}(\boldsymbol{\beta}) \pi_{2}(\Sigma)$, with
+$$
+\pi_{2}(\boldsymbol{\beta})=N\left(\mathbf{0}, A^{-1}\right) \quad \text { and } \quad \pi_{2}(\Sigma)=I W\left(\Lambda_{0}, \nu_{0}\right)
+$$
+.
+The joint posterior density function for the parameters is then:
+$$
+\begin{aligned} \pi_{1}\left(\boldsymbol{\beta}, \Sigma | \boldsymbol{Y}_{n}, X_{n}\right) \propto &|\Sigma|^{-\left(n+\nu_{0}+m+1\right) / 2} \exp \left[-\frac{1}{2} \operatorname{tr}\left\{\Sigma^{-1} \Lambda_{0}\right\}\right] \\ & \times \exp \left[-\frac{1}{2} \boldsymbol{\beta}^{T} A \boldsymbol{\beta}+\left(\boldsymbol{y}_{n}-X_{n} \boldsymbol{\beta}\right)(\Sigma \otimes I)^{-1}\left(\boldsymbol{y}_{n}-X_{n} \boldsymbol{\beta}\right)\right] \end{aligned}
+$$
+Conditional posterior of $\beta$ is expressed as
+$$
+\pi_{2}\left(\boldsymbol{\beta} | \boldsymbol{Y}_{n}, X_{n}, \Sigma\right) \propto \exp \left[-\frac{1}{2}\left\{(\boldsymbol{\beta}-\overline{\boldsymbol{\beta}})^{T} \bar{\Omega}^{-1}(\boldsymbol{\beta}-\overline{\boldsymbol{\beta}})+b\right\}\right]
+$$
+with
+$$
+\begin{array}{l}{\overline{\boldsymbol{\beta}}=\left\{X_{n}^{T}\left(\Sigma^{-1} \otimes I\right) X_{n}+A\right\}^{-1} X_{n}^{T}\left(\Sigma^{-1} \otimes I\right) \boldsymbol{y}_{n}} \\ {\bar{\Omega}=\left(X_{n}^{T}\left(\Sigma^{-1} \otimes I\right) X_{n}+A\right)^{-1}} \\ {b=\operatorname{tr}\left\{\Sigma^{-1} \Lambda_{0}\right\}+\boldsymbol{y}_{n}^{T}\left(\Sigma^{-1} \otimes I\right) \boldsymbol{y}_{n}-\overline{\boldsymbol{\beta}}^{T} \bar{\Omega}^{-1} \overline{\boldsymbol{\beta}}}\end{array}
+$$
+.
+
+the use of the inverse Wishart prior to leave the posterior probability density:
+$$
+\pi_{2}\left(\Sigma | \boldsymbol{Y}_{n}, X_{n}, \boldsymbol{\beta}\right) \propto|\Sigma|^{\left(n+\nu_{0}+m+1\right) / 2} \exp \left[-\frac{1}{2} \operatorname{tr}\left\{\Sigma^{-1}\left(R+\Lambda_{0}\right)\right\}\right]
+$$
+所以从这个例子表明的是形式如：
+$$
+\begin{align}
+\pi_{1}\left(\boldsymbol{\beta}, \Sigma | \boldsymbol{Y}_{n}, X_{n}\right)\\
+\pi_{2}\left(\boldsymbol{\beta} | \boldsymbol{Y}_{n}, X_{n}, \Sigma\right)
+\end{align}
+$$
+这样可以对
+$$
+\log P\left(\boldsymbol{X}_{n}\right)=\log f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}\right)+\log \pi(\boldsymbol{\theta})-\log \pi\left(\boldsymbol{\theta} | \boldsymbol{X}_{n}\right)
+$$
+这个做逼近。
+
+$$
+\left\{\hat{\boldsymbol{\beta}}_{n}, \hat{\Sigma}_{n}\right\} \approx \max _{j} f\left(\boldsymbol{Y}_{n} | X_{n}, \boldsymbol{\beta}^{(j)}, \Sigma^{(j)}\right) \pi_{2}\left(\boldsymbol{\beta}^{(j)}, \boldsymbol{\Sigma}^{(j)}\right)
+$$
+Calculating the posterior covariance $\hat{V}_n$, we can obtain the Laplace-Metropol estimator:
+$$
+P\left(\boldsymbol{Y}_{n}\right) \approx f\left(\boldsymbol{Y}_{n} | X_{n}, \hat{\boldsymbol{\beta}}_{n}, \hat{\Sigma}_{n}\right) \pi_{2}\left(\hat{\boldsymbol{\beta}}_{n}, \hat{\Sigma}_{n}\right) \times(2 \pi)^{p / 2}\left|\hat{V}_{n}\right|^{1 / 2}
+$$
+where $p=\sum_{k=1}^{m} \operatorname{dim} \boldsymbol{\beta}_{k}+\operatorname{dim} \Sigma$ is the number of free parameters included in the coefficient vector and the covariance matrix. Also, the Harmonic mean estimator is
+$$
+P\left(\boldsymbol{Y}_{n}\right) \approx \frac{1}{\frac{1}{L} \sum_{j=1}^{L} \frac{1}{f\left(\boldsymbol{Y}_{n} | X_{n}, \boldsymbol{\beta}^{(j)}, \Sigma^{(j)}\right)}}
+$$
+
+The joint posterior distribution of $\theta$ can be estimated as
+$$
+\pi_{2}\left(\boldsymbol{\beta}, \Sigma | \boldsymbol{Y}_{n}, X_{n}\right)=\pi_{2}\left(\boldsymbol{\beta} | \boldsymbol{Y}_{n}, X_{n}, \Sigma\right) \pi_{2}\left(\Sigma | \boldsymbol{Y}_{n}, X_{n}\right)
+$$
+with an appropriate Monte Carlo estimate of $\pi_{2}\left(\Sigma | \boldsymbol{Y}_{n}, X_{n}\right)$ given as
+$$
+\hat{\pi}_{2}\left(\Sigma | \boldsymbol{Y}_{n}, X_{n}\right)=\frac{1}{L} \sum_{j=1}^{L} \pi_{2}\left(\Sigma | \boldsymbol{Y}_{n}, X_{n}, \boldsymbol{\beta}^{(j)}\right)
+$$
+we have an estimator of the marginal likelihood as
+$$
+\begin{aligned} \log P\left(\boldsymbol{Y}_{n}\right) \approx & \log f\left(\boldsymbol{Y}_{n} | X_{n}, \boldsymbol{\beta}^{*}, \Sigma^{*}\right)+\log \pi_{2}\left(\boldsymbol{\beta}^{*}, \Sigma^{*}\right) \\ &+\log \pi_{2}\left(\boldsymbol{\beta}^{*} | \boldsymbol{Y}_{n}, X_{n}, \Sigma^{*}\right)+\log \hat{\pi}_{2}\left(\Sigma^{*} | \boldsymbol{Y}_{n}, X_{n}\right) \end{aligned}
+$$
+The value of $\beta^*$ and $\Sigma^*$ can be chosen as their posterior mode $\hat\beta_n$ and $\hat\Sigma_n$.
+
+## Bridge sampling methods
+
+This method is based on bridge sampling. The method starts from an identity
+
+$$
+1=\frac{\int \alpha(\boldsymbol{\theta}) \pi\left(\boldsymbol{\theta} | \boldsymbol{X}_{n}\right) p(\boldsymbol{\theta}) d \boldsymbol{\theta}}{\int \alpha(\boldsymbol{\theta}) p(\boldsymbol{\theta}) \pi\left(\boldsymbol{\theta} | \boldsymbol{X}_{n}\right) d \boldsymbol{\theta}}
+$$
+
+在上式中把$\pi(\theta|X_n)$打开得到
+$$
+1=\frac{\int \alpha(\boldsymbol{\theta}) \frac{\pi\left(\boldsymbol{\theta}\right)f\left(\boldsymbol{X}_{n}|\boldsymbol{\theta}\right)}{\int \pi\left(\boldsymbol{\theta}\right)f\left(\boldsymbol{X}_{n}|\boldsymbol{\theta}\right)}
+ p(\boldsymbol{\theta}) d \boldsymbol{\theta}}{\int \alpha(\boldsymbol{\theta}) p(\boldsymbol{\theta}) \pi\left(\boldsymbol{\theta} | \boldsymbol{X}_{n}\right) d \boldsymbol{\theta}}
+$$
+等价于
+
+$$
+P\left(\boldsymbol{X}_{n}\right)=\frac{\int \alpha(\boldsymbol{\theta}) f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}\right) \pi(\boldsymbol{\theta}) p(\boldsymbol{\theta}) d \boldsymbol{\theta}}{\int \alpha(\boldsymbol{\theta}) p(\boldsymbol{\theta}) \pi\left(\boldsymbol{\theta} | \boldsymbol{X}_{n}\right) d \boldsymbol{\theta}}
+$$
+用$p(\theta)$当proposal,则能用expectation估计分子分母。
+$$
+P\left(\boldsymbol{X}_{n}\right)=\frac{M^{-1} \sum_{j^{\prime}=1}^{M} \alpha\left(\boldsymbol{\theta}^{\left(j^{\prime}\right)}\right) f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}^{\left(j^{\prime}\right)}\right) \pi\left(\boldsymbol{\theta}^{\left(j^{\prime}\right)}\right)}{L^{-1} \sum_{j=1}^{L} \alpha\left(\boldsymbol{\theta}^{(j)}\right) p\left(\boldsymbol{\theta}^{(j)}\right)}
+$$
+当
+$$
+\alpha(\boldsymbol{\theta})^{-1}=f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}\right) \pi(\boldsymbol{\theta}) p(\boldsymbol{\theta})
+$$
+时
+这个估计就等价于harmonic mean estimator
+$$
+P\left(\boldsymbol{X}_{n}\right)=\frac{M^{-1} \sum_{j^{\prime}=1}^{M}\left[p\left(\boldsymbol{\theta}^{\left(j^{\prime}\right)}\right)\right]^{-1}}{L^{-1} \sum_{j=1}^{L}\left[f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}^{(j)}\right) \pi\left(\boldsymbol{\theta}^{(j)}\right)\right]^{-1}}
+$$
+
+Lopes and West(2004) investigated the performance of the bridge sampling estimator and various marginal likelihood evaluation methods in the context of factor analysis.
+
+## The savage-Dickey density ratio approach
+When compare nested models, this approach is a convenient tool for calculating the marginal likelihood.
+
+
+
+
+
+
+
+
+
