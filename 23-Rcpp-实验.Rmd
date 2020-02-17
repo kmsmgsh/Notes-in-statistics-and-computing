@@ -143,4 +143,11 @@ class prior& prior_beta
 所以在接口函数里面，得手动初始化prior然后保留实例。
 
 
+## Rcpp package
+
+基础的.call和动态链接库的[知识](http://r-pkgs.had.co.nz/src.html)
+
+在r包那本书里有翻译。
+
+
 

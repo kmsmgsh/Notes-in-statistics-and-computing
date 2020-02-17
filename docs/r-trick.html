@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-10-23">
+<meta name="date" content="2020-02-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -145,6 +145,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="general-notes.html"><a href="general-notes.html#section-3.1"><i class="fa fa-check"></i><b>3.1</b> 台湾教授彭明辉教授的研究生手册</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="general-notes.html"><a href="general-notes.html#section-3.1.1"><i class="fa fa-check"></i><b>3.1.1</b> 读论文的要求</a></li>
 </ul></li>
+<li class="chapter" data-level="3.2" data-path="general-notes.html"><a href="general-notes.html#section-3.2"><i class="fa fa-check"></i><b>3.2</b> 论文报告的要求与技巧</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>4</b> Statistician Tool Box</a><ul>
 <li class="chapter" data-level="4.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>4.1</b> Matrix algebra</a><ul>
@@ -307,6 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="18" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>18</b> Rcpp</a><ul>
 <li class="chapter" data-level="18.1" data-path="rcpp.html"><a href="rcpp.html#rarmadillo"><i class="fa fa-check"></i><b>18.1</b> 一个R操作对应的armadillo操作的文档：</a></li>
+<li class="chapter" data-level="18.2" data-path="rcpp.html"><a href="rcpp.html#rcpp-package"><i class="fa fa-check"></i><b>18.2</b> Rcpp package</a></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="statistical-computing.html"><a href="statistical-computing.html"><i class="fa fa-check"></i><b>19</b> Statistical Computing</a><ul>
 <li class="chapter" data-level="19.1" data-path="statistical-computing.html"><a href="statistical-computing.html#generate-multivariate-normal-samples"><i class="fa fa-check"></i><b>19.1</b> Generate Multivariate Normal samples</a></li>
@@ -353,9 +355,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p><code>rm(list=ls())</code></p>
 <ul>
-<li><p>拼接字符串
-<code>paste()</code></p></li>
-<li><p>Try catch</p></li>
+<li>拼接字符串</li>
+</ul>
+<pre class="paste()```"><code>
+- 生成全排列：
+[来自](https://stackoverflow.com/questions/18705153/generate-list-of-all-possible-combinations-of-elements-of-vector)</code></pre>
+<p>expand.grid(0:1, 0:1, 0:1)
+# for longer case:
+n &lt;- 14
+l &lt;- rep(list(0:1), n)
+expand.grid(l)
+```</p>
+<ul>
+<li>Try catch</li>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>) {
 <span class="kw">tryCatch</span>({<span class="kw">log</span>(<span class="dv">4</span><span class="op">-</span>i)},<span class="dt">warning=</span><span class="cf">function</span>(a){<span class="kw">print</span>(<span class="st">&quot;warning!&quot;</span>);<span class="kw">browser</span>();<span class="kw">stop</span>()},<span class="dt">finally =</span> {<span class="kw">print</span>(i);})
@@ -436,6 +448,37 @@ pb &lt;-<span class="st"> </span>progress_bar<span class="op">$</span><span clas
 <pre><code>benchmark(&quot;Rvec2tril&quot;=BayesJMCM::vec2tril(phiiVec)
           &quot;Rcppvec2tril&quot;=vec2trilcpp(phiiVec)
          )</code></pre>
+<ul>
+<li>用字符串访问变量：
+使用 get().
+如果要访问list中的元素，比如说</li>
+</ul>
+<pre><code>a=list(var1=c(1,2,3),var2=c(2,3,4))</code></pre>
+<p>要访问var1的话：</p>
+<pre><code>get(&quot;var1&quot;,a)</code></pre>
+<p>或者可以用一个更简单的方案：</p>
+<pre><code>a[[&quot;var1&quot;]]</code></pre>
+<ul>
+<li>1行/1列的矩阵取下标不降维：</li>
+</ul>
+<p><a href="https://d.cosx.org/d/420997-1-vector/4" class="uri">https://d.cosx.org/d/420997-1-vector/4</a></p>
+<pre><code>matrix(rep(1,6),ncol=1)[1:3,,drop=FALSE] %*% 1</code></pre>
+<ul>
+<li><p>加载管道符<code>%&gt;%</code>就只需要magrittr一个包 <a href="https://d.cosx.org/d/420697/7">by yihui</a></p></li>
+<li><p>矩阵反序
+<a href="https://stackoverflow.com/questions/9135799/how-to-reverse-a-matrix-in-r">来源</a></p></li>
+</ul>
+<pre><code>a &lt;- matrix(c(1:10,10:1), ncol=2)
+b &lt;- apply(a, 2, rev)</code></pre>
+<ul>
+<li>Bookdown github pages 设置：
+<a href="https://bookdown.org/yihui/bookdown/github.html">来源于这一段</a></li>
+</ul>
+<p>One approach is to publish your book as a GitHub Pages site from a /docs folder on your master branch as described in GitHub Help. First, set the output directory of your book to be /docs by adding the line <code>output_dir: &quot;docs&quot;</code> to the configuration file <code>_bookdown.yml</code>. Then, after pushing your changes to GitHub, go to your repository’s settings and under “GitHub Pages” change the “Source” to be “master branch /docs folder”. In this case, the <code>.nojekyll</code> file has to be in the <code>/docs</code> folder.</p>
+<p>另外一个方法教程长了5倍所以还是忽略吧</p>
+<ul>
+<li><a href="https://jennybc.github.io/2014-05-12-ubc/ubc-r/session03_git.html">R git</a></li>
+</ul>
 
 </div>
             </section>
@@ -481,7 +524,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["Notes in statistics and computing.pdf", "Notes in statistics and computing.epub"],
+"download": null,
 "toc": {
 "collapse": "subsection"
 }

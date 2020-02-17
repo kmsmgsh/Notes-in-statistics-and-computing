@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2019-10-23">
+<meta name="date" content="2020-02-17">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -145,6 +145,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.1" data-path="general-notes.html"><a href="general-notes.html#section-3.1"><i class="fa fa-check"></i><b>3.1</b> 台湾教授彭明辉教授的研究生手册</a><ul>
 <li class="chapter" data-level="3.1.1" data-path="general-notes.html"><a href="general-notes.html#section-3.1.1"><i class="fa fa-check"></i><b>3.1.1</b> 读论文的要求</a></li>
 </ul></li>
+<li class="chapter" data-level="3.2" data-path="general-notes.html"><a href="general-notes.html#section-3.2"><i class="fa fa-check"></i><b>3.2</b> 论文报告的要求与技巧</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>4</b> Statistician Tool Box</a><ul>
 <li class="chapter" data-level="4.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>4.1</b> Matrix algebra</a><ul>
@@ -307,6 +308,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="18" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>18</b> Rcpp</a><ul>
 <li class="chapter" data-level="18.1" data-path="rcpp.html"><a href="rcpp.html#rarmadillo"><i class="fa fa-check"></i><b>18.1</b> 一个R操作对应的armadillo操作的文档：</a></li>
+<li class="chapter" data-level="18.2" data-path="rcpp.html"><a href="rcpp.html#rcpp-package"><i class="fa fa-check"></i><b>18.2</b> Rcpp package</a></li>
 </ul></li>
 <li class="chapter" data-level="19" data-path="statistical-computing.html"><a href="statistical-computing.html"><i class="fa fa-check"></i><b>19</b> Statistical Computing</a><ul>
 <li class="chapter" data-level="19.1" data-path="statistical-computing.html"><a href="statistical-computing.html#generate-multivariate-normal-samples"><i class="fa fa-check"></i><b>19.1</b> Generate Multivariate Normal samples</a></li>
@@ -450,6 +452,11 @@ arma::mat armadillo_joint_cols_test(arma::vec x1,arma::vec x2)
 在测试文档中，如果使用统一的初始化函数，则会出现class prior的子类的实现mvn_prior的作用域只是在初始化函数内部，所以，返回jmcm_mcd_evaluator的实例中，就不包括prior的实例。
 则这个引用绑定的类实例，在当初始化函数返回以后就被释放了，所以引用就失效了。这时候再调用这个引用，r就崩溃了。
 所以在接口函数里面，得手动初始化prior然后保留实例。</p>
+</div>
+<div id="rcpp-package" class="section level2">
+<h2><span class="header-section-number">18.2</span> Rcpp package</h2>
+<p>基础的.call和动态链接库的<a href="http://r-pkgs.had.co.nz/src.html">知识</a></p>
+<p>在r包那本书里有翻译。</p>
 
 </div>
 </div>
@@ -496,7 +503,7 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["Notes in statistics and computing.pdf", "Notes in statistics and computing.epub"],
+"download": null,
 "toc": {
 "collapse": "subsection"
 }

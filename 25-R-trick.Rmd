@@ -23,6 +23,16 @@ options(digits=3)
 - 拼接字符串
 ```paste()```
 
+- 生成全排列：
+[来自](https://stackoverflow.com/questions/18705153/generate-list-of-all-possible-combinations-of-elements-of-vector)
+```
+expand.grid(0:1, 0:1, 0:1)
+# for longer case:
+n <- 14
+l <- rep(list(0:1), n)
+expand.grid(l)
+```
+
 
 - Try catch
 
@@ -127,4 +137,54 @@ benchmark("Rvec2tril"=BayesJMCM::vec2tril(phiiVec)
           "Rcppvec2tril"=vec2trilcpp(phiiVec)
          )
 ```
+
+
+- 用字符串访问变量：
+使用 get().
+如果要访问list中的元素，比如说
+```
+a=list(var1=c(1,2,3),var2=c(2,3,4))
+```
+要访问var1的话：
+```
+get("var1",a)
+```
+或者可以用一个更简单的方案：
+```
+a[["var1"]]
+```
+
+
+
+- 1行/1列的矩阵取下标不降维：
+
+https://d.cosx.org/d/420997-1-vector/4
+
+```
+matrix(rep(1,6),ncol=1)[1:3,,drop=FALSE] %*% 1
+```
+
+- 加载管道符`%>%`就只需要magrittr一个包 [by yihui](https://d.cosx.org/d/420697/7)
+
+
+
+- 矩阵反序
+[来源](https://stackoverflow.com/questions/9135799/how-to-reverse-a-matrix-in-r)
+
+```
+a <- matrix(c(1:10,10:1), ncol=2)
+b <- apply(a, 2, rev)
+```
+
+
+
+- Bookdown github pages 设置：
+[来源于这一段](https://bookdown.org/yihui/bookdown/github.html)
+
+One approach is to publish your book as a GitHub Pages site from a /docs folder on your master branch as described in GitHub Help. First, set the output directory of your book to be /docs by adding the line `output_dir: "docs"` to the configuration file `_bookdown.yml`. Then, after pushing your changes to GitHub, go to your repository’s settings and under “GitHub Pages” change the “Source” to be “master branch /docs folder”. In this case, the `.nojekyll` file has to be in the `/docs` folder.
+
+另外一个方法教程长了5倍所以还是忽略吧
+
+
+- [R git](https://jennybc.github.io/2014-05-12-ubc/ubc-r/session03_git.html)
 
