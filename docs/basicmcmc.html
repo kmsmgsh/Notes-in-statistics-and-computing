@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2020-02-17">
+<meta name="date" content="2020-02-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -517,9 +517,8 @@ p(\tau | \mu, \mathbf{Y}) \propto p(\mathbf{Y}, \mu, \tau)=\tau^{n / 2} \exp \le
 <div id="a-metropolis-example" class="section level2">
 <h2><span class="header-section-number">7.4</span> A Metropolis Example</h2>
 <p>Frequency logistic regression.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mcmc)</code></pre>
-<pre><code>## Warning: package &#39;mcmc&#39; was built under R version 3.5.2</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(<span class="st">&quot;logit&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mcmc)
+<span class="kw">data</span>(<span class="st">&quot;logit&quot;</span>)
 out=<span class="kw">glm</span>(y<span class="op">~</span><span class="st"> </span>x1<span class="op">+</span>x2<span class="op">+</span>x3<span class="op">+</span>x4,<span class="dt">data=</span>logit,<span class="dt">family=</span><span class="kw">binomial</span>(),<span class="dt">x=</span><span class="ot">TRUE</span>)
 <span class="kw">summary</span>(out)</code></pre>
 <pre><code>## 

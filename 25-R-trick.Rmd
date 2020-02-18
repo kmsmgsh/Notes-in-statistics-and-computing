@@ -188,3 +188,12 @@ One approach is to publish your book as a GitHub Pages site from a /docs folder 
 
 - [R git](https://jennybc.github.io/2014-05-12-ubc/ubc-r/session03_git.html)
 
+
+- [patchwork](https://d.cosx.org/d/421267-ggplot-patchwork) 把多个ggplot放在一起
+
+
+
+
+
+
+

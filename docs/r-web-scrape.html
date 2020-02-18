@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2020-02-17">
+<meta name="date" content="2020-02-18">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -339,10 +339,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="r-web-scrape" class="section level1">
 <h1><span class="header-section-number">Chapter 16</span> R web scrape</h1>
 <p>Web scrape用</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)</code></pre>
-<pre><code>## Warning: package &#39;rvest&#39; was built under R version 3.5.2</code></pre>
-<pre><code>## Loading required package: xml2</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">lego_movie &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;http://www.imdb.com/title/tt1490017/&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
+lego_movie &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;http://www.imdb.com/title/tt1490017/&quot;</span>)
 
 rating &lt;-<span class="st"> </span>lego_movie <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;strong span&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 这个&quot;strong span&quot;是指什么意思？</span>
