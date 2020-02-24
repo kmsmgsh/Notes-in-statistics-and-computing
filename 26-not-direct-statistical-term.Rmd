@@ -19,8 +19,12 @@
 也叫[Sample probability](https://en.wikipedia.org/wiki/Sampling_probability)
 在有限总体中抽样，一个元素的sampling probability(inclusion probability)，被一次抽样抽出来的概率。
 
+- effective size 效果大小
 
+The terms treatment effects and effect sizes are used in different ways by different people. Meta-analyses in medicine often refer to the effect size as a treatment effect, and this term is sometimes assumed to refer to odds ratios, risk ratios, or riskdifferences, which are common in meta-analyses that deal with medical interventions.Similarly, meta-analyses in the social sciences often refer to the effect size simply as an effect size and this term is sometimes assumed to refer to standardized mean differences or to correlations, which are common in social science meta-analyses. by book [Introduction to Meta-Analysis]
 
+- condition number
 
+The condition number of a nonnegative definite matrix is defined as $\lambda_1/\lambda_p$ or the ratio of its largest and smallest eigenvalues, it is infinity when the latter is zero.
 
 

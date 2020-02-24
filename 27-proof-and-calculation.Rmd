@@ -1,0 +1,34 @@
+# Proof and Calculation
+
+本来会推的会证的就少，还老忘，推一个就抄一个过来就好了。虽然不保证因为很麻烦。
+
+### Coordinate Descent Algorithm for Lasso
+For a general design matrix $X$, there is no closed form for the Lasso solution and the computational details of the Lasso procedure are more involved. A fast method to solve the general Lasso regression problem is the coordinate descent algorithm which minimizes loss function over one $\beta_j$ at a time with the others kept fixed. It then cycles through all the parameters until convergence (Friedman et al.,2008). 
+
+Suppose all the values of $\beta_k$ for $k\neq j$ are held fixed at their current value $\tilde \beta_k$, so that $Q(\tilde\beta)$ can be written as
+$$
+Q(\tilde{\beta})=\frac{1}{2} \sum_{i=1}^{n}\left(Y_{i}-\sum_{k \neq j} x_{i k} \tilde{\beta}_{k}-x_{i j} \beta_{j}\right)^{2}+\lambda \sum_{k \neq j}\left|\tilde{\beta}_{k}\right|+\lambda\left|\beta_{j}\right|
+$$
+也就是写成两块，一块是fixed的$\beta_k$,$k\neq j$, 一块是当作变量的$\beta_j$.这样就是一个关于$\beta_j$的单变量函数。关于$\beta_j$ 解单变量lasso，解就能写成soft threshold的形式：
+$$
+\widehat{\beta}(\lambda)=S\left(\sum_{i=1}^{n} x_{i} y_{i}, \lambda\right)
+$$
+这时候对应的元素应该是：$r_{i}^{(j)}=Y_{i}-\sum_{k \neq j} x_{i k} \tilde{\beta}_{k}$.则解就能直接写出来：
+$$
+\tilde{\beta}_{j} \leftarrow S\left(\sum_{i=1}^{n} x_{i j} r_{i}^{(j)}, \lambda\right)
+$$
+这时候算法对所有$\beta_j$重复，$j=1,2,...p,1,2,...p,...$直到$\tilde \beta$收敛。
+一般来说，$Lasso$的解$\hat\beta$的characterization是通过KKT条件，极小化convex function。接下来是个定理，说明平方损失函数那块的梯度表示为$\beta$的函数的话，$\hat\beta$是解的充分必要条件是如果$\hat\beta\neq 0$,则梯度是$-\operatorname{sign}\left(\widehat{\beta}_{j}\right) \lambda$,如果$\hat\beta=0$,则梯度的绝对值小于$\lambda$.
+不太理解所以不写了，需要去看书。
+
+
+
+
+
+
+
+
+
+
+
+

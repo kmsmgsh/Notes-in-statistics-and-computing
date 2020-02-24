@@ -89,6 +89,129 @@ $$
 
 
 
+## 正定阵的基础定理：
+Theorem 1 
+
+For a \(p \times p\) symmetric matrix \(\Sigma=\left(\sigma_{i j}\right),\) the following are equivalent:
+
+(a) \(\Sigma\) is nonnegative definite.
+
+(b) all its leading principal minors are nonnegative definite, that is, the \(i \times i\) matrices
+$$
+\boldsymbol{\Sigma}_{i i}=\left(\begin{array}{ccc}
+{\sigma_{11}} & {\cdots} & {\sigma_{1 i}} \\
+{\vdots} & {\ddots} & {\vdots} \\
+{\sigma_{i 1}} & {\cdots} & {\sigma_{i i}}
+\end{array}\right), i=1, \cdots, p
+$$
+are nonnegative definite.
+
+(c) all eigenvalues of \(\Sigma\) are nonnegative.
+
+(d) there exists a matrix A such that
+$$
+\boldsymbol{\Sigma}=A A^{\prime}
+$$
+
+(e) there exists a lower triangular matrix \(L\) such that
+$$
+\boldsymbol{\Sigma}=L L^{\prime}
+$$
+
+(f) there exist vectors \(\boldsymbol{u}_{1}, \cdots, \boldsymbol{u}_{p}\) in \(R^{p}\) such that \(\sigma_{i j}=\boldsymbol{u}_{i}^{\prime} \boldsymbol{u}_{j}\)
+
+
+## 对称阵的谱分解相关定理
+Theorem 4 (The Spectral Decomposition) Let \(A\) be a \(p \times p\) symmetric matrix with p pairs of eigenvalues and eigenvectors
+$$
+\left(\lambda_{1}, \mathbf{e}_{1}\right),\left(\lambda_{2}, \mathbf{e}_{2}\right), \cdots,\left(\lambda_{p}, \mathbf{e}_{p}\right)
+$$
+Then,
+
+(a) The eigenvalues \(\lambda_{1}, \ldots, \lambda_{p}\) are all real, and can be ordered from the largest
+to the smallest
+$$
+\lambda_{1} \geq \lambda_{2} \geq \ldots \geq \lambda_{p}
+$$
+
+(b) The normalized eigenvectors \(\mathbf{e}_{1}, \ldots, \mathbf{e}_{p}\) are mutually orthogonal and the matrix
+$$
+P=\left(\mathbf{e}_{1}, \mathbf{e}_{2}, \ldots, \mathbf{e}_{p}\right)
+$$
+is an orthogonal matrix, that is,
+$$
+P P^{\prime}=P^{\prime} P=I
+$$
+
+(c) The spectral decomposition of \(A\) is the expansion
+$$
+A=\lambda_{1} \mathbf{e}_{1} \mathbf{e}_{1}^{\prime}+\lambda_{2} \mathbf{e}_{2} \mathbf{e}_{2}^{\prime}+\cdots+\lambda_{p} \mathbf{e}_{p} \mathbf{e}_{p}^{\prime}=P \Lambda P^{\prime}
+$$
+where \(P\) is as above and
+$$
+\Lambda=\operatorname{diag}\left(\lambda_{1}, \cdots, \lambda_{p}\right)
+$$
+is a diagonal matrix with \(\lambda_{1}, \ldots, \lambda_{p}\) as its respective diagonal entries.
+
+(d) The matrix \(A\) is nonnegative definite, if and only if all its eigenvalues are
+nonnegative.
+
+## Covariance Structure
+
+### Compound Symmetry Covariance结构
+
+P54 of pourahmadi covariance book
+
+a sufficient condition for nonnegative definite is : $1+(p-1) \rho \geq 0$ or \(-(p-1)^{-1} \leq \rho \leq 1\)
+
+### Huynh-Feldt Structure
+
+\(\Sigma=\sigma^{2}\left(\alpha I+a \mathbf{1}_{p}^{\prime}+\mathbf{1}_{p} a^{\prime}\right)\)
+
+The $\Sigma$ is nonnegative definite provided that
+$$
+\alpha>\mathbf{1}_{p}^{\prime} a-\sqrt{p a^{\prime} a}
+$$
+
+### The One-Dependent Covariance Structure
+$$
+\Sigma=\sigma^{2}\left(\begin{array}{ccccc}
+{a} & {b} & {0} & {\cdots} & {0} \\
+{b} & {a} & {b} & {\ddots} & {\vdots} \\
+{\vdots} & {\ddots} & {\ddots} & {\ddots} & {0} \\
+{\vdots} & {} & {\ddots} & {\ddots} & {b} \\
+{0} & {\cdots} & {0} & {b} & {a}
+\end{array}\right)
+$$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
