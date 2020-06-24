@@ -184,6 +184,16 @@ $$
 \end{array}\right)
 $$
 
+### AR(1) Structure (highly popular)
+
+$$
+\boldsymbol{\Sigma}=\sigma^{2}\left(\begin{array}{cccc}
+{1} & {\rho} & {\cdots} & {\rho^{p-1}} \\
+{\rho} & {1} & {\cdots} & {\rho^{p-1}} \\
+{\vdots} & {\vdots} & {\ddots} & {\vdots} \\
+{\rho^{p-1}} & {\rho^{p-2}} & {\cdots} & {1}
+\end{array}\right),-1<\rho<1
+$$
 
 
 

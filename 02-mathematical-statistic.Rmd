@@ -46,7 +46,27 @@ $$
 
 Using this technique, we can prove the "Objective Bayesian Methods for Model Selection: Introduction and Comparison" example under difficulty 3 that vague proper prior usually gives bad answers. Vague parameters usually have strongly influence on the Bayes factor.
 
+[Vector form:](http://cs229.stanford.edu/section/more_on_gaussians.pdf)
 
+"Completion of squares" trick:
+$$
+\frac{1}{2} z^{T} A z+b^{T} z+c=\frac{1}{2}\left(z+A^{-1} b\right)^{T} A\left(z+A^{-1} b\right)+c-\frac{1}{2} b^{T} A^{-1} b
+$$
+
+Then use the fact from multivariate Gaussian:
+
+\[
+\frac{1}{(2 \pi)^{n / 2}|\Sigma|^{1 / 2}} \int_{\mathbf{R}^{n}} \exp \left(-\frac{1}{2}(x-\mu)^{T} \Sigma^{-1}(x-\mu)\right)=1
+\]
+or equivalently
+\[
+\int_{\mathbf{R}^{n}} \exp \left(-\frac{1}{2}(x-\mu)^{T} \Sigma^{-1}(x-\mu)\right)=(2 \pi)^{n / 2}|\Sigma|^{1 / 2}
+\]
+
+So we have:
+$$
+\int_{x \in \mathbf{R}^{n}} \exp \left(-\frac{1}{2} x^{T} A x-x^{T} b-c\right) d x=\frac{(2 \pi)^{n / 2}}{|A|^{1 / 2} \exp \left(c-b^{T} A^{-1} b\right)}
+$$
 
 ## Asymptotic issues
 

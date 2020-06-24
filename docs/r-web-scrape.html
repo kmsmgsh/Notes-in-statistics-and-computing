@@ -25,7 +25,7 @@
 <meta name="author" content="Jiaming Shen">
 
 
-<meta name="date" content="2020-02-23">
+<meta name="date" content="2020-04-14">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -153,6 +153,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#sumSquare"><i class="fa fa-check"></i><b>4.2</b> 两个二次型相加</a></li>
 <li class="chapter" data-level="4.3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#section-4.3"><i class="fa fa-check"></i><b>4.3</b> 正定阵的基础定理：</a></li>
+<li class="chapter" data-level="4.4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#section-4.4"><i class="fa fa-check"></i><b>4.4</b> 对称阵的谱分解相关定理</a></li>
+<li class="chapter" data-level="4.5" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#covariance-structure"><i class="fa fa-check"></i><b>4.5</b> Covariance Structure</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#compound-symmetry-covariance"><i class="fa fa-check"></i><b>4.5.1</b> Compound Symmetry Covariance结构</a></li>
+<li class="chapter" data-level="4.5.2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#huynh-feldt-structure"><i class="fa fa-check"></i><b>4.5.2</b> Huynh-Feldt Structure</a></li>
+<li class="chapter" data-level="4.5.3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#the-one-dependent-covariance-structure"><i class="fa fa-check"></i><b>4.5.3</b> The One-Dependent Covariance Structure</a></li>
+<li class="chapter" data-level="4.5.4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#ar1-structure-highly-popular"><i class="fa fa-check"></i><b>4.5.4</b> AR(1) Structure (highly popular)</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Longitudinal data analysis</a><ul>
 <li class="chapter" data-level="5.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>5.1</b> Linear mixed model</a><ul>
@@ -343,15 +350,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="r-web-scrape" class="section level1">
 <h1><span class="header-section-number">Chapter 16</span> R web scrape</h1>
 <p>Web scrape用</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)
-lego_movie &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;http://www.imdb.com/title/tt1490017/&quot;</span>)
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(rvest)</code></pre>
+<pre><code>## Warning: package &#39;rvest&#39; was built under R version 3.5.2</code></pre>
+<pre><code>## Loading required package: xml2</code></pre>
+<pre><code>## Warning: package &#39;xml2&#39; was built under R version 3.5.2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">lego_movie &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;http://www.imdb.com/title/tt1490017/&quot;</span>)
 
 rating &lt;-<span class="st"> </span>lego_movie <span class="op">%&gt;%</span><span class="st"> </span>
 <span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;strong span&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 这个&quot;strong span&quot;是指什么意思？</span>
 <span class="st">  </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">as.numeric</span>()
 rating</code></pre>
-<pre><code>## [1] 7.8</code></pre>
+<pre><code>## [1] 7.7</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#&gt; [1] 7.8</span></code></pre>
 <p>上述的问题回答是由于：</p>
 <pre class="sourceCode r"><code class="sourceCode r">knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="kw">rep</span>(<span class="st">&quot;pic/scrape_2.png&quot;</span>, <span class="dv">1</span>))</code></pre>

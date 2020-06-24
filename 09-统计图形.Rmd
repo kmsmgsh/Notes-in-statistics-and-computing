@@ -20,3 +20,34 @@ for (i in 2:10) {
 }
 
 ```
+
+
+
+## 图例：
+
+legend()
+
+第一个也可以用"topright"这种.
+
+legend(2000,9.5, # places a legend at the appropriate place c(“Health”,”Defense”), # puts text in the legend
+
+lty=c(1,1), # gives the legend appropriate symbols (lines)
+
+lwd=c(2.5,2.5),col=c(“blue”,”red”)) # gives the legend lines the correct color and width
+
+我的样例：
+legend("topright", # places a legend at the appropriate place 
+       c("Bayesian estimation","Sample Covariance","jmcmfit"), # puts text in the legend
+       lty=c(NA,NA,1), # gives the legend appropriate symbols (lines)
+       pch=c(1,1,NA),
+       lwd=c(1,1,1),
+       col=c("black","red","black")) 
+
+pch是点的类型，[具体见这个网址](http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r)
+
+暂时把图搬过来:
+
+![](http://www.sthda.com/sthda/RDoc/figure/graphs/r-plot-pch-symbols-points-in-r.png)
+
+lwd是线的宽度
+lty是线的类型，是点的话这就用了NA。
