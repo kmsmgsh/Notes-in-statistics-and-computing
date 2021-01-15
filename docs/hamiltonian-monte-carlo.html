@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html >
-
+<html lang="" xml:lang="">
 <head>
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chapter 10 Hamiltonian Monte Carlo | Notes on Statistics</title>
-  <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes">
-  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 11 Hamiltonian Monte Carlo | Notes on Statistics</title>
+  <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 10 Hamiltonian Monte Carlo | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 11 Hamiltonian Monte Carlo | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -17,23 +16,23 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 10 Hamiltonian Monte Carlo | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 11 Hamiltonian Monte Carlo | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
 
-<meta name="author" content="Jiaming Shen">
+<meta name="author" content="Jiaming Shen" />
 
 
-<meta name="date" content="2020-04-14">
+<meta name="date" content="2021-01-15" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="optimal-proposal-distributions-and-adaptive-mcmc.html">
-<link rel="next" href="bayes-variable-selection.html">
+<link rel="prev" href="optimal-proposal-distributions-and-adaptive-mcmc.html"/>
+<link rel="next" href="bayes-variable-selection.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -41,6 +40,7 @@
 <link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
 
 
 
@@ -48,29 +48,33 @@
 
 
 
+
+
+<script src="libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -79,9 +83,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -131,200 +135,202 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <li class="divider"></li>
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>preliminary</a></li>
-<li class="chapter" data-level="" data-path="e69d82e4b883e69d82e585ab.html"><a href="e69d82e4b883e69d82e585ab.html"><i class="fa fa-check"></i>杂七杂八</a></li>
-<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
-<li class="chapter" data-level="2" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html"><i class="fa fa-check"></i><b>2</b> Mathematical statistic Trick</a><ul>
-<li class="chapter" data-level="2.1" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#NormalForm"><i class="fa fa-check"></i><b>2.1</b> Normal distribution as exponential family</a></li>
-<li class="chapter" data-level="2.2" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#section-2.2"><i class="fa fa-check"></i><b>2.2</b> 密度变换公式：</a></li>
-<li class="chapter" data-level="2.3" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#probability-mass-function"><i class="fa fa-check"></i><b>2.3</b> Probability mass function:</a></li>
-<li class="chapter" data-level="2.4" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#vector-to-diagonal-matrix"><i class="fa fa-check"></i><b>2.4</b> Vector to diagonal matrix:</a></li>
-<li class="chapter" data-level="2.5" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#gaussian-integral-trick"><i class="fa fa-check"></i><b>2.5</b> Gaussian Integral Trick</a></li>
-<li class="chapter" data-level="2.6" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#asymptotic-issues"><i class="fa fa-check"></i><b>2.6</b> Asymptotic issues</a></li>
+<li class="chapter" data-level="1" data-path="-extra.html"><a href="-extra.html"><i class="fa fa-check"></i><b>1</b> 杂七杂八{# extra}</a></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Introduction</a></li>
+<li class="chapter" data-level="3" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html"><i class="fa fa-check"></i><b>3</b> Mathematical statistic Trick</a><ul>
+<li class="chapter" data-level="3.1" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#NormalForm"><i class="fa fa-check"></i><b>3.1</b> Normal distribution as exponential family</a></li>
+<li class="chapter" data-level="3.2" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#密度变换公式"><i class="fa fa-check"></i><b>3.2</b> 密度变换公式：</a></li>
+<li class="chapter" data-level="3.3" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#probability-mass-function"><i class="fa fa-check"></i><b>3.3</b> Probability mass function:</a></li>
+<li class="chapter" data-level="3.4" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#vector-to-diagonal-matrix"><i class="fa fa-check"></i><b>3.4</b> Vector to diagonal matrix:</a></li>
+<li class="chapter" data-level="3.5" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#gaussian-integral-trick"><i class="fa fa-check"></i><b>3.5</b> Gaussian Integral Trick</a></li>
+<li class="chapter" data-level="3.6" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#asymptotic-issues"><i class="fa fa-check"></i><b>3.6</b> Asymptotic issues</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="general-notes.html"><a href="general-notes.html"><i class="fa fa-check"></i><b>3</b> General Notes</a><ul>
-<li class="chapter" data-level="3.1" data-path="general-notes.html"><a href="general-notes.html#section-3.1"><i class="fa fa-check"></i><b>3.1</b> 台湾教授彭明辉教授的研究生手册</a><ul>
-<li class="chapter" data-level="3.1.1" data-path="general-notes.html"><a href="general-notes.html#section-3.1.1"><i class="fa fa-check"></i><b>3.1.1</b> 读论文的要求</a></li>
+<li class="chapter" data-level="4" data-path="general-notes.html"><a href="general-notes.html"><i class="fa fa-check"></i><b>4</b> General Notes</a><ul>
+<li class="chapter" data-level="4.1" data-path="general-notes.html"><a href="general-notes.html#台湾教授彭明辉教授的研究生手册"><i class="fa fa-check"></i><b>4.1</b> 台湾教授彭明辉教授的研究生手册</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="general-notes.html"><a href="general-notes.html#读论文的要求"><i class="fa fa-check"></i><b>4.1.1</b> 读论文的要求</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="general-notes.html"><a href="general-notes.html#section-3.2"><i class="fa fa-check"></i><b>3.2</b> 论文报告的要求与技巧</a></li>
+<li class="chapter" data-level="4.2" data-path="general-notes.html"><a href="general-notes.html#论文报告的要求与技巧"><i class="fa fa-check"></i><b>4.2</b> 论文报告的要求与技巧</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>4</b> Statistician Tool Box</a><ul>
-<li class="chapter" data-level="4.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>4.1</b> Matrix algebra</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>4.1.1</b> Block diagonal matrices</a></li>
+<li class="chapter" data-level="5" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html"><i class="fa fa-check"></i><b>5</b> Statistician Tool Box</a><ul>
+<li class="chapter" data-level="5.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#matrix"><i class="fa fa-check"></i><b>5.1</b> Matrix algebra</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#block-diagonal-matrices"><i class="fa fa-check"></i><b>5.1.1</b> Block diagonal matrices</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#sumSquare"><i class="fa fa-check"></i><b>4.2</b> 两个二次型相加</a></li>
-<li class="chapter" data-level="4.3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#section-4.3"><i class="fa fa-check"></i><b>4.3</b> 正定阵的基础定理：</a></li>
-<li class="chapter" data-level="4.4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#section-4.4"><i class="fa fa-check"></i><b>4.4</b> 对称阵的谱分解相关定理</a></li>
-<li class="chapter" data-level="4.5" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#covariance-structure"><i class="fa fa-check"></i><b>4.5</b> Covariance Structure</a><ul>
-<li class="chapter" data-level="4.5.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#compound-symmetry-covariance"><i class="fa fa-check"></i><b>4.5.1</b> Compound Symmetry Covariance结构</a></li>
-<li class="chapter" data-level="4.5.2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#huynh-feldt-structure"><i class="fa fa-check"></i><b>4.5.2</b> Huynh-Feldt Structure</a></li>
-<li class="chapter" data-level="4.5.3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#the-one-dependent-covariance-structure"><i class="fa fa-check"></i><b>4.5.3</b> The One-Dependent Covariance Structure</a></li>
-<li class="chapter" data-level="4.5.4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#ar1-structure-highly-popular"><i class="fa fa-check"></i><b>4.5.4</b> AR(1) Structure (highly popular)</a></li>
-</ul></li>
-</ul></li>
-<li class="chapter" data-level="5" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>5</b> Longitudinal data analysis</a><ul>
-<li class="chapter" data-level="5.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>5.1</b> Linear mixed model</a><ul>
-<li class="chapter" data-level="5.1.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#condition-mean-vs-marginal-mean"><i class="fa fa-check"></i><b>5.1.1</b> Condition Mean vs Marginal mean</a></li>
-<li class="chapter" data-level="5.1.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#restricted-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>5.1.2</b> Restricted maximum likelihood estimation</a></li>
-<li class="chapter" data-level="5.1.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#prediction"><i class="fa fa-check"></i><b>5.1.3</b> Prediction</a></li>
-</ul></li>
-<li class="chapter" data-level="5.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#generalised-linear-mixed-models"><i class="fa fa-check"></i><b>5.2</b> Generalised linear mixed models</a><ul>
-<li class="chapter" data-level="5.2.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#expFam"><i class="fa fa-check"></i><b>5.2.1</b> Exponential distribution family</a></li>
-<li class="chapter" data-level="5.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>5.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
-<li class="chapter" data-level="5.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>5.2.3</b> GLMMs</a></li>
-</ul></li>
-<li class="chapter" data-level="5.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>5.3</b> The Bayesian analysis approach for covariance modelling</a></li>
-</ul></li>
-<li class="chapter" data-level="6" data-path="section-6.html"><a href="section-6.html"><i class="fa fa-check"></i><b>6</b> 统计图形笔记</a></li>
-<li class="chapter" data-level="7" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>7</b> BasicMCMC</a><ul>
-<li class="chapter" data-level="7.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>7.1</b> Metropolis-Hastings Update</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-update"><i class="fa fa-check"></i><b>7.1.1</b> Metropolis Update</a></li>
-</ul></li>
-<li class="chapter" data-level="7.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>7.2</b> The Gibbs Update</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="basicmcmc.html"><a href="basicmcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>7.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
-<li class="chapter" data-level="7.2.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>7.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
-<li class="chapter" data-level="7.2.3" data-path="basicmcmc.html"><a href="basicmcmc.html#gibbs-full-conditional-distibution"><i class="fa fa-check"></i><b>7.2.3</b> Gibbs Full conditional distibution</a></li>
-</ul></li>
-<li class="chapter" data-level="7.3" data-path="basicmcmc.html"><a href="basicmcmc.html#combining-updates"><i class="fa fa-check"></i><b>7.3</b> Combining Updates</a><ul>
-<li class="chapter" data-level="7.3.1" data-path="basicmcmc.html"><a href="basicmcmc.html#composition"><i class="fa fa-check"></i><b>7.3.1</b> Composition</a></li>
-<li class="chapter" data-level="7.3.2" data-path="basicmcmc.html"><a href="basicmcmc.html#palindromic-composition"><i class="fa fa-check"></i><b>7.3.2</b> Palindromic Composition</a></li>
-<li class="chapter" data-level="7.3.3" data-path="basicmcmc.html"><a href="basicmcmc.html#state-independent-mixing"><i class="fa fa-check"></i><b>7.3.3</b> State-Independent Mixing</a></li>
-<li class="chapter" data-level="7.3.4" data-path="basicmcmc.html"><a href="basicmcmc.html#subsampling"><i class="fa fa-check"></i><b>7.3.4</b> Subsampling</a></li>
-</ul></li>
-<li class="chapter" data-level="7.4" data-path="basicmcmc.html"><a href="basicmcmc.html#a-metropolis-example"><i class="fa fa-check"></i><b>7.4</b> A Metropolis Example</a></li>
-</ul></li>
-<li class="chapter" data-level="8" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html"><i class="fa fa-check"></i><b>8</b> Reversible Jump MCMC</a><ul>
-<li class="chapter" data-level="8.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#introduction"><i class="fa fa-check"></i><b>8.1</b> Introduction</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#from-metropolis-hastings-to-reversible-jump"><i class="fa fa-check"></i><b>8.1.1</b> From Metropolis-Hastings to Reversible Jump</a></li>
-<li class="chapter" data-level="8.1.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#application-area"><i class="fa fa-check"></i><b>8.1.2</b> Application Area</a></li>
-</ul></li>
-<li class="chapter" data-level="8.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#implementation"><i class="fa fa-check"></i><b>8.2</b> Implementation</a><ul>
-<li class="chapter" data-level="8.2.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-dimension-matching"><i class="fa fa-check"></i><b>8.2.1</b> Example Dimension Matching</a></li>
-<li class="chapter" data-level="8.2.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-moment-matching-in-a-finite-mixture-of-univariate-normals"><i class="fa fa-check"></i><b>8.2.2</b> Example: Moment Matching in a Finite Mixture of Univariate Normals</a></li>
-</ul></li>
-<li class="chapter" data-level="8.3" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#mapping-functions-and-proposal-distribution"><i class="fa fa-check"></i><b>8.3</b> Mapping Functions and Proposal Distribution</a><ul>
-<li class="chapter" data-level="8.3.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#marginalization-and-augmentation"><i class="fa fa-check"></i><b>8.3.1</b> Marginalization and augmentation:</a></li>
-<li class="chapter" data-level="8.3.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#centering-and-order-methods"><i class="fa fa-check"></i><b>8.3.2</b> Centering and Order Methods</a></li>
+<li class="chapter" data-level="5.2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#sumSquare"><i class="fa fa-check"></i><b>5.2</b> 两个二次型相加</a></li>
+<li class="chapter" data-level="5.3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#正定阵的基础定理"><i class="fa fa-check"></i><b>5.3</b> 正定阵的基础定理：</a></li>
+<li class="chapter" data-level="5.4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#对称阵的谱分解相关定理"><i class="fa fa-check"></i><b>5.4</b> 对称阵的谱分解相关定理</a></li>
+<li class="chapter" data-level="5.5" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#covariance-structure"><i class="fa fa-check"></i><b>5.5</b> Covariance Structure</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#compound-symmetry-covariance结构"><i class="fa fa-check"></i><b>5.5.1</b> Compound Symmetry Covariance结构</a></li>
+<li class="chapter" data-level="5.5.2" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#huynh-feldt-structure"><i class="fa fa-check"></i><b>5.5.2</b> Huynh-Feldt Structure</a></li>
+<li class="chapter" data-level="5.5.3" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#the-one-dependent-covariance-structure"><i class="fa fa-check"></i><b>5.5.3</b> The One-Dependent Covariance Structure</a></li>
+<li class="chapter" data-level="5.5.4" data-path="statistician-tool-box.html"><a href="statistician-tool-box.html#ar1-structure-highly-popular"><i class="fa fa-check"></i><b>5.5.4</b> AR(1) Structure (highly popular)</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html"><i class="fa fa-check"></i><b>9</b> Optimal Proposal Distributions and Adaptive MCMC</a><ul>
-<li class="chapter" data-level="9.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#intro-1"><i class="fa fa-check"></i><b>9.1</b> Intro</a><ul>
-<li class="chapter" data-level="9.1.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#mh-algorithm"><i class="fa fa-check"></i><b>9.1.1</b> MH algorithm</a></li>
-<li class="chapter" data-level="9.1.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling"><i class="fa fa-check"></i><b>9.1.2</b> Optimal Scaling</a></li>
-<li class="chapter" data-level="9.1.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc"><i class="fa fa-check"></i><b>9.1.3</b> Adaptive MCMC</a></li>
-<li class="chapter" data-level="9.1.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#comparing-markov-chains"><i class="fa fa-check"></i><b>9.1.4</b> Comparing Markov Chains</a></li>
+<li class="chapter" data-level="6" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html"><i class="fa fa-check"></i><b>6</b> Longitudinal data analysis</a><ul>
+<li class="chapter" data-level="6.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#linear-mixed-model"><i class="fa fa-check"></i><b>6.1</b> Linear mixed model</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#condition-mean-vs-marginal-mean"><i class="fa fa-check"></i><b>6.1.1</b> Condition Mean vs Marginal mean</a></li>
+<li class="chapter" data-level="6.1.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#restricted-maximum-likelihood-estimation"><i class="fa fa-check"></i><b>6.1.2</b> Restricted maximum likelihood estimation</a></li>
+<li class="chapter" data-level="6.1.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#prediction"><i class="fa fa-check"></i><b>6.1.3</b> Prediction</a></li>
 </ul></li>
-<li class="chapter" data-level="9.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling-of-random-walk-metropolis"><i class="fa fa-check"></i><b>9.2</b> Optimal Scaling of Random-Walk Metropolis</a><ul>
-<li class="chapter" data-level="9.2.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#basic-principle"><i class="fa fa-check"></i><b>9.2.1</b> Basic principle</a></li>
-<li class="chapter" data-level="9.2.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-acceptance-rate-as-drightarrow-infty"><i class="fa fa-check"></i><b>9.2.2</b> Optimal Acceptance Rate as <span class="math inline">\(d\rightarrow \infty\)</span></a></li>
-<li class="chapter" data-level="9.2.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-target-distributions"><i class="fa fa-check"></i><b>9.2.3</b> Inhomogeneous Target Distributions</a></li>
-<li class="chapter" data-level="9.2.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#metropolis-adjusted-langevin-algorithm."><i class="fa fa-check"></i><b>9.2.4</b> Metropolis-Adjusted Langevin Algorithm.</a></li>
-<li class="chapter" data-level="9.2.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#numerical-examples"><i class="fa fa-check"></i><b>9.2.5</b> Numerical Examples</a></li>
-<li class="chapter" data-level="9.2.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-covariance"><i class="fa fa-check"></i><b>9.2.6</b> Inhomogeneous Covariance</a></li>
+<li class="chapter" data-level="6.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#generalised-linear-mixed-models"><i class="fa fa-check"></i><b>6.2</b> Generalised linear mixed models</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#expFam"><i class="fa fa-check"></i><b>6.2.1</b> Exponential distribution family</a></li>
+<li class="chapter" data-level="6.2.2" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#iteratively-reweighted-least-square-algorithm-iwls"><i class="fa fa-check"></i><b>6.2.2</b> Iteratively reweighted Least square algorithm (IWLS)</a></li>
+<li class="chapter" data-level="6.2.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#glmms"><i class="fa fa-check"></i><b>6.2.3</b> GLMMs</a></li>
 </ul></li>
-<li class="chapter" data-level="9.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc-1"><i class="fa fa-check"></i><b>9.3</b> Adaptive MCMC</a></li>
-<li class="chapter" data-level="9.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#ergodicity-of-adaptive-mcmc"><i class="fa fa-check"></i><b>9.4</b> Ergodicity of Adaptive MCMC</a><ul>
-<li class="chapter" data-level="9.4.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis"><i class="fa fa-check"></i><b>9.4.1</b> Adaptive Metropolis</a></li>
-<li class="chapter" data-level="9.4.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis-within-gibbs"><i class="fa fa-check"></i><b>9.4.2</b> Adaptive Metropolis-within-Gibbs</a></li>
-<li class="chapter" data-level="9.4.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#state-dependent-proposal-scalings"><i class="fa fa-check"></i><b>9.4.3</b> State-Dependent Proposal Scalings</a></li>
-<li class="chapter" data-level="9.4.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#limit-theorem"><i class="fa fa-check"></i><b>9.4.4</b> Limit Theorem</a></li>
+<li class="chapter" data-level="6.3" data-path="longitudinal-data-analysis.html"><a href="longitudinal-data-analysis.html#the-bayesian-analysis-approach-for-covariance-modelling"><i class="fa fa-check"></i><b>6.3</b> The Bayesian analysis approach for covariance modelling</a></li>
 </ul></li>
-<li class="chapter" data-level="9.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#faq"><i class="fa fa-check"></i><b>9.5</b> FAQ</a></li>
-<li class="chapter" data-level="9.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#conclusion"><i class="fa fa-check"></i><b>9.6</b> Conclusion</a></li>
-<li class="chapter" data-level="9.7" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#a-tutorial-on-adaptive-mcmc"><i class="fa fa-check"></i><b>9.7</b> A tutorial on adaptive MCMC</a></li>
+<li class="chapter" data-level="7" data-path="-.html"><a href="-.html"><i class="fa fa-check"></i><b>7</b> 统计图形笔记</a><ul>
+<li class="chapter" data-level="7.1" data-path="-.html"><a href="-.html#图例"><i class="fa fa-check"></i><b>7.1</b> 图例：</a></li>
 </ul></li>
-<li class="chapter" data-level="10" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html"><i class="fa fa-check"></i><b>10</b> Hamiltonian Monte Carlo</a><ul>
-<li class="chapter" data-level="10.0.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#properties-of-hamiltonian-dynamics"><i class="fa fa-check"></i><b>10.0.1</b> Properties of Hamiltonian Dynamics</a></li>
-<li class="chapter" data-level="10.0.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#conservation-of-the-hamiltonian"><i class="fa fa-check"></i><b>10.0.2</b> Conservation of the Hamiltonian</a></li>
-<li class="chapter" data-level="10.0.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#volume-preservation"><i class="fa fa-check"></i><b>10.0.3</b> Volume preservation</a></li>
-<li class="chapter" data-level="10.0.4" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#symplecticness-"><i class="fa fa-check"></i><b>10.0.4</b> Symplecticness (辛？)</a></li>
-<li class="chapter" data-level="10.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#discretizing-hamiltons-equations-the-leapfrog-method."><i class="fa fa-check"></i><b>10.1</b> Discretizing Hamilton’s Equations: The leapfrog method.</a><ul>
-<li class="chapter" data-level="10.1.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#modification-of-eulers-method"><i class="fa fa-check"></i><b>10.1.1</b> Modification of Euler’s Method</a></li>
-<li class="chapter" data-level="10.1.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#the-leapfrog-method"><i class="fa fa-check"></i><b>10.1.2</b> The leapfrog Method</a></li>
-<li class="chapter" data-level="10.1.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#local-and-global-error-of-discretization-methods."><i class="fa fa-check"></i><b>10.1.3</b> Local and Global Error of discretization Methods.</a></li>
+<li class="chapter" data-level="8" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>8</b> BasicMCMC</a><ul>
+<li class="chapter" data-level="8.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>8.1</b> Metropolis-Hastings Update</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-update"><i class="fa fa-check"></i><b>8.1.1</b> Metropolis Update</a></li>
 </ul></li>
-<li class="chapter" data-level="10.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#mcmc-from-hamiltonian-dynamics."><i class="fa fa-check"></i><b>10.2</b> MCMC from Hamiltonian Dynamics.</a><ul>
-<li class="chapter" data-level="10.2.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#probability-and-the-hamiltonian-canonical-distributions"><i class="fa fa-check"></i><b>10.2.1</b> Probability and the Hamiltonian: Canonical Distributions</a></li>
-<li class="chapter" data-level="10.2.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#the-hamiltonian-monte-carlo-algorithm"><i class="fa fa-check"></i><b>10.2.2</b> The Hamiltonian Monte Carlo Algorithm</a></li>
-<li class="chapter" data-level="10.2.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#illustrations-of-hmc-and-its-benefits"><i class="fa fa-check"></i><b>10.2.3</b> Illustrations of HMC and Its Benefits</a></li>
-<li class="chapter" data-level="10.2.4" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#the-benefit-of-avoiding-random-walks"><i class="fa fa-check"></i><b>10.2.4</b> The benefit of avoiding random walks</a></li>
-<li class="chapter" data-level="10.2.5" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#sampling-from-a-100-dimensional-distribution"><i class="fa fa-check"></i><b>10.2.5</b> Sampling from a 100-Dimensional Distribution</a></li>
+<li class="chapter" data-level="8.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-update"><i class="fa fa-check"></i><b>8.2</b> The Gibbs Update</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="basicmcmc.html"><a href="basicmcmc.html#variable-at-a-time-metropolis-hastings"><i class="fa fa-check"></i><b>8.2.1</b> Variable-at-a-Time Metropolis-Hastings</a></li>
+<li class="chapter" data-level="8.2.2" data-path="basicmcmc.html"><a href="basicmcmc.html#the-gibbs-is-a-special-case-of-metropolis-hastings"><i class="fa fa-check"></i><b>8.2.2</b> The Gibbs is a special case of Metropolis-Hastings:</a></li>
+<li class="chapter" data-level="8.2.3" data-path="basicmcmc.html"><a href="basicmcmc.html#gibbs-full-conditional-distibution"><i class="fa fa-check"></i><b>8.2.3</b> Gibbs Full conditional distibution</a></li>
 </ul></li>
-<li class="chapter" data-level="10.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#hmc-in-practice-and-theory"><i class="fa fa-check"></i><b>10.3</b> HMC in Practice and Theory</a><ul>
-<li class="chapter" data-level="10.3.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#effect-of-linear-transformation"><i class="fa fa-check"></i><b>10.3.1</b> Effect of Linear Transformation</a></li>
-<li class="chapter" data-level="10.3.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#tuning-hmc"><i class="fa fa-check"></i><b>10.3.2</b> Tuning HMC</a></li>
-<li class="chapter" data-level="10.3.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#combining-hmc-with-other-mcmc-updates"><i class="fa fa-check"></i><b>10.3.3</b> Combining HMC with Other MCMC Updates</a></li>
-<li class="chapter" data-level="10.3.4" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#scaling-with-dimensionality"><i class="fa fa-check"></i><b>10.3.4</b> Scaling with Dimensionality</a></li>
-<li class="chapter" data-level="10.3.5" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#hmc-for-hierarchical-models"><i class="fa fa-check"></i><b>10.3.5</b> HMC for Hierarchical Models</a></li>
+<li class="chapter" data-level="8.3" data-path="basicmcmc.html"><a href="basicmcmc.html#combining-updates"><i class="fa fa-check"></i><b>8.3</b> Combining Updates</a><ul>
+<li class="chapter" data-level="8.3.1" data-path="basicmcmc.html"><a href="basicmcmc.html#composition"><i class="fa fa-check"></i><b>8.3.1</b> Composition</a></li>
+<li class="chapter" data-level="8.3.2" data-path="basicmcmc.html"><a href="basicmcmc.html#palindromic-composition"><i class="fa fa-check"></i><b>8.3.2</b> Palindromic Composition</a></li>
+<li class="chapter" data-level="8.3.3" data-path="basicmcmc.html"><a href="basicmcmc.html#state-independent-mixing"><i class="fa fa-check"></i><b>8.3.3</b> State-Independent Mixing</a></li>
+<li class="chapter" data-level="8.3.4" data-path="basicmcmc.html"><a href="basicmcmc.html#subsampling"><i class="fa fa-check"></i><b>8.3.4</b> Subsampling</a></li>
 </ul></li>
-<li class="chapter" data-level="10.4" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#extensions-of-and-variations-on-hmc"><i class="fa fa-check"></i><b>10.4</b> Extensions of and Variations on HMC</a><ul>
-<li class="chapter" data-level="10.4.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#discretization-by-splitting-handling-constraints-and-other-applications"><i class="fa fa-check"></i><b>10.4.1</b> Discretization by Splitting: Handling constraints and Other Applications</a></li>
+<li class="chapter" data-level="8.4" data-path="basicmcmc.html"><a href="basicmcmc.html#a-metropolis-example"><i class="fa fa-check"></i><b>8.4</b> A Metropolis Example</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html"><i class="fa fa-check"></i><b>9</b> Reversible Jump MCMC</a><ul>
+<li class="chapter" data-level="9.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#introduction"><i class="fa fa-check"></i><b>9.1</b> Introduction</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#from-metropolis-hastings-to-reversible-jump"><i class="fa fa-check"></i><b>9.1.1</b> From Metropolis-Hastings to Reversible Jump</a></li>
+<li class="chapter" data-level="9.1.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#application-area"><i class="fa fa-check"></i><b>9.1.2</b> Application Area</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#implementation"><i class="fa fa-check"></i><b>9.2</b> Implementation</a><ul>
+<li class="chapter" data-level="9.2.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-dimension-matching"><i class="fa fa-check"></i><b>9.2.1</b> Example Dimension Matching</a></li>
+<li class="chapter" data-level="9.2.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#example-moment-matching-in-a-finite-mixture-of-univariate-normals"><i class="fa fa-check"></i><b>9.2.2</b> Example: Moment Matching in a Finite Mixture of Univariate Normals</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#mapping-functions-and-proposal-distribution"><i class="fa fa-check"></i><b>9.3</b> Mapping Functions and Proposal Distribution</a><ul>
+<li class="chapter" data-level="9.3.1" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#marginalization-and-augmentation"><i class="fa fa-check"></i><b>9.3.1</b> Marginalization and augmentation:</a></li>
+<li class="chapter" data-level="9.3.2" data-path="reversible-jump-mcmc.html"><a href="reversible-jump-mcmc.html#centering-and-order-methods"><i class="fa fa-check"></i><b>9.3.2</b> Centering and Order Methods</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="11" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>11</b> Bayes variable selection</a><ul>
-<li class="chapter" data-level="11.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>11.1</b> Prior Specification</a></li>
-<li class="chapter" data-level="11.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>11.2</b> Summaries the posterior distribution and model averaged inference</a></li>
-<li class="chapter" data-level="11.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>11.3</b> Numerical Methods</a><ul>
-<li class="chapter" data-level="11.3.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#empirical-bayes-by-marginal-maximum-likelihood"><i class="fa fa-check"></i><b>11.3.1</b> Empirical Bayes by Marginal Maximum Likelihood</a></li>
+<li class="chapter" data-level="10" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html"><i class="fa fa-check"></i><b>10</b> Optimal Proposal Distributions and Adaptive MCMC</a><ul>
+<li class="chapter" data-level="10.1" data-path="intro.html"><a href="intro.html#intro"><i class="fa fa-check"></i><b>10.1</b> Intro</a><ul>
+<li class="chapter" data-level="10.1.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#mh-algorithm"><i class="fa fa-check"></i><b>10.1.1</b> MH algorithm</a></li>
+<li class="chapter" data-level="10.1.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling"><i class="fa fa-check"></i><b>10.1.2</b> Optimal Scaling</a></li>
+<li class="chapter" data-level="10.1.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc"><i class="fa fa-check"></i><b>10.1.3</b> Adaptive MCMC</a></li>
+<li class="chapter" data-level="10.1.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#comparing-markov-chains"><i class="fa fa-check"></i><b>10.1.4</b> Comparing Markov Chains</a></li>
 </ul></li>
-<li class="chapter" data-level="11.4" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#bayesian-asymptotically-analysis"><i class="fa fa-check"></i><b>11.4</b> Bayesian asymptotically analysis</a></li>
-<li class="chapter" data-level="11.5" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#bayes-factor"><i class="fa fa-check"></i><b>11.5</b> Bayes factor</a><ul>
-<li class="chapter" data-level="11.5.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#marginal-density-"><i class="fa fa-check"></i><b>11.5.1</b> Marginal density 居然可以这么来使</a></li>
-<li class="chapter" data-level="11.5.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#section-11.5.2"><i class="fa fa-check"></i><b>11.5.2</b> 几个需要可能研究的玩意</a></li>
+<li class="chapter" data-level="10.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-scaling-of-random-walk-metropolis"><i class="fa fa-check"></i><b>10.2</b> Optimal Scaling of Random-Walk Metropolis</a><ul>
+<li class="chapter" data-level="10.2.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#basic-principle"><i class="fa fa-check"></i><b>10.2.1</b> Basic principle</a></li>
+<li class="chapter" data-level="10.2.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#optimal-acceptance-rate-as-drightarrow-infty"><i class="fa fa-check"></i><b>10.2.2</b> Optimal Acceptance Rate as <span class="math inline">\(d\rightarrow \infty\)</span></a></li>
+<li class="chapter" data-level="10.2.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-target-distributions"><i class="fa fa-check"></i><b>10.2.3</b> Inhomogeneous Target Distributions</a></li>
+<li class="chapter" data-level="10.2.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#metropolis-adjusted-langevin-algorithm."><i class="fa fa-check"></i><b>10.2.4</b> Metropolis-Adjusted Langevin Algorithm.</a></li>
+<li class="chapter" data-level="10.2.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#numerical-examples"><i class="fa fa-check"></i><b>10.2.5</b> Numerical Examples</a></li>
+<li class="chapter" data-level="10.2.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#inhomogeneous-covariance"><i class="fa fa-check"></i><b>10.2.6</b> Inhomogeneous Covariance</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-mcmc-1"><i class="fa fa-check"></i><b>10.3</b> Adaptive MCMC</a></li>
+<li class="chapter" data-level="10.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#ergodicity-of-adaptive-mcmc"><i class="fa fa-check"></i><b>10.4</b> Ergodicity of Adaptive MCMC</a><ul>
+<li class="chapter" data-level="10.4.1" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis"><i class="fa fa-check"></i><b>10.4.1</b> Adaptive Metropolis</a></li>
+<li class="chapter" data-level="10.4.2" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#adaptive-metropolis-within-gibbs"><i class="fa fa-check"></i><b>10.4.2</b> Adaptive Metropolis-within-Gibbs</a></li>
+<li class="chapter" data-level="10.4.3" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#state-dependent-proposal-scalings"><i class="fa fa-check"></i><b>10.4.3</b> State-Dependent Proposal Scalings</a></li>
+<li class="chapter" data-level="10.4.4" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#limit-theorem"><i class="fa fa-check"></i><b>10.4.4</b> Limit Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="10.5" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#faq"><i class="fa fa-check"></i><b>10.5</b> FAQ</a></li>
+<li class="chapter" data-level="10.6" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#conclusion"><i class="fa fa-check"></i><b>10.6</b> Conclusion</a></li>
+<li class="chapter" data-level="10.7" data-path="optimal-proposal-distributions-and-adaptive-mcmc.html"><a href="optimal-proposal-distributions-and-adaptive-mcmc.html#a-tutorial-on-adaptive-mcmc"><i class="fa fa-check"></i><b>10.7</b> A tutorial on adaptive MCMC</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html"><i class="fa fa-check"></i><b>11</b> Hamiltonian Monte Carlo</a><ul>
+<li class="chapter" data-level="11.0.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#properties-of-hamiltonian-dynamics"><i class="fa fa-check"></i><b>11.0.1</b> Properties of Hamiltonian Dynamics</a></li>
+<li class="chapter" data-level="11.0.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#conservation-of-the-hamiltonian"><i class="fa fa-check"></i><b>11.0.2</b> Conservation of the Hamiltonian</a></li>
+<li class="chapter" data-level="11.0.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#volume-preservation"><i class="fa fa-check"></i><b>11.0.3</b> Volume preservation</a></li>
+<li class="chapter" data-level="11.0.4" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#symplecticness-辛"><i class="fa fa-check"></i><b>11.0.4</b> Symplecticness (辛？)</a></li>
+<li class="chapter" data-level="11.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#discretizing-hamiltons-equations-the-leapfrog-method."><i class="fa fa-check"></i><b>11.1</b> Discretizing Hamilton’s Equations: The leapfrog method.</a><ul>
+<li class="chapter" data-level="11.1.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#modification-of-eulers-method"><i class="fa fa-check"></i><b>11.1.1</b> Modification of Euler’s Method</a></li>
+<li class="chapter" data-level="11.1.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#the-leapfrog-method"><i class="fa fa-check"></i><b>11.1.2</b> The leapfrog Method</a></li>
+<li class="chapter" data-level="11.1.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#local-and-global-error-of-discretization-methods."><i class="fa fa-check"></i><b>11.1.3</b> Local and Global Error of discretization Methods.</a></li>
+</ul></li>
+<li class="chapter" data-level="11.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#mcmc-from-hamiltonian-dynamics."><i class="fa fa-check"></i><b>11.2</b> MCMC from Hamiltonian Dynamics.</a><ul>
+<li class="chapter" data-level="11.2.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#probability-and-the-hamiltonian-canonical-distributions"><i class="fa fa-check"></i><b>11.2.1</b> Probability and the Hamiltonian: Canonical Distributions</a></li>
+<li class="chapter" data-level="11.2.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#the-hamiltonian-monte-carlo-algorithm"><i class="fa fa-check"></i><b>11.2.2</b> The Hamiltonian Monte Carlo Algorithm</a></li>
+<li class="chapter" data-level="11.2.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#illustrations-of-hmc-and-its-benefits"><i class="fa fa-check"></i><b>11.2.3</b> Illustrations of HMC and Its Benefits</a></li>
+<li class="chapter" data-level="11.2.4" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#the-benefit-of-avoiding-random-walks"><i class="fa fa-check"></i><b>11.2.4</b> The benefit of avoiding random walks</a></li>
+<li class="chapter" data-level="11.2.5" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#sampling-from-a-100-dimensional-distribution"><i class="fa fa-check"></i><b>11.2.5</b> Sampling from a 100-Dimensional Distribution</a></li>
+</ul></li>
+<li class="chapter" data-level="11.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#hmc-in-practice-and-theory"><i class="fa fa-check"></i><b>11.3</b> HMC in Practice and Theory</a><ul>
+<li class="chapter" data-level="11.3.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#effect-of-linear-transformation"><i class="fa fa-check"></i><b>11.3.1</b> Effect of Linear Transformation</a></li>
+<li class="chapter" data-level="11.3.2" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#tuning-hmc"><i class="fa fa-check"></i><b>11.3.2</b> Tuning HMC</a></li>
+<li class="chapter" data-level="11.3.3" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#combining-hmc-with-other-mcmc-updates"><i class="fa fa-check"></i><b>11.3.3</b> Combining HMC with Other MCMC Updates</a></li>
+<li class="chapter" data-level="11.3.4" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#scaling-with-dimensionality"><i class="fa fa-check"></i><b>11.3.4</b> Scaling with Dimensionality</a></li>
+<li class="chapter" data-level="11.3.5" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#hmc-for-hierarchical-models"><i class="fa fa-check"></i><b>11.3.5</b> HMC for Hierarchical Models</a></li>
+</ul></li>
+<li class="chapter" data-level="11.4" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#extensions-of-and-variations-on-hmc"><i class="fa fa-check"></i><b>11.4</b> Extensions of and Variations on HMC</a><ul>
+<li class="chapter" data-level="11.4.1" data-path="hamiltonian-monte-carlo.html"><a href="hamiltonian-monte-carlo.html#discretization-by-splitting-handling-constraints-and-other-applications"><i class="fa fa-check"></i><b>11.4.1</b> Discretization by Splitting: Handling constraints and Other Applications</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="12" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>12</b> Advanced R</a><ul>
-<li class="chapter" data-level="12.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>12.0.1</b> Vector</a></li>
-<li class="chapter" data-level="12.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>12.0.2</b> Types and tests:</a></li>
-<li class="chapter" data-level="12.0.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>12.0.3</b> Coercion</a></li>
-<li class="chapter" data-level="12.1" data-path="advanced-r.html"><a href="advanced-r.html#data.frame"><i class="fa fa-check"></i><b>12.1</b> Data.frame</a><ul>
-<li class="chapter" data-level="12.1.1" data-path="advanced-r.html"><a href="advanced-r.html#ordering-integer-subsetting"><i class="fa fa-check"></i><b>12.1.1</b> Ordering (integer subsetting)</a></li>
-<li class="chapter" data-level="12.1.2" data-path="advanced-r.html"><a href="advanced-r.html#calling-a-function-given-a-list-of-arguments"><i class="fa fa-check"></i><b>12.1.2</b> Calling a function given a list of arguments</a></li>
+<li class="chapter" data-level="12" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html"><i class="fa fa-check"></i><b>12</b> Bayes variable selection</a><ul>
+<li class="chapter" data-level="12.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#prior-specification"><i class="fa fa-check"></i><b>12.1</b> Prior Specification</a></li>
+<li class="chapter" data-level="12.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#summaries-the-posterior-distribution-and-model-averaged-inference"><i class="fa fa-check"></i><b>12.2</b> Summaries the posterior distribution and model averaged inference</a></li>
+<li class="chapter" data-level="12.3" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#numerical-methods"><i class="fa fa-check"></i><b>12.3</b> Numerical Methods</a><ul>
+<li class="chapter" data-level="12.3.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#empirical-bayes-by-marginal-maximum-likelihood"><i class="fa fa-check"></i><b>12.3.1</b> Empirical Bayes by Marginal Maximum Likelihood</a></li>
+</ul></li>
+<li class="chapter" data-level="12.4" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#bayesian-asymptotically-analysis"><i class="fa fa-check"></i><b>12.4</b> Bayesian asymptotically analysis</a></li>
+<li class="chapter" data-level="12.5" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#bayes-factor"><i class="fa fa-check"></i><b>12.5</b> Bayes factor</a><ul>
+<li class="chapter" data-level="12.5.1" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#marginal-density-居然可以这么来使"><i class="fa fa-check"></i><b>12.5.1</b> Marginal density 居然可以这么来使</a></li>
+<li class="chapter" data-level="12.5.2" data-path="bayes-variable-selection.html"><a href="bayes-variable-selection.html#几个需要可能研究的玩意"><i class="fa fa-check"></i><b>12.5.2</b> 几个需要可能研究的玩意</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="13" data-path="numeric-derivatives.html"><a href="numeric-derivatives.html"><i class="fa fa-check"></i><b>13</b> Numeric Derivatives</a></li>
-<li class="chapter" data-level="14" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>14</b> Imputation</a></li>
-<li class="chapter" data-level="15" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html"><i class="fa fa-check"></i><b>15</b> Simulation approach for computing the marginal likelihood</a><ul>
-<li class="chapter" data-level="15.1" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#laplace-metropolis-approximation"><i class="fa fa-check"></i><b>15.1</b> Laplace-Metropolis approximation</a></li>
-<li class="chapter" data-level="15.2" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#laplace-metropolis-approximation-1"><i class="fa fa-check"></i><b>15.2</b> Laplace-Metropolis approximation</a></li>
-<li class="chapter" data-level="15.3" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#chibs-estimator-from-gibbss-sampling"><i class="fa fa-check"></i><b>15.3</b> Chib’s estimator from Gibbs’s sampling</a></li>
-<li class="chapter" data-level="15.4" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#example-seemingly-unrelated-regression-model-with-informative-prior."><i class="fa fa-check"></i><b>15.4</b> Example: Seemingly unrelated regression model with informative prior.</a></li>
-<li class="chapter" data-level="15.5" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#bridge-sampling-methods"><i class="fa fa-check"></i><b>15.5</b> Bridge sampling methods</a></li>
-<li class="chapter" data-level="15.6" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#the-savage-dickey-density-ratio-approach"><i class="fa fa-check"></i><b>15.6</b> The savage-Dickey density ratio approach</a></li>
+<li class="chapter" data-level="13" data-path="advanced-r.html"><a href="advanced-r.html"><i class="fa fa-check"></i><b>13</b> Advanced R</a><ul>
+<li class="chapter" data-level="13.0.1" data-path="advanced-r.html"><a href="advanced-r.html#vector"><i class="fa fa-check"></i><b>13.0.1</b> Vector</a></li>
+<li class="chapter" data-level="13.0.2" data-path="advanced-r.html"><a href="advanced-r.html#types-and-tests"><i class="fa fa-check"></i><b>13.0.2</b> Types and tests:</a></li>
+<li class="chapter" data-level="13.0.3" data-path="advanced-r.html"><a href="advanced-r.html#coercion"><i class="fa fa-check"></i><b>13.0.3</b> Coercion</a></li>
+<li class="chapter" data-level="13.1" data-path="advanced-r.html"><a href="advanced-r.html#data.frame"><i class="fa fa-check"></i><b>13.1</b> Data.frame</a><ul>
+<li class="chapter" data-level="13.1.1" data-path="advanced-r.html"><a href="advanced-r.html#ordering-integer-subsetting"><i class="fa fa-check"></i><b>13.1.1</b> Ordering (integer subsetting)</a></li>
+<li class="chapter" data-level="13.1.2" data-path="advanced-r.html"><a href="advanced-r.html#calling-a-function-given-a-list-of-arguments"><i class="fa fa-check"></i><b>13.1.2</b> Calling a function given a list of arguments</a></li>
 </ul></li>
-<li class="chapter" data-level="16" data-path="r-web-scrape.html"><a href="r-web-scrape.html"><i class="fa fa-check"></i><b>16</b> R web scrape</a></li>
-<li class="chapter" data-level="17" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html"><i class="fa fa-check"></i><b>17</b> Guide to Scientific Computing in C++</a><ul>
-<li class="chapter" data-level="17.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#basics"><i class="fa fa-check"></i><b>17.1</b> Basics</a></li>
-<li class="chapter" data-level="17.2" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#basics-in-c"><i class="fa fa-check"></i><b>17.2</b> Basics in C++</a></li>
-<li class="chapter" data-level="17.3" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#redirect-console-output-to-file"><i class="fa fa-check"></i><b>17.3</b> Redirect Console Output to File</a><ul>
-<li class="chapter" data-level="17.3.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#reading-from-the-command-line"><i class="fa fa-check"></i><b>17.3.1</b> Reading from the Command Line</a></li>
 </ul></li>
-<li class="chapter" data-level="17.4" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#pointer"><i class="fa fa-check"></i><b>17.4</b> Pointer</a></li>
-<li class="chapter" data-level="17.5" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#functions"><i class="fa fa-check"></i><b>17.5</b> Functions</a><ul>
-<li class="chapter" data-level="17.5.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#use-of-pointers-as-function-arguments."><i class="fa fa-check"></i><b>17.5.1</b> Use of Pointers as function arguments.</a></li>
+<li class="chapter" data-level="14" data-path="numeric-derivatives.html"><a href="numeric-derivatives.html"><i class="fa fa-check"></i><b>14</b> Numeric Derivatives</a></li>
+<li class="chapter" data-level="15" data-path="imputation.html"><a href="imputation.html"><i class="fa fa-check"></i><b>15</b> Imputation</a></li>
+<li class="chapter" data-level="16" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html"><i class="fa fa-check"></i><b>16</b> Simulation approach for computing the marginal likelihood</a><ul>
+<li class="chapter" data-level="16.1" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#laplace-metropolis-approximation"><i class="fa fa-check"></i><b>16.1</b> Laplace-Metropolis approximation</a></li>
+<li class="chapter" data-level="16.2" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#laplace-metropolis-approximation-1"><i class="fa fa-check"></i><b>16.2</b> Laplace-Metropolis approximation</a></li>
+<li class="chapter" data-level="16.3" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#chibs-estimator-from-gibbss-sampling"><i class="fa fa-check"></i><b>16.3</b> Chib’s estimator from Gibbs’s sampling</a></li>
+<li class="chapter" data-level="16.4" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#example-seemingly-unrelated-regression-model-with-informative-prior."><i class="fa fa-check"></i><b>16.4</b> Example: Seemingly unrelated regression model with informative prior.</a></li>
+<li class="chapter" data-level="16.5" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#bridge-sampling-methods"><i class="fa fa-check"></i><b>16.5</b> Bridge sampling methods</a></li>
+<li class="chapter" data-level="16.6" data-path="simulation-approach-for-computing-the-marginal-likelihood.html"><a href="simulation-approach-for-computing-the-marginal-likelihood.html#the-savage-dickey-density-ratio-approach"><i class="fa fa-check"></i><b>16.6</b> The savage-Dickey density ratio approach</a></li>
 </ul></li>
-<li class="chapter" data-level="17.6" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#classess"><i class="fa fa-check"></i><b>17.6</b> Classess</a><ul>
-<li class="chapter" data-level="17.6.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#header-files"><i class="fa fa-check"></i><b>17.6.1</b> Header Files</a></li>
+<li class="chapter" data-level="17" data-path="r-web-scrape.html"><a href="r-web-scrape.html"><i class="fa fa-check"></i><b>17</b> R web scrape</a></li>
+<li class="chapter" data-level="18" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html"><i class="fa fa-check"></i><b>18</b> Guide to Scientific Computing in C++</a><ul>
+<li class="chapter" data-level="18.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#basics"><i class="fa fa-check"></i><b>18.1</b> Basics</a></li>
+<li class="chapter" data-level="18.2" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#basics-in-c"><i class="fa fa-check"></i><b>18.2</b> Basics in C++</a></li>
+<li class="chapter" data-level="18.3" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#redirect-console-output-to-file"><i class="fa fa-check"></i><b>18.3</b> Redirect Console Output to File</a><ul>
+<li class="chapter" data-level="18.3.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#reading-from-the-command-line"><i class="fa fa-check"></i><b>18.3.1</b> Reading from the Command Line</a></li>
 </ul></li>
-<li class="chapter" data-level="17.7" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#using-makefiles-to-compile-multiple-files"><i class="fa fa-check"></i><b>17.7</b> Using Makefiles to Compile Multiple Files</a></li>
-<li class="chapter" data-level="17.8" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#section-17.8"><i class="fa fa-check"></i><b>17.8</b> 类的继承</a><ul>
-<li class="chapter" data-level="17.8.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#-run-time-polymorphism"><i class="fa fa-check"></i><b>17.8.1</b> 继承类的实时多态 Run-Time Polymorphism</a></li>
+<li class="chapter" data-level="18.4" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#pointer"><i class="fa fa-check"></i><b>18.4</b> Pointer</a></li>
+<li class="chapter" data-level="18.5" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#functions"><i class="fa fa-check"></i><b>18.5</b> Functions</a><ul>
+<li class="chapter" data-level="18.5.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#use-of-pointers-as-function-arguments."><i class="fa fa-check"></i><b>18.5.1</b> Use of Pointers as function arguments.</a></li>
 </ul></li>
-<li class="chapter" data-level="17.9" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#section-17.9"><i class="fa fa-check"></i><b>17.9</b> 模板</a><ul>
-<li class="chapter" data-level="17.9.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#brief-survey-of-the-standard-template-library"><i class="fa fa-check"></i><b>17.9.1</b> Brief Survey of the Standard Template Library</a></li>
+<li class="chapter" data-level="18.6" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#classess"><i class="fa fa-check"></i><b>18.6</b> Classess</a><ul>
+<li class="chapter" data-level="18.6.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#header-files"><i class="fa fa-check"></i><b>18.6.1</b> Header Files</a></li>
 </ul></li>
-<li class="chapter" data-level="17.10" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#class-for-linear-algebra"><i class="fa fa-check"></i><b>17.10</b> Class for linear algebra</a></li>
+<li class="chapter" data-level="18.7" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#using-makefiles-to-compile-multiple-files"><i class="fa fa-check"></i><b>18.7</b> Using Makefiles to Compile Multiple Files</a></li>
+<li class="chapter" data-level="18.8" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#类的继承"><i class="fa fa-check"></i><b>18.8</b> 类的继承</a><ul>
+<li class="chapter" data-level="18.8.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#继承类的实时多态-run-time-polymorphism"><i class="fa fa-check"></i><b>18.8.1</b> 继承类的实时多态 Run-Time Polymorphism</a></li>
 </ul></li>
-<li class="chapter" data-level="18" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>18</b> Rcpp</a><ul>
-<li class="chapter" data-level="18.1" data-path="rcpp.html"><a href="rcpp.html#rarmadillo"><i class="fa fa-check"></i><b>18.1</b> 一个R操作对应的armadillo操作的文档：</a></li>
-<li class="chapter" data-level="18.2" data-path="rcpp.html"><a href="rcpp.html#rcpp-package"><i class="fa fa-check"></i><b>18.2</b> Rcpp package</a></li>
+<li class="chapter" data-level="18.9" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#模板"><i class="fa fa-check"></i><b>18.9</b> 模板</a><ul>
+<li class="chapter" data-level="18.9.1" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#brief-survey-of-the-standard-template-library"><i class="fa fa-check"></i><b>18.9.1</b> Brief Survey of the Standard Template Library</a></li>
 </ul></li>
-<li class="chapter" data-level="19" data-path="statistical-computing.html"><a href="statistical-computing.html"><i class="fa fa-check"></i><b>19</b> Statistical Computing</a><ul>
-<li class="chapter" data-level="19.1" data-path="statistical-computing.html"><a href="statistical-computing.html#generate-multivariate-normal-samples"><i class="fa fa-check"></i><b>19.1</b> Generate Multivariate Normal samples</a></li>
+<li class="chapter" data-level="18.10" data-path="guide-to-scientific-computing-in-c.html"><a href="guide-to-scientific-computing-in-c.html#class-for-linear-algebra"><i class="fa fa-check"></i><b>18.10</b> Class for linear algebra</a></li>
 </ul></li>
-<li class="chapter" data-level="20" data-path="r-trick.html"><a href="r-trick.html"><i class="fa fa-check"></i><b>20</b> R trick</a></li>
-<li class="chapter" data-level="21" data-path="statistic-term.html"><a href="statistic-term.html"><i class="fa fa-check"></i><b>21</b> Statistic term</a></li>
-<li class="chapter" data-level="22" data-path="proof-and-calculation.html"><a href="proof-and-calculation.html"><i class="fa fa-check"></i><b>22</b> Proof and Calculation</a><ul>
-<li class="chapter" data-level="22.0.1" data-path="proof-and-calculation.html"><a href="proof-and-calculation.html#coordinate-descent-algorithm-for-lasso"><i class="fa fa-check"></i><b>22.0.1</b> Coordinate Descent Algorithm for Lasso</a></li>
+<li class="chapter" data-level="19" data-path="rcpp.html"><a href="rcpp.html"><i class="fa fa-check"></i><b>19</b> Rcpp</a><ul>
+<li class="chapter" data-level="19.1" data-path="rcpp.html"><a href="rcpp.html#一个r操作对应的armadillo操作的文档"><i class="fa fa-check"></i><b>19.1</b> 一个R操作对应的armadillo操作的文档：</a></li>
+<li class="chapter" data-level="19.2" data-path="rcpp.html"><a href="rcpp.html#rcpp-package"><i class="fa fa-check"></i><b>19.2</b> Rcpp package</a></li>
+</ul></li>
+<li class="chapter" data-level="20" data-path="statistical-computing.html"><a href="statistical-computing.html"><i class="fa fa-check"></i><b>20</b> Statistical Computing</a><ul>
+<li class="chapter" data-level="20.1" data-path="statistical-computing.html"><a href="statistical-computing.html#generate-multivariate-normal-samples"><i class="fa fa-check"></i><b>20.1</b> Generate Multivariate Normal samples</a></li>
+</ul></li>
+<li class="chapter" data-level="21" data-path="r-trick.html"><a href="r-trick.html"><i class="fa fa-check"></i><b>21</b> R trick</a></li>
+<li class="chapter" data-level="22" data-path="statistic-term.html"><a href="statistic-term.html"><i class="fa fa-check"></i><b>22</b> Statistic term</a></li>
+<li class="chapter" data-level="23" data-path="proof-and-calculation.html"><a href="proof-and-calculation.html"><i class="fa fa-check"></i><b>23</b> Proof and Calculation</a><ul>
+<li class="chapter" data-level="23.0.1" data-path="proof-and-calculation.html"><a href="proof-and-calculation.html#coordinate-descent-algorithm-for-lasso"><i class="fa fa-check"></i><b>23.0.1</b> Coordinate Descent Algorithm for Lasso</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -348,9 +354,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="hamiltonian-monte-carlo" class="section level1">
-<h1><span class="header-section-number">Chapter 10</span> Hamiltonian Monte Carlo</h1>
+<h1><span class="header-section-number">Chapter 11</span> Hamiltonian Monte Carlo</h1>
 <div id="properties-of-hamiltonian-dynamics" class="section level3">
-<h3><span class="header-section-number">10.0.1</span> Properties of Hamiltonian Dynamics</h3>
+<h3><span class="header-section-number">11.0.1</span> Properties of Hamiltonian Dynamics</h3>
 <ol style="list-style-type: decimal">
 <li>Hamiltonian dynamics is <em>reversible</em>. That is, the mapping <span class="math inline">\(T_{s}\)</span> from the state at time t,<span class="math inline">\((q(t),p(t))\)</span> to the state at time <span class="math inline">\(t+s,(q(t+s),p(t+s))\)</span>, is one-to-one, so hence there exists an inverse, <span class="math inline">\(T_{-s}\)</span>.</li>
 </ol>
@@ -359,7 +365,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>而Hamiltonian dynamics的reversibility对MCMC更新非常重要，这样使用dynamics更新的MCMC就能使稳定分布是需要的分布。最简单证明稳定性的方法就是使用Reversible。</p>
 </div>
 <div id="conservation-of-the-hamiltonian" class="section level3">
-<h3><span class="header-section-number">10.0.2</span> Conservation of the Hamiltonian</h3>
+<h3><span class="header-section-number">11.0.2</span> Conservation of the Hamiltonian</h3>
 <p>A second property of the dynamics is that it keeps the Hamiltonian invariant (i.e. conserved).</p>
 <p><span class="math display">\[
 \frac{d H}{d t}=\sum_{i=1}^{d}\left[\frac{d q_{i}}{d t} \frac{\partial H}{\partial q_{i}}+\frac{d p_{i}}{d t} \frac{\partial H}{\partial p_{i}}\right]=\sum_{i=1}^{d}\left[\frac{\partial H}{\partial p_{i}} \frac{\partial H}{\partial q_{i}}-\frac{\partial H}{\partial q_{i}} \frac{\partial H}{\partial p_{i}}\right]=0
@@ -369,7 +375,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>在Metropolis updates中，如果用 Hamiltonian dynamics作为proposal的话，也就是HMC，接受率是1如果H能保持invariant. 后面可以看到。但是在实践中只能保持H approximately invariant, 所以我们很难达到这个目标。</p>
 </div>
 <div id="volume-preservation" class="section level3">
-<h3><span class="header-section-number">10.0.3</span> Volume preservation</h3>
+<h3><span class="header-section-number">11.0.3</span> Volume preservation</h3>
 <p>Hamiltonian dynamics的第三个基础性质是在(q,p)空间内他保持volume。（Liouville’s theorem的结论）。如果我们队映射<span class="math inline">\(T_s\)</span>作用到一个在（q,p）空间的区域R上的一些点，有体积V,则R在<span class="math inline">\(T_s\)</span>的像也有体积V。
 在一维的例子中的体现就是映射只是旋转变化，明显不改变面基。当然也不改变区域的形状。后者则不总是成立。Hamiltonian dynamics 可能对区域在某个方向进行拉伸，当这个区域因为在其他方向非常集中，为了保证volume，所以进行拉伸。</p>
 <p>在MCMC中，保证volume不变的意以不导致对于任意change in volume in the acceptance probability for Metropolis updates. 改变volume不会导致Metropolis updates的接受概率变化。如果我们考虑proposed新的状态，用一些随机的，非Hamiltonian，dynamics,我们可能会需要去计算Jacobian matrix for the mapping the dynamics defines的行列式，这可能做不到。</p>
@@ -406,8 +412,8 @@ B_{8}=\left[ \begin{array}{c}{I+\delta\left[\frac{\partial^{2} H}{\partial q_{j}
 类似的形式，但是变成了分块矩阵。</p>
 <p>高阶的项消掉了，剩下的项处理方式和1维的时候类似。</p>
 </div>
-<div id="symplecticness-" class="section level3">
-<h3><span class="header-section-number">10.0.4</span> Symplecticness (辛？)</h3>
+<div id="symplecticness-辛" class="section level3">
+<h3><span class="header-section-number">11.0.4</span> Symplecticness (辛？)</h3>
 <p>volume不变性是Hamiltonian dynamics being symplectic的一个结论。假设<span class="math inline">\(z=(q,p)\)</span>, 定义J是<span class="math inline">\(J=\left[ \begin{array}{cc}{0_{d \times d}} &amp; {I_{d \times d}} \\ {-I_{d \times d}} &amp; {0_{d \times d}}\end{array}\right]\)</span>, symplecticness condition is that the Jacobian matrix, <span class="math inline">\(B_s\)</span>, of the mapping <span class="math inline">\(T_s\)</span> satisfies</p>
 <p><span class="math display">\[
 B_{s}^{T} J^{-1} B_{s}=J^{-1}
@@ -416,7 +422,7 @@ This implies volume conservation, since <span class="math inline">\(det(B^T_s)de
 <p>在实践中，Reversibility, preservation of volume, and symplecticness可以确实被保证，也必须被保证。</p>
 </div>
 <div id="discretizing-hamiltons-equations-the-leapfrog-method." class="section level2">
-<h2><span class="header-section-number">10.1</span> Discretizing Hamilton’s Equations: The leapfrog method.</h2>
+<h2><span class="header-section-number">11.1</span> Discretizing Hamilton’s Equations: The leapfrog method.</h2>
 <p>为了在计算机中实现，Hamilton’s equations must be approximated by discretizing time, using some small stepsize,<span class="math inline">\(\epsilon\)</span>. 在0时刻开始，iteratively compute (approximately) the state at times <span class="math inline">\(\epsilon,2\epsilon,3\epsilon,etc.\)</span></p>
 <p>In discussing how to do this, assume that the Hamiltonian has the form <span class="math inline">\(H(q,p)=U(q)+K(p)\)</span>. 虽然这个方法对各种定义的动能都适用，但是为了简化操作还是假设<span class="math inline">\(K(p)=p^{T} M^{-1} p / 2\)</span>. 然后M是diagonal的，对角元是<span class="math inline">\(m_1,...,m_d\)</span>, so that
 <span class="math display">\[
@@ -424,7 +430,7 @@ K(p)=\sum_{i=1}^{d} \frac{p_{i}^{2}}{2 m_{i}}
 \]</span>
 相当于动能是每个方向上的动能之和。</p>
 <div id="eulers-method" class="section level4">
-<h4><span class="header-section-number">10.1.0.1</span> Euler’s Method</h4>
+<h4><span class="header-section-number">11.1.0.1</span> Euler’s Method</h4>
 <p>最广为人知的逼近微分方程系统的解的方法是Euler’s method. 对于Hamilton’s equations, this method performs the following step, for each component of position and momentum, indexed by i=1,…,d:</p>
 <p><span class="math display">\[
 \begin{array}{l}{p_{i}(t+\varepsilon)=p_{i}(t)+\varepsilon \frac{d p_{i}}{d t}(t)=p_{i}(t)-\varepsilon \frac{\partial U}{\partial q_{i}}(q(t))} \\ {q_{i}(t+\varepsilon)=q_{i}(t)+\varepsilon \frac{d q_{i}}{d t}(t)=q_{i}(t)+\varepsilon \frac{p_{i}(t)}{m_{i}}}\end{array}
@@ -433,7 +439,7 @@ K(p)=\sum_{i=1}^{d} \frac{p_{i}^{2}}{2 m_{i}}
 <p>对于一般的Euler法解的轨迹并不好,轨迹叉到无穷上了，但是真实的轨道是一个圆、</p>
 </div>
 <div id="modification-of-eulers-method" class="section level3">
-<h3><span class="header-section-number">10.1.1</span> Modification of Euler’s Method</h3>
+<h3><span class="header-section-number">11.1.1</span> Modification of Euler’s Method</h3>
 <p><span class="math display">\[
 \begin{array}{c}{p_{i}(t+\varepsilon)=p_{i}(t)-\varepsilon \frac{\partial U}{\partial q_{i}}(q(t))} \\ {q_{i}(t+\varepsilon)=q_{i}(t)+\varepsilon \frac{p_{i}(t+\varepsilon)}{m_{i}}}\end{array}
 \]</span></p>
@@ -442,7 +448,7 @@ K(p)=\sum_{i=1}^{d} \frac{p_{i}^{2}}{2 m_{i}}
 <p>要探究modification of Euler’s method preserve volume, exactly despite the finite discretization of time, 注意这两个变换 from <span class="math inline">\((q(t), p(t))\)</span> to <span class="math inline">\(q(t),p(t+\epsilon)\)</span> 通过modification的第一个等式，然后第二个等式是从<span class="math inline">\((q(t), p(t+\varepsilon))\)</span>变换到<span class="math inline">\((q(t+\varepsilon), p(t+\varepsilon))\)</span>. 这是“shear” transformation (剪羊毛？没懂)，每次变换只变换一个值，要么<span class="math inline">\(p_i\)</span>，要么<span class="math inline">\(q_i\)</span>,这样只会变一个参数，而any shear transformation will preserve volume,因为这样变换的Jacobian只有一个元，并且值为1.</p>
 </div>
 <div id="the-leapfrog-method" class="section level3">
-<h3><span class="header-section-number">10.1.2</span> The leapfrog Method</h3>
+<h3><span class="header-section-number">11.1.2</span> The leapfrog Method</h3>
 <p>Leapfrog method可以得到更好的结果</p>
 <p><span class="math display">\[
 \begin{aligned} p_{i}(t+\varepsilon / 2) &amp;=p_{i}(t)-(\varepsilon / 2) \frac{\partial U}{\partial q_{i}}(q(t)) \\ q_{i}(t+\varepsilon) &amp;=q_{i}(t)+\varepsilon \frac{p_{i}(t+\varepsilon / 2)}{m_{i}} \\ p_{i}(t+\varepsilon) &amp;=p_{i}(t+\varepsilon / 2)-(\varepsilon / 2) \frac{\partial U}{\partial q_{i}}(q(t+\varepsilon)) \end{aligned}
@@ -451,7 +457,7 @@ K(p)=\sum_{i=1}^{d} \frac{p_{i}^{2}}{2 m_{i}}
 这个方法当然也保证了volume，因为第一个更新通过第三个更新是shear transformation，由于对称性，这也是reversible的by simply negating p again.</p>
 </div>
 <div id="local-and-global-error-of-discretization-methods." class="section level3">
-<h3><span class="header-section-number">10.1.3</span> Local and Global Error of discretization Methods.</h3>
+<h3><span class="header-section-number">11.1.3</span> Local and Global Error of discretization Methods.</h3>
 <p>How the error from discretizing the dynamics behaves in the limit as the stepsize, <span class="math inline">\(\epsilon\)</span>, goes to zero; Leimkuhler and Reich(2004) provide a much more detail discussion.</p>
 <p>The error goes to zero as <span class="math inline">\(\epsilon\)</span> goes to zero, so that any upper limit on the error will apply (apart from a usually unknown constant factor) to any differentiable function of state. For example, if the error for (q,p) is no more than order <span class="math inline">\(\epsilon^2\)</span>, the error for <span class="math inline">\(H(q,p)\)</span> will also be no more than order <span class="math inline">\(\epsilon^2\)</span>.</p>
 <p>The <em>local error</em> is the error after one step, that moves from time t to time <span class="math inline">\(t+\epsilon\)</span>. The global error is the error after simulating for some fixed time interval, s, which will require <span class="math inline">\(s/epsilon\)</span> steps.</p>
@@ -459,10 +465,10 @@ K(p)=\sum_{i=1}^{d} \frac{p_{i}^{2}}{2 m_{i}}
 </div>
 </div>
 <div id="mcmc-from-hamiltonian-dynamics." class="section level2">
-<h2><span class="header-section-number">10.2</span> MCMC from Hamiltonian Dynamics.</h2>
+<h2><span class="header-section-number">11.2</span> MCMC from Hamiltonian Dynamics.</h2>
 <p>要用Hamiltonian dynamics去得到某个分布的sample需要把density function translate to potential energy function and introducing “momentum” variables to go with the original variables of interest (now seen as “position” variables). We can then simulate a Markov chain in which each iteration resamples the momentum and then does a Metropolis update with a proposal found using Hamiltonian dynamics.</p>
 <div id="probability-and-the-hamiltonian-canonical-distributions" class="section level3">
-<h3><span class="header-section-number">10.2.1</span> Probability and the Hamiltonian: Canonical Distributions</h3>
+<h3><span class="header-section-number">11.2.1</span> Probability and the Hamiltonian: Canonical Distributions</h3>
 <p>可以把要抽的分布函数和一个潜在的能量函数通过 <em>canonical distribution</em> 联系起来。给定某些能量函数,<span class="math inline">\(E(x)\)</span>,对于某些状态,x,x of some physical system, the canonical distribution over states has probability or probability density function</p>
 <p><span class="math display">\[
 P(x)=\frac{1}{Z}exp(\frac{-E(x)}{T})
@@ -491,7 +497,7 @@ U(q)=-\log [\pi(q) L(q | D)],
 where <span class="math inline">\(\pi(q)\)</span> is the prior density, and <span class="math inline">\(L(q|D)\)</span> is the likelihood function given data D.</p>
 </div>
 <div id="the-hamiltonian-monte-carlo-algorithm" class="section level3">
-<h3><span class="header-section-number">10.2.2</span> The Hamiltonian Monte Carlo Algorithm</h3>
+<h3><span class="header-section-number">11.2.2</span> The Hamiltonian Monte Carlo Algorithm</h3>
 <p>下一步就进入HMC。
 HMC仅限于<span class="math inline">\(\mathbb R^d\)</span>上的连续分布，并且density function can be evaluated(perhaps up to an unknown normalizing constant). For the moment, It will also assume that the density is nonzero everywhere (but this is relaxed in following section). We must also be able to compute the partial derivatives of the log of the density function. These derivatives must therefore exist, except perhaps on a set of point with probability zero, for shich some arbitrary value could be returned.
 条件，要求还行？连续，可以算density，可以算log density的偏导。不可导的点的概率测度应为0.
@@ -501,7 +507,7 @@ K(p)=\sum_{i=1}^{d} \frac{p_{i}^{2}}{2 m_{i}}.
 \]</span>
 在5.4会讲<span class="math inline">\(m_i\)</span>的选取对表现的影响。</p>
 <div id="the-two-steps-of-the-hmc-algorithm" class="section level4">
-<h4><span class="header-section-number">10.2.2.1</span> The two steps of the HMC algorithm</h4>
+<h4><span class="header-section-number">11.2.2.1</span> The two steps of the HMC algorithm</h4>
 <p>每次HMC算法的迭代有两部。第一步only the momentum; the second may change both position and momentum. 第二步 may change both position and momentum. Both steps leave the canonical joint distribution of <span class="math inline">\((q,p)\)</span> invariant, and hence their combination also leaves this distribution invariant.</p>
 <p>In the first step, new values for the momentum variables are randomly drawn from their Gaussian distribution, independently of the current values of the position variables. 由上一步的假设，有
 <span class="math display">\[
@@ -518,43 +524,43 @@ p_i\sim N(0,m_i)
 <p>所以这里的resampling就是指对p的正态抽样？
 从他的代码来看，negate momentum的意思就是让p=-p,所以为什么要这样好像提了好几次但是没懂，硕士要让proposal symmetric? 为啥要这样啊</p>
 </blockquote>
-<pre class="sourceCode r"><code class="sourceCode r">HMC =<span class="st"> </span><span class="cf">function</span> (U, grad_U, epsilon, L, current_q)
-  {
-    q =<span class="st"> </span>current_q
-    p =<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(q),<span class="dv">0</span>,<span class="dv">1</span>)  <span class="co"># independent standard normal variates</span>
-    current_p =<span class="st"> </span>p
-    <span class="co"># Make a half step for momentum at the beginning</span>
-    p =<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>epsilon <span class="op">*</span><span class="st"> </span><span class="kw">grad_U</span>(q) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>
-    <span class="co"># Alternate full steps for position and momentum</span>
-    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>L)
-    {
-      <span class="co"># Make a full step for the position</span>
-      q =<span class="st"> </span>q <span class="op">+</span><span class="st"> </span>epsilon <span class="op">*</span><span class="st"> </span>p
-      <span class="co"># Make a full step for the momentum, except at end of trajectory</span>
-      <span class="cf">if</span> (i<span class="op">!=</span>L) p =<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>epsilon <span class="op">*</span><span class="st"> </span><span class="kw">grad_U</span>(q)
-}
-    <span class="co"># Make a half step for momentum at the end.</span>
-    p =<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>epsilon <span class="op">*</span><span class="st"> </span><span class="kw">grad_U</span>(q) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>
-    <span class="co"># Negate momentum at end of trajectory to make the proposal symmetric</span>
-    p =<span class="st"> </span><span class="op">-</span>p
-    <span class="co"># Evaluate potential and kinetic energies at start and end of trajectory</span>
-    current_U =<span class="st"> </span><span class="kw">U</span>(current_q)
-    current_K =<span class="st"> </span><span class="kw">sum</span>(current_pˆ2) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>
-    proposed_U =<span class="st"> </span><span class="kw">U</span>(q)
-    proposed_K =<span class="st"> </span><span class="kw">sum</span>(pˆ2) <span class="op">/</span><span class="st"> </span><span class="dv">2</span>
-    <span class="co"># Accept or reject the state at end of trajectory, returning either</span>
-    <span class="co"># the position at the end of the trajectory or the initial position</span>
-    <span class="cf">if</span> (<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&lt;</span><span class="st"> </span><span class="kw">exp</span>(current_U<span class="op">-</span>proposed_U<span class="op">+</span>current_K<span class="op">-</span>proposed_K))
-    {
-      <span class="kw">return</span> (q)  <span class="co"># accept</span>
-    }
-<span class="cf">else</span> {
-      <span class="kw">return</span> (current_q)  <span class="co"># reject</span>
-    }
-}</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="hamiltonian-monte-carlo.html#cb8-1"></a>HMC =<span class="st"> </span><span class="cf">function</span> (U, grad_U, epsilon, L, current_q)</span>
+<span id="cb8-2"><a href="hamiltonian-monte-carlo.html#cb8-2"></a>  {</span>
+<span id="cb8-3"><a href="hamiltonian-monte-carlo.html#cb8-3"></a>    q =<span class="st"> </span>current_q</span>
+<span id="cb8-4"><a href="hamiltonian-monte-carlo.html#cb8-4"></a>    p =<span class="st"> </span><span class="kw">rnorm</span>(<span class="kw">length</span>(q),<span class="dv">0</span>,<span class="dv">1</span>)  <span class="co"># independent standard normal variates</span></span>
+<span id="cb8-5"><a href="hamiltonian-monte-carlo.html#cb8-5"></a>    current_p =<span class="st"> </span>p</span>
+<span id="cb8-6"><a href="hamiltonian-monte-carlo.html#cb8-6"></a>    <span class="co"># Make a half step for momentum at the beginning</span></span>
+<span id="cb8-7"><a href="hamiltonian-monte-carlo.html#cb8-7"></a>    p =<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>epsilon <span class="op">*</span><span class="st"> </span><span class="kw">grad_U</span>(q) <span class="op">/</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb8-8"><a href="hamiltonian-monte-carlo.html#cb8-8"></a>    <span class="co"># Alternate full steps for position and momentum</span></span>
+<span id="cb8-9"><a href="hamiltonian-monte-carlo.html#cb8-9"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>L)</span>
+<span id="cb8-10"><a href="hamiltonian-monte-carlo.html#cb8-10"></a>    {</span>
+<span id="cb8-11"><a href="hamiltonian-monte-carlo.html#cb8-11"></a>      <span class="co"># Make a full step for the position</span></span>
+<span id="cb8-12"><a href="hamiltonian-monte-carlo.html#cb8-12"></a>      q =<span class="st"> </span>q <span class="op">+</span><span class="st"> </span>epsilon <span class="op">*</span><span class="st"> </span>p</span>
+<span id="cb8-13"><a href="hamiltonian-monte-carlo.html#cb8-13"></a>      <span class="co"># Make a full step for the momentum, except at end of trajectory</span></span>
+<span id="cb8-14"><a href="hamiltonian-monte-carlo.html#cb8-14"></a>      <span class="cf">if</span> (i<span class="op">!=</span>L) p =<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>epsilon <span class="op">*</span><span class="st"> </span><span class="kw">grad_U</span>(q)</span>
+<span id="cb8-15"><a href="hamiltonian-monte-carlo.html#cb8-15"></a>}</span>
+<span id="cb8-16"><a href="hamiltonian-monte-carlo.html#cb8-16"></a>    <span class="co"># Make a half step for momentum at the end.</span></span>
+<span id="cb8-17"><a href="hamiltonian-monte-carlo.html#cb8-17"></a>    p =<span class="st"> </span>p <span class="op">-</span><span class="st"> </span>epsilon <span class="op">*</span><span class="st"> </span><span class="kw">grad_U</span>(q) <span class="op">/</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb8-18"><a href="hamiltonian-monte-carlo.html#cb8-18"></a>    <span class="co"># Negate momentum at end of trajectory to make the proposal symmetric</span></span>
+<span id="cb8-19"><a href="hamiltonian-monte-carlo.html#cb8-19"></a>    p =<span class="st"> </span><span class="op">-</span>p</span>
+<span id="cb8-20"><a href="hamiltonian-monte-carlo.html#cb8-20"></a>    <span class="co"># Evaluate potential and kinetic energies at start and end of trajectory</span></span>
+<span id="cb8-21"><a href="hamiltonian-monte-carlo.html#cb8-21"></a>    current_U =<span class="st"> </span><span class="kw">U</span>(current_q)</span>
+<span id="cb8-22"><a href="hamiltonian-monte-carlo.html#cb8-22"></a>    current_K =<span class="st"> </span><span class="kw">sum</span>(current_pˆ2) <span class="op">/</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb8-23"><a href="hamiltonian-monte-carlo.html#cb8-23"></a>    proposed_U =<span class="st"> </span><span class="kw">U</span>(q)</span>
+<span id="cb8-24"><a href="hamiltonian-monte-carlo.html#cb8-24"></a>    proposed_K =<span class="st"> </span><span class="kw">sum</span>(pˆ2) <span class="op">/</span><span class="st"> </span><span class="dv">2</span></span>
+<span id="cb8-25"><a href="hamiltonian-monte-carlo.html#cb8-25"></a>    <span class="co"># Accept or reject the state at end of trajectory, returning either</span></span>
+<span id="cb8-26"><a href="hamiltonian-monte-carlo.html#cb8-26"></a>    <span class="co"># the position at the end of the trajectory or the initial position</span></span>
+<span id="cb8-27"><a href="hamiltonian-monte-carlo.html#cb8-27"></a>    <span class="cf">if</span> (<span class="kw">runif</span>(<span class="dv">1</span>) <span class="op">&lt;</span><span class="st"> </span><span class="kw">exp</span>(current_U<span class="op">-</span>proposed_U<span class="op">+</span>current_K<span class="op">-</span>proposed_K))</span>
+<span id="cb8-28"><a href="hamiltonian-monte-carlo.html#cb8-28"></a>    {</span>
+<span id="cb8-29"><a href="hamiltonian-monte-carlo.html#cb8-29"></a>      <span class="kw">return</span> (q)  <span class="co"># accept</span></span>
+<span id="cb8-30"><a href="hamiltonian-monte-carlo.html#cb8-30"></a>    }</span>
+<span id="cb8-31"><a href="hamiltonian-monte-carlo.html#cb8-31"></a><span class="cf">else</span> {</span>
+<span id="cb8-32"><a href="hamiltonian-monte-carlo.html#cb8-32"></a>      <span class="kw">return</span> (current_q)  <span class="co"># reject</span></span>
+<span id="cb8-33"><a href="hamiltonian-monte-carlo.html#cb8-33"></a>    }</span>
+<span id="cb8-34"><a href="hamiltonian-monte-carlo.html#cb8-34"></a>}</span></code></pre></div>
 </div>
 <div id="proof-that-hmc-leaves-the-canonical-distribution-invariant." class="section level4">
-<h4><span class="header-section-number">10.2.2.2</span> Proof that HMC leaves the canonical distribution Invariant.</h4>
+<h4><span class="header-section-number">11.2.2.2</span> Proof that HMC leaves the canonical distribution Invariant.</h4>
 <p>首先是证Metropolis update是reversible的，并且收敛到canonical distribution function for q and p.这是detail balance condition
 思路是<span class="math inline">\(A_k\)</span> 是<span class="math inline">\((q,p)\)</span> 空间的一个分割，那么用Hamilton dynamic的Metropolis update就能把<span class="math inline">\(A_k\)</span>映到<span class="math inline">\(B_k\)</span>,由于leapfrog steps的reversibility，所以<span class="math inline">\(B_k\)</span>也是<span class="math inline">\((q,p)\)</span>空间的一个分割，并且由于保volume,所以<span class="math inline">\(A_k\)</span>的volume和<span class="math inline">\(B_k\)</span>的相等。则有下式</p>
 <p><span class="math display">\[
@@ -575,7 +581,7 @@ P\left(A_{i}\right) T\left(B_{j} | A_{i}\right)=P\left(B_{j}\right) T\left(A_{i}
 The Metropolis update within HMC therefore leaves the canonical distribution invariant.</p>
 </div>
 <div id="ergodicity-of-hmc" class="section level4">
-<h4><span class="header-section-number">10.2.2.3</span> Ergodicity of HMC</h4>
+<h4><span class="header-section-number">11.2.2.3</span> Ergodicity of HMC</h4>
 <p>Typically, HMC will also be “ergodic”. Any value can be sampled for the momentum variables, which can then affect the position variables in arbitrary ways.
 However, ergodicity can fail if the L leapfrog steps in a trajectory produce an exact periodicity for some function of state. The one-dimensional example solutions are periodic with period <span class="math inline">\(2\pi\)</span>. When <span class="math inline">\(L\epsilon\)</span> is exactly <span class="math inline">\(2\pi\)</span>, HMC may return to the same possition coordinate.
 For nearby values of <span class="math inline">\(L\)</span> and <span class="math inline">\(\epsilon\)</span>, HMC may theoretically ergodic, but take very long time to move about the full state space.</p>
@@ -583,10 +589,10 @@ For nearby values of <span class="math inline">\(L\)</span> and <span class="mat
 </div>
 </div>
 <div id="illustrations-of-hmc-and-its-benefits" class="section level3">
-<h3><span class="header-section-number">10.2.3</span> Illustrations of HMC and Its Benefits</h3>
+<h3><span class="header-section-number">11.2.3</span> Illustrations of HMC and Its Benefits</h3>
 <p>Now illustrate some practical issues with HMC.</p>
 <div id="trajectories-for-a-two-dimensional-problem" class="section level4">
-<h4><span class="header-section-number">10.2.3.1</span> Trajectories for a Two-Dimensional Problem</h4>
+<h4><span class="header-section-number">11.2.3.1</span> Trajectories for a Two-Dimensional Problem</h4>
 <p>Example 1: Sampling from two variables which is bivariate Gaussian, mean of zero, standard deviations of one, and correlation 0.95. Regard this as “position” variables, and introduce two corresponding “momentum” variables which is also Gaussian (as previous demonstrate), with mean 0 and 1 sd, and 0 correlation. Then the Hamiltonian can be define as</p>
 <p><span class="math display">\[
 H(q, p)=q^{T} \Sigma^{-1} q / 2+p^{T} p / 2, \quad \text { with } \Sigma=\left[ \begin{array}{cc}{1} &amp; {0.95} \\ {0.95} &amp; {1}\end{array}\right]
@@ -594,18 +600,18 @@ H(q, p)=q^{T} \Sigma^{-1} q / 2+p^{T} p / 2, \quad \text { with } \Sigma=\left[ 
 </div>
 </div>
 <div id="the-benefit-of-avoiding-random-walks" class="section level3">
-<h3><span class="header-section-number">10.2.4</span> The benefit of avoiding random walks</h3>
+<h3><span class="header-section-number">11.2.4</span> The benefit of avoiding random walks</h3>
 <p>最大的好处，HMC会几乎固定的朝一个方向走</p>
 </div>
 <div id="sampling-from-a-100-dimensional-distribution" class="section level3">
-<h3><span class="header-section-number">10.2.5</span> Sampling from a 100-Dimensional Distribution</h3>
+<h3><span class="header-section-number">11.2.5</span> Sampling from a 100-Dimensional Distribution</h3>
 </div>
 </div>
 <div id="hmc-in-practice-and-theory" class="section level2">
-<h2><span class="header-section-number">10.3</span> HMC in Practice and Theory</h2>
+<h2><span class="header-section-number">11.3</span> HMC in Practice and Theory</h2>
 <p>Requires proper tuning of <span class="math inline">\(L\)</span> and <span class="math inline">\(\epsilon\)</span>. Then the tuning will be discussed below. How performance can be improved by using whatever knowledge is available regarding the scales of variables and their correlations. An additional benefit of HMC- its better scaling with dimensionality than simple Metropolis methods.</p>
 <div id="effect-of-linear-transformation" class="section level3">
-<h3><span class="header-section-number">10.3.1</span> Effect of Linear Transformation</h3>
+<h3><span class="header-section-number">11.3.1</span> Effect of Linear Transformation</h3>
 <p>If the variables beging sampled are transformed by multiplication by some nonsingular matrix, A. However, performance stays the same (except perhaps in terms of computation time per iteration), if at the same time the corresponding momentum variables are multiplied by <span class="math inline">\((A^T)^{-1}\)</span>. These facts provide insight into the operation of HMC. Also can help us improve performance when we have some knowledge of the scales and correlations of the variables.</p>
 <p>Let new variables be <span class="math inline">\(q&#39;=Aq\)</span>. Then <span class="math inline">\(P&#39;(q&#39;)=P(A^{-1}q&#39;)/|det(A)|\)</span>, where <span class="math inline">\(P(q)\)</span> is the density for q. If the distribution for q is the canonical distribution for a potential energy function <span class="math inline">\(U(q)\)</span>, we can obtain the distribution for <span class="math inline">\(q&#39;\)</span> as the canonical distribution for <span class="math inline">\(U&#39;(q&#39;)=U(A^{-1}q&#39;)\)</span>. 因为<span class="math inline">\(|det(A)|\)</span> 是一个常数，我们需要不把log|deta(A)| 放到potential energy里面。</p>
 <p>用之前的动能函数，但是把动量变量变成<span class="math inline">\(p&#39;=(A^T)^{-1}p\)</span>,然后新的动能方程是<span class="math inline">\(K&#39;(p&#39;)=K(A^Tp&#39;)\)</span>. 如果使用二次型的动能,<span class="math inline">\(K(p)=p^{T} M^{-1} p / 2\)</span>,则新的动能是</p>
@@ -629,15 +635,15 @@ K^{\prime}\left(p^{\prime}\right)=\left(A^{T} p^{\prime}\right)^{T} M^{-1}\left(
 所以对于高维问题一般用对角的covariance matrix <span class="math inline">\(\Sigma\)</span> ,相当于只考虑variable的scale而不考虑之间的相关性。</p>
 </div>
 <div id="tuning-hmc" class="section level3">
-<h3><span class="header-section-number">10.3.2</span> Tuning HMC</h3>
+<h3><span class="header-section-number">11.3.2</span> Tuning HMC</h3>
 <p>一个HMC应用的阻碍是需要选择合适的Leapfrog step, <span class="math inline">\(\epsilon\)</span>, 以及Leapfrog steps的迭代次数，L。这两个参数共同决定了轨道的虚时间。大部分mcmc方法都有参数需要tuned，除了Gibbs，推出来全条件分布以后就能直接抽了。但是，tuning HMC比起其他简单的Metropolis会更难。</p>
 <div id="preliminary-runs-and-trace-plots" class="section level4">
-<h4><span class="header-section-number">10.3.2.1</span> Preliminary Runs and Trace Plots</h4>
+<h4><span class="header-section-number">11.3.2.1</span> Preliminary Runs and Trace Plots</h4>
 <p>要Tuning HMC一般需要先尝试性的run几次去寻找<span class="math inline">\(\epsilon\)</span>和L。为了判断这几次run的效果如何， trace plots of quantities that are thought to be indicative of overall convergence should be examined. 但是尝试性的run也可能会造成misleading。因为<span class="math inline">\(\epsilon\)</span>和<span class="math inline">\(L\)</span>的最佳选择不一定是第一次达到平稳的时候的选择。如果必要的话，HMC的每一步迭代中，<span class="math inline">\(\epsilon\)</span>和 <span class="math inline">\(L\)</span>都进行随机选取。
 建议多跑跑几次基于不同的随机性设置，这样比较隔绝的极大值点就更容易被探测到。和其他所有MCMC方法相比，HMC不会更少（或者更多）容易被隔离的极值点所影响。如果找到了有隔离的极值点存在，需要做一些事情去处理这个问题。只是把约束在单个极值点的链组合起来是不可取的，可以尝试使用沿着解集轨道“tempering”回火结合的HMC进行处理多个极值点问题。</p>
 </div>
 <div id="what-stepsize" class="section level4">
-<h4><span class="header-section-number">10.3.2.2</span> What Stepsize?</h4>
+<h4><span class="header-section-number">11.3.2.2</span> What Stepsize?</h4>
 <p>选取一个合适的leapfrog stepsize <span class="math inline">\(\epsilon\)</span>也是很重要的。 太大的stepsize会导致很低的接受率，太小的stepsize会浪费很多计算时间。</p>
 <p>幸运的是，stepsize的选择几乎与要走多少步(L)独立。Hamiltonian的误差，基本上不会因为多走几步而增加，所以stepsize如果足够小的话，这个dynamics会很稳定。</p>
 <p>Stability的问题可以从一个一维的问题中看出
@@ -664,7 +670,7 @@ q的分布是<span class="math inline">\(N(0,\sigma^2)\)</span> ,对这个系统
 <p>这个问题可以通过选取一个随机的<span class="math inline">\(\epsilon\)</span>进行减轻。即便这个分布的均值太大，合适的小的<span class="math inline">\(\epsilon\)</span>也有可能偶尔会选到。随机选择步长应该处于计算轨道之前，而不是每次更新轨道leapfrog step的时候。有一个“捷径”方法能够当随机选取的步长不合适的时候节约计算时间。</p>
 </div>
 <div id="what-trajectory-length" class="section level4">
-<h4><span class="header-section-number">10.3.2.3</span> What Trajectory Length?</h4>
+<h4><span class="header-section-number">11.3.2.3</span> What Trajectory Length?</h4>
 <p>选取一个合适的轨道长度对于一个要系统的，而不是随机游走的探索状态空间的HMC非常重要。很多分布非常难以取样因为他们紧紧的在某些方向被约束住了，但是在其他方向的约束没那么紧。用足够长的轨道就能探索没那么多限制的方向。</p>
 <p>但是轨道也可能过长。</p>
 <p>对于更复杂的问题，不能用肉眼观察轨道的长度选取的如何，找到变量的线性组合使得约束最小会非常困难，甚至于不可能，当最小的方向其实是一个非线性曲线或者平面的时候。
@@ -672,7 +678,7 @@ q的分布是<span class="math inline">\(N(0,\sigma^2)\)</span> ,对这个系统
 <p>之后会讨论随机变化的轨道长可能很有必要。这样可以避免选到一个靠近周期性的长度。</p>
 </div>
 <div id="using-multiple-stepsizes." class="section level4">
-<h4><span class="header-section-number">10.3.2.4</span> Using Multiple Stepsizes.</h4>
+<h4><span class="header-section-number">11.3.2.4</span> Using Multiple Stepsizes.</h4>
 <p>所以可以通过找相对的variable的scales去提高HMC的表现。这可以通过两个等价的方法得到。第一个是如果<span class="math inline">\(s_i\)</span>是<span class="math inline">\(q_i\)</span>合适的scale，我们可以变换q，使得<span class="math inline">\(q_{i}^{\prime}=q_{i} / s_{i}\)</span>.或者也可以用另外一个动能函数<span class="math inline">\(K(p)=p^TM^{-1}p\)</span>,其中M的对角元是<span class="math inline">\(m_i=1/s_i^2\)</span>.
 第三种等价方式是最方便的，是使用不同的stepsizes for different pairs of position and momentum variables. 考虑一个leapfrog update with <span class="math inline">\(m_i=1/s_i^2\)</span>:
 <span class="math display">\[
@@ -691,7 +697,7 @@ Define <span class="math inline">\((q^{(0)},p^{(0)})\)</span> 为leapfrog的开�
 </div>
 </div>
 <div id="combining-hmc-with-other-mcmc-updates" class="section level3">
-<h3><span class="header-section-number">10.3.3</span> Combining HMC with Other MCMC Updates</h3>
+<h3><span class="header-section-number">11.3.3</span> Combining HMC with Other MCMC Updates</h3>
 <p>对于某些问题，MCMC孤立的使用HMC是不可能或者不受欢迎的。两个情况Non-HMC更新将会很有必要，1当某些变量是离散的，2当log probability density的导数很难计算或者不可能计算的时候。</p>
 <p>这种情况的时候，HMC可以只对其他变量生效。另外一个例子是当特殊的MCMC更新过程可以帮助MCMC收敛，同时HMC不会，比如说，从两个孤立的极值点之间移动。但是并不会完全代替HMC。下面将会讨论，比如说Bayesian hierarchical models可能用HMC结合Gibbs最好。
 在这些情况里，一个或者多个HMC updates对于所有变量，或者变量的子集可以代替一个或者多个更新，从而使得对于全部变量的联合分布保持稳定invariant.
@@ -700,16 +706,16 @@ The HMC updates can be viewed as either leaving this same joint distribution inv
 <p>When both HMC and other updates are used, it may be best to use shorter trajectories for HMC than would be used if only HMC were being done. This allows the other updates to be done more often, which presumably helps sampling. Finding the optimal tradeoff is likely to be difficult, however, A variation on HMC that reduces the need for such a tradeoff is described below.</p>
 </div>
 <div id="scaling-with-dimensionality" class="section level3">
-<h3><span class="header-section-number">10.3.4</span> Scaling with Dimensionality</h3>
+<h3><span class="header-section-number">11.3.4</span> Scaling with Dimensionality</h3>
 <p>Main benefits of HMC was illustrated, its ability to avoid the inefficient exploration of the state space via a random walk.</p>
 <div id="creating-distributions-of-increasing-dimensionality-by-replication" class="section level4">
-<h4><span class="header-section-number">10.3.4.1</span> Creating Distributions of Increasing Dimensionality by Replication</h4>
+<h4><span class="header-section-number">11.3.4.1</span> Creating Distributions of Increasing Dimensionality by Replication</h4>
 <p>How performance scales with dimensionality, assume something about how the distribution changes with dimensionality, <span class="math inline">\(d\)</span>.</p>
 <p>Dimensionality increases by adding independent replicas of variables- that is, the potential energy function for <span class="math inline">\(q=(q_1,...,q_d)\)</span> has the form <span class="math inline">\(U(q)=\sum u_i(q_i)\)</span>, for functions <span class="math inline">\(u_i\)</span> drawn independently from some distribution. 实际情况肯定不是这样，但是这样可以作为一个有道理的模型来看看提高维度对某些问题的影响。</p>
 <p>虽然在独立的情况下Gibbs表现的非常好，对每个变量进行Metropolis update 也很好，但是这两个算法都是not invariant to rotation. 所以对于某些特殊问题表现可能就不会太好。</p>
 </div>
 <div id="scaling-of-hmc-and-random-walk-metropolis" class="section level4">
-<h4><span class="header-section-number">10.3.4.2</span> Scaling of HMC and Random-Walk Metropolis</h4>
+<h4><span class="header-section-number">11.3.4.2</span> Scaling of HMC and Random-Walk Metropolis</h4>
 <p>Discuss informally how well HMC and random-walk Metropolis scale with dimension, loosely following Creutz.</p>
 <p>The following relationship holds when any Metropolis-style algorithm is used to sample a density <span class="math inline">\(P(x)=(1 / Z) \exp (-E(x))\)</span>:
 <span class="math display">\[
@@ -732,7 +738,7 @@ Jesen不等式的形式：<span class="math inline">\(\varphi(\mathrm{E}[X]) \le
 <blockquote>
 <p>后面的大致意思是对于RWM维度越高，那么对于目前状态和proposal的state，potential energy的差异是每个变量造成的差异之和。如果使用固定的标准差<span class="math inline">\(\zeta\)</span>，potential energy difference的mean and variance随着d增大线性增长。这样会导致很低的接受率。所以为了保证能接受的表现，标准差应该随着d增加而降低，iteration次数应该需要保证几乎独立的点。</p>
 </blockquote>
-<p>而和RWM类似，HMC的话，q是独立的，使用能量函数<span class="math inline">\(K(p)=\Sigma p_{i}^{2} / 2\)</span>,不同的<span class="math inline">\((q_i,p_i)\)</span> 组都能服从Hamiltonian dynamics通过potential energy 用q，Kinetic energy用p。而解轨道中的虚拟世界虚拟时间不会随着维度增加而增加(我觉得是指<span class="math inline">\(\epsilon L\)</span>不受维度影响？)但是使用leapfrog方法得到的proposal state的接受概率是the sum of the errors pertaining to each <span class="math inline">\((q_i,p_i)\)</span> pair. 对于固定的步长<span class="math inline">\(\epsilon\)</span>,一个固定的轨道长度，<span class="math inline">\(\epsilon L\)</span>, mean and variance of the error in H grow linearly with d. This will also lead a progressively lower acceptance rate as dimensionality increases.</p>
+<p>而和RWM类似，HMC的话，q是独立的，使用能量函数<span class="math inline">\(K(p)=\Sigma p_{i}^{2} / 2\)</span>,不同的<span class="math inline">\((q_i,p_i)\)</span> 组都能服从Hamiltonian dynamics通过potential energy 用q，Kinetic energy用p。而解轨道中的虚拟世界虚拟时间不会随着维度增加而增加(我觉得是指<span class="math inline">\(\epsilon L\)</span>不受维度影响？)但是使用leapfrog方法得到的proposal state的接受概率是the sum of the errors pertaining to each <span class="math inline">\((q_i,p_i)\)</span> pair. 对于固定的步长<span class="math inline">\(\epsilon\)</span>,一个固定的轨道长度，<span class="math inline">\(\epsilon L\)</span>, mean and variance of the error in H grow linearly with d. This will also lead a progressively lower acceptance rate as dimensionality increases.</p>
 <p>所以为了判断哪个方法更好需要决定我们需要多迅速的改变<span class="math inline">\(\zeta\)</span> 和 <span class="math inline">\(\epsilon\)</span> 当d 增加的时候。当d增加的时候，那么<span class="math inline">\(\eta\)</span>和<span class="math inline">\(\epsilon\)</span>会趋向于0，同时<span class="math inline">\(\Delta_1\)</span> 将会也趋于0。使用二阶逼近<span class="math inline">\(exp(-\Delta_1)\)</span>，则有<span class="math inline">\(1-\Delta_{1}+\Delta_{1}^{2} / 2\)</span> ，则带入上式就有
 <span class="math display">\[
 \mathrm{E}\left[\Delta_{1}\right] \approx \frac{\mathrm{E}\left[\Delta_{1}^{2}\right]}{2}
@@ -742,7 +748,7 @@ Jesen不等式的形式：<span class="math inline">\(\varphi(\mathrm{E}[X]) \le
 <p>It follows that <span class="math inline">\(E[\Delta_d]\)</span> is proportional to <span class="math inline">\(d^2_\zeta\)</span>, wo we can maintain a reasonable acceptance rate by letting <span class="math inline">\(\zeta\)</span> be proportional to <span class="math inline">\(d^{-1/2}\)</span>. The number of iterations needed to reach a nearly independent point will be proportional to <span class="math inline">\(\zeta^{-1/2}\)</span>. The number of iterations needed to reach a nearly independent point will be proportional to <span class="math inline">\(\zeta^{-2}\)</span>, which will be proportional to d.</p>
 </div>
 <div id="optimal-acceptance-rates" class="section level4">
-<h4><span class="header-section-number">10.3.4.3</span> Optimal Acceptance Rates</h4>
+<h4><span class="header-section-number">11.3.4.3</span> Optimal Acceptance Rates</h4>
 <p>继续扩展以上的理论，我们可决定如果基于最优的tuning parameter<span class="math inline">\(\zeta\)</span>或者<span class="math inline">\(\epsilon\)</span>,对应的接受率是多少。</p>
 <p>为了找到这个接受率，我们先注意Metropolis methods满足Detailed Balance条件，接受概率对于正负<span class="math inline">\(\Delta_d\)</span>是一样的。因为所有的proposal对于负的<span class="math inline">\(\Delta_d\)</span> 都接受，所以接受率一般来说是简单的两倍概率对于proposal有一个负的<span class="math inline">\(\Delta_d\)</span>.对于一个很大的d，中心极限定理暗示了<span class="math inline">\(\Delta_d\)</span>的分布是Gaussian，因为其为d个独立的<span class="math inline">\(\Delta_1\)</span>的值。</p>
 <p>因为<span class="math inline">\(\Delta_d\)</span>的方差是二倍均值，<span class="math inline">\(E[\Delta_d]=\mu\)</span>. 则接受概率能写成如下形式：
@@ -759,7 +765,7 @@ C_{\mathrm{rw}} \propto \frac{1}{(a(\mu) \mu)}
 <p>The same optimal <span class="math inline">\(23\%\)</span> acceptance rate for random-walk Metropolis was previously obtained using a more formal analysis by Roberts et al (1997). The optimal 65% acceptance rate for HMC .</p>
 </div>
 <div id="exploring-the-distribution-of-potential-energy" class="section level4">
-<h4><span class="header-section-number">10.3.4.4</span> Exploring the Distribution of Potential Energy</h4>
+<h4><span class="header-section-number">11.3.4.4</span> Exploring the Distribution of Potential Energy</h4>
 <p>更好的Scaling会让HMC的表现取决于resampling of the momentum variables. 我们可以看到考虑how well the methods explore the distribution of the potential energy, <span class="math inline">\(U(q)=\sum u_i(q_i)\)</span> .用动量的变量去探索能量函数。</p>
 <blockquote>
 <p>等等，能量不应该是distribution of interest吗？得返回去看看</p>
@@ -774,7 +780,7 @@ Analyzing how well method explore the distribution of <span class="math inline">
 </div>
 </div>
 <div id="hmc-for-hierarchical-models" class="section level3">
-<h3><span class="header-section-number">10.3.5</span> HMC for Hierarchical Models</h3>
+<h3><span class="header-section-number">11.3.5</span> HMC for Hierarchical Models</h3>
 <p>Many Bayesian models are defined hierarchically. A large set of low-level parameters have prior distributions that are determined by fewer higher-level “hyperparameters,” which in turn may have priors determined by fewer higher-level“hyperparameters,” which in turn may have priors determined by yet-higher-level hyperparameters.</p>
 <p>可以应用HMC于这些模型通过一个很显然的办法： (注意对variance hyperparameters做一个log变换，使得无限制)。然而，最好应用HMC仅仅对lower-level parameters, 原因以下会讨论，（5.4.3一般性的讨论了如何applying HMC对variable的子集。）
 Bayesian neural network model会作为一个例子。这些模型一般来讲有几组low-level parameters,每个associated variance hyperparameter. The posterior distribution of these hyperparameters reflects important aspects of the data,比如说哪些变量和目标任务最相关。The efficiency with which values for these hyperparameters are sampled from the posterior distribution can often determine the overall efficiency of the MCMC method.
@@ -789,16 +795,16 @@ I use HMC only for the low-level parameters in Bayesian neural network models, w
 </div>
 </div>
 <div id="extensions-of-and-variations-on-hmc" class="section level2">
-<h2><span class="header-section-number">10.4</span> Extensions of and Variations on HMC</h2>
+<h2><span class="header-section-number">11.4</span> Extensions of and Variations on HMC</h2>
 <p>Modify the basic HMC algorithm can be done in many ways. Improve its efficiency, make it useful for a wider range of distribution.</p>
 <p>Alternatives to the leapfrog discretization of Hamilton’s equation will be discussed. Also how the HMC handle distributions with constraints on the variables.
 Another algorithm that leapfrog step only done once, which may be useful when not all variables are updated by HMC.</p>
 <p>Computing a short cut method that avoids computing the whole trajectory when the stepsize is inappropriate.</p>
 <div id="discretization-by-splitting-handling-constraints-and-other-applications" class="section level3">
-<h3><span class="header-section-number">10.4.1</span> Discretization by Splitting: Handling constraints and Other Applications</h3>
+<h3><span class="header-section-number">11.4.1</span> Discretization by Splitting: Handling constraints and Other Applications</h3>
 <p>Leapfrog method 不是解决Hamilton’s等式，保证volume和reversible的唯一方法。所以也有其他方法可以用于HMC。 很多“symplectic integration method”被设计出来了，很多用于其他方面的应用而不是HMC（比如模拟太阳系几百万年的运行用于检验稳定性。）设计一个有更高阶的准确度的方法是可能的，比如（McLachlan and Atela,1992）。使用这些方法在HMC上，当维度增加时HMC的会渐进地产出更好的结果。尽管如此，还是值得研究Hamiltonian dynamics如何被模拟，这样才能指出如何处理variable的constrain，也可以提高探索偏分析的结果。</p>
 <div id="splitting-the-hamiltonian" class="section level4">
-<h4><span class="header-section-number">10.4.1.1</span> Splitting the Hamiltonian</h4>
+<h4><span class="header-section-number">11.4.1.1</span> Splitting the Hamiltonian</h4>
 <p>Many symplectic discretization of Hamiltonian dynamics can be derived by “splitting” the Hamiltonian into several terms, and then, for each term in succession, simulating the dynamics defined by that term for some small time step,
 很多辛离散化Hamiltonian dynamics可以用“splitting” Hamiltonian 成为几项导出，然后对于每项一连串的模拟dynamics由定义一些小的时间步骤，重复这个过程知道达到要求的总模拟时间。如果每一项的模拟可以解析的得到，那么我们可以得到辛逼近对dynamics如果可以做到的话。</p>
 <p>这个更一般的方法可以从Leimkuhler and Reich (2004,section4.2)和(Sexton and Weingarten (1992))找到.</p>
@@ -826,7 +832,7 @@ If <span class="math inline">\(K(p)=\frac{1}{2}\sum p_i^2/m_i\)</span>, applying
 </blockquote>
 </div>
 <div id="handling-constraints" class="section level4">
-<h4><span class="header-section-number">10.4.1.2</span> Handling Constraints</h4>
+<h4><span class="header-section-number">11.4.1.2</span> Handling Constraints</h4>
 
 </div>
 </div>
@@ -843,11 +849,13 @@ If <span class="math inline">\(K(p)=\frac{1}{2}\sum p_i^2/m_i\)</span>, applying
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
 <script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
@@ -855,12 +863,11 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -872,6 +879,10 @@ gitbook.start({
 "text": null
 },
 "history": {
+"link": null,
+"text": null
+},
+"view": {
 "link": null,
 "text": null
 },
@@ -890,8 +901,9 @@ gitbook.start({
     script.type = "text/javascript";
     var src = "true";
     if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(src))
-      src = src.replace(/^https?:/, '');
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
     script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();

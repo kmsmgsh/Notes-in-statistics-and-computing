@@ -163,6 +163,14 @@ nonnegative.
 P54 of pourahmadi covariance book
 
 a sufficient condition for nonnegative definite is : $1+(p-1) \rho \geq 0$ or \(-(p-1)^{-1} \leq \rho \leq 1\)
+$$
+\boldsymbol{\Sigma}=\sigma^{2} R=\sigma^{2}\left(\begin{array}{cccc}
+1 & \rho & \cdots & \rho \\
+\rho & 1 & \cdots & \rho \\
+\vdots & \vdots & \ddots & \vdots \\
+\rho & \rho & \cdots & 1
+\end{array}\right)=\sigma^{2}\left[(1-\rho) I+\rho \mathbf{1}_{n} \mathbf{1}_{n}^{\prime}\right]
+$$
 
 ### Huynh-Feldt Structure
 

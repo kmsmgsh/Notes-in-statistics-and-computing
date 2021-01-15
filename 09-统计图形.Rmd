@@ -51,3 +51,22 @@ pch是点的类型，[具体见这个网址](http://www.sthda.com/english/wiki/r
 
 lwd是线的宽度
 lty是线的类型，是点的话这就用了NA。
+
+
+
+
+- 使用patchwork组合图形：
+
+[来自于](https://d.cosx.org/d/421267-ggplot-patchwork), [官方文档](https://github.com/thomasp85/patchwork)
+
+
+
+
+
+
+
+
+
+
+
+

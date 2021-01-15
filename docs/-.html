@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 9 Reversible Jump MCMC | Notes on Statistics</title>
+  <title>Chapter 7 统计图形笔记 | Notes on Statistics</title>
   <meta name="description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 9 Reversible Jump MCMC | Notes on Statistics" />
+  <meta property="og:title" content="Chapter 7 统计图形笔记 | Notes on Statistics" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 9 Reversible Jump MCMC | Notes on Statistics" />
+  <meta name="twitter:title" content="Chapter 7 统计图形笔记 | Notes on Statistics" />
   
   <meta name="twitter:description" content="This is a minimal notes on the problem facing and follow the idea by yufree.cn/notes" />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="basicmcmc.html"/>
-<link rel="next" href="optimal-proposal-distributions-and-adaptive-mcmc.html"/>
+<link rel="prev" href="longitudinal-data-analysis.html"/>
+<link rel="next" href="basicmcmc.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -353,139 +353,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="reversible-jump-mcmc" class="section level1">
-<h1><span class="header-section-number">Chapter 9</span> Reversible Jump MCMC</h1>
-<div id="introduction" class="section level2">
-<h2><span class="header-section-number">9.1</span> Introduction</h2>
-<p>Provides a general framework for Markov chain Monte Carlo simulation in which the dimension of the parameter space can vary between iterates of the Markov chain. Extension of the Metropolis-Hastings algorithm onto more general state spaces.</p>
-<p>Suppose that for observed data <span class="math inline">\(x\)</span> we have a countable collection of candidate models <span class="math inline">\(\mathcal{M}=\left\{\mathcal{M}_{1}, \mathcal{M}_{2}, \ldots\right\}\)</span> indexed by a parameter <span class="math inline">\(k \in \mathcal{K}\)</span>. The index k can be considered as an auxiliary model indicator variable, such that <span class="math inline">\(\mathcal{M}_{k^{\prime}}\)</span> denotes the model where <span class="math inline">\(k=k&#39;\)</span>. Each model <span class="math inline">\(\mathcal{M}_k\)</span> has an <span class="math inline">\(n_k\)</span>-dimensional vector of unknown parameters,<span class="math inline">\(\boldsymbol{\theta}_{k} \in \mathbb{R}^{n_{k}}\)</span>, where <span class="math inline">\(n_k\)</span> can take different values for different models <span class="math inline">\(k\in\mathcal K\)</span>. The joint posterior distribution of <span class="math inline">\((k,\boldsymbol{\theta}_k)\)</span> given observed data,x, is obtained as the product of the likelihood, <span class="math inline">\(L\left(\mathbf{x} | k, \boldsymbol{\theta}_{k}\right)\)</span>, and the joint prior, <span class="math inline">\(p\left(k, \boldsymbol{\theta}_{k}\right)=p\left(\boldsymbol{\theta}_{k} | k\right) p(k)\)</span>, constructed from the prior distribution of <span class="math inline">\(\boldsymbol \theta_k\)</span> under model <span class="math inline">\(\mathcal M_k\)</span>, and the prior for the model indicator k(i.e. the prior for model <span class="math inline">\(\mathcal M_k\)</span>). Hence, the joint posterior is
-<span class="math display">\[
-\pi\left(k, \boldsymbol{\theta}_{k} | \mathbf{x}\right)=\frac{L\left(\mathbf{x} | k, \boldsymbol{\theta}_{k}\right) p\left(\boldsymbol{\theta}_{k} | k\right) p(k)}{\sum_{k^{\prime} \in \mathcal{K}} \int_{\mathbb{R}^{n} k^{\prime}} L\left(\mathbf{x} | k^{\prime}, \boldsymbol{\theta}_{k^{\prime}}^{\prime}\right) p\left(\boldsymbol{\theta}_{k^{\prime}}^{\prime} | k^{\prime}\right) p\left(k^{\prime}\right) d \boldsymbol{\theta}_{k^{\prime}}^{\prime}}
-\]</span>
-&gt; 也就是说，这个posterior就是选一个模型（自带<span class="math inline">\(n_k\)</span>个参数），然后再这个模型下可以得到一个posterior，而选定了模型以后，对应<span class="math inline">\(n_k\)</span>个参数也有一个prior，在已知k的时候的prior，这样就构造了对于k个模型，已知数据x的posterior
-因为reversible jump就按前言中所说的，是用来解决参数维度变化的。而对于coefficient维度变化则对应了不同的模型，也就是说在不同模型之间跳来跳去的，</p>
-<p>The target of an MCMC sampler over the state space <span class="math inline">\(\boldsymbol{\Theta}=\bigcup_{k \in \mathcal{K}}\left(\{k\} \times \mathbb{R}^{n_{k}}\right)\)</span>, where the states of the Markov chain are of the form <span class="math inline">\((k,\boldsymbol \theta_k)\)</span>, the dimension of which can vary over the state space. Accordingly, from the output of a single Markov chain sampler, the user is able to obtain a full probabilistic description of the posterior probabilities of each model having observed the data, x, in addition of the posterior porbabilities of each model having observed the data,x, in addition to the posterior distributions of the individual models.</p>
-<blockquote>
-<p>输出是一个单独的Markov chain sampler。可以的到期描述每个模型的全后验概率，关于观测数据。</p>
-</blockquote>
-<div id="from-metropolis-hastings-to-reversible-jump" class="section level3">
-<h3><span class="header-section-number">9.1.1</span> From Metropolis-Hastings to Reversible Jump</h3>
-<p>Stand form of MH relies on the construction of a time-reversible Markov chain via the detailed balance condition. That is, the moves from state <span class="math inline">\(\theta\)</span> to <span class="math inline">\(\theta&#39;\)</span> are made as often as moves from <span class="math inline">\(\theta&#39;\)</span> to <span class="math inline">\(\theta\)</span> with respect to the ratget density. Then extension MH to the setting that the dimension of the parameter vector varies.</p>
-<p>The previous part construction of a Markov chain on a general state space <span class="math inline">\(\Theta\)</span> with invariant or stationary distribution <span class="math inline">\(\pi\)</span>, the detailed balance condition can be written as
-<span class="math display">\[
-\int_{\left(\theta, \theta^{\prime}\right) \in \mathcal{A} \times \mathcal{B}} \pi(d \theta) P\left(\theta, d \theta^{\prime}\right)=\int_{\left(\theta, \theta^{\prime}\right) \in \mathcal{A} \times \mathcal{B}} \pi\left(d \theta^{\prime}\right) P\left(\theta^{\prime}, d \theta\right)
-\]</span></p>
-<p>所以只是换了state space,其他都没变？
-Compare to standard MH algorithm, Markov chain transitions from a current state <span class="math inline">\(\boldsymbol{\theta}=\left(k, \boldsymbol{\theta}_{k}^{\prime}\right) \in \mathcal{A}\)</span>, in model <span class="math inline">\(\mathcal M_k\)</span> are realized by first proposing a new state <span class="math inline">\(\boldsymbol{\theta}^{\prime}=\left(k^{\prime}, \boldsymbol{\theta}_{k^{\prime}}\right) \in \mathcal{B}\)</span>，(<span class="math inline">\(A\)</span>是<span class="math inline">\(k\)</span>的域，比如<span class="math inline">\(\mathbb N\)</span>? <span class="math inline">\(B\)</span>是<span class="math inline">\(\mathbb R^{n_k}\)</span>,也就是正常的<span class="math inline">\(\theta\)</span>的域。) by proposal distribution <span class="math inline">\(q(\boldsymbol\theta,\boldsymbol \theta&#39;)\)</span>. The detailed balance condition is enforced through the acceptance probability, where the move to the candidate state <span class="math inline">\(\boldsymbol \theta&#39;\)</span> is accepted with probability <span class="math inline">\(\alpha\left(\theta, \theta^{\prime}\right)\)</span>. If rejected, the chain remains at the current state <span class="math inline">\(\boldsymbol \theta\)</span> in model <span class="math inline">\(\mathcal M_k\)</span>. Under this mechanism, detail balance condition equation becomes
-<span class="math display">\[
-\int_{\left(\theta, \theta^{\prime}\right) \in \mathcal{A} \times \mathcal{B}} \pi(\boldsymbol{\theta} | \mathbf{x}) q\left(\boldsymbol{\theta}, \boldsymbol{\theta}^{\prime}\right) \alpha\left(\boldsymbol{\theta}, \boldsymbol{\theta}^{\prime}\right) d \boldsymbol{\theta} d \boldsymbol{\theta}^{\prime}=\int_{\left(\theta, \boldsymbol{\theta}^{\prime}\right) \in \mathcal{A} \times \mathcal{B}} \pi\left(\boldsymbol{\theta}^{\prime} | \mathbf{x}\right) q\left(\boldsymbol{\theta}^{\prime}, \boldsymbol{\theta}\right) \alpha\left(\boldsymbol{\theta}^{\prime}, \boldsymbol{\theta}\right) d \boldsymbol{\theta} d \boldsymbol{\theta}^{\prime}
-\]</span>
-where <span class="math inline">\(\pi(\theta|x)\)</span> are the posterior we want sample.</p>
-<p>One way to enforce this equation is by setting the acceptance probability as</p>
-<p><span class="math display">\[
-\alpha\left(\boldsymbol{\theta}, \boldsymbol{\theta}^{\prime}\right)=\min \left\{1, \frac{\pi(\boldsymbol{\theta} | \mathbf{x}) q\left(\boldsymbol{\theta}, \boldsymbol{\theta}^{\prime}\right)}{\pi\left(\boldsymbol{\theta}^{\prime} | \mathbf{x}\right) q\left(\boldsymbol{\theta}^{\prime}, \boldsymbol{\theta}\right)}\right\}
-\]</span></p>
-<p>This resembles the usual metropolis-hastings acceptance ratio. Then a reversible jump sampler with N iterations is commonly constructed as follows:</p>
+<div id="统计图形笔记" class="section level1">
+<h1><span class="header-section-number">Chapter 7</span> 统计图形笔记</h1>
+<p>使用 <code>palette()</code> 进行批量获得色彩
+比如说</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="-.html#cb1-1"></a>x=<span class="kw">seq</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="fl">0.01</span>)</span>
+<span id="cb1-2"><a href="-.html#cb1-2"></a><span class="kw">plot</span>(x,x,<span class="dt">type=</span><span class="st">&#39;l&#39;</span>,<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))</span>
+<span id="cb1-3"><a href="-.html#cb1-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>) {</span>
+<span id="cb1-4"><a href="-.html#cb1-4"></a>  <span class="kw">lines</span>(x,i<span class="op">*</span>x,<span class="dt">type =</span> <span class="st">&#39;l&#39;</span>,<span class="dt">col=</span><span class="kw">palette</span>()[i])</span>
+<span id="cb1-5"><a href="-.html#cb1-5"></a>}</span></code></pre></div>
+<p><img src="Notes-in-statistics-and-computing_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>可以使用<code>adjustcolor(palette()[i], alpha.f = 0.5)</code> 给上述色彩增加透明度
+例如:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="-.html#cb2-1"></a><span class="kw">plot</span>(x,x,<span class="dt">type=</span><span class="st">&#39;l&#39;</span>,<span class="dt">ylim=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">10</span>))</span>
+<span id="cb2-2"><a href="-.html#cb2-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>) {</span>
+<span id="cb2-3"><a href="-.html#cb2-3"></a>  <span class="kw">lines</span>(x,i<span class="op">*</span>x,<span class="dt">type =</span> <span class="st">&#39;l&#39;</span>,<span class="dt">col=</span><span class="kw">adjustcolor</span>(<span class="kw">palette</span>()[i], <span class="dt">alpha.f =</span> <span class="fl">0.3</span>))</span>
+<span id="cb2-4"><a href="-.html#cb2-4"></a>}</span></code></pre></div>
+<p><img src="Notes-in-statistics-and-computing_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<div id="图例" class="section level2">
+<h2><span class="header-section-number">7.1</span> 图例：</h2>
+<p>legend()</p>
+<p>第一个也可以用“topright”这种.</p>
+<p>legend(2000,9.5, # places a legend at the appropriate place c(“Health”,”Defense”), # puts text in the legend</p>
+<p>lty=c(1,1), # gives the legend appropriate symbols (lines)</p>
+<p>lwd=c(2.5,2.5),col=c(“blue”,”red”)) # gives the legend lines the correct color and width</p>
+<p>我的样例：
+legend(“topright”, # places a legend at the appropriate place
+c(“Bayesian estimation”,“Sample Covariance”,“jmcmfit”), # puts text in the legend
+lty=c(NA,NA,1), # gives the legend appropriate symbols (lines)
+pch=c(1,1,NA),
+lwd=c(1,1,1),
+col=c(“black”,“red”,“black”))</p>
+<p>pch是点的类型，<a href="http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r">具体见这个网址</a></p>
+<p>暂时把图搬过来:</p>
+<p><img src="http://www.sthda.com/sthda/RDoc/figure/graphs/r-plot-pch-symbols-points-in-r.png" /></p>
+<p>lwd是线的宽度
+lty是线的类型，是点的话这就用了NA。</p>
 <ul>
-<li>Initialize k and <span class="math inline">\(\boldsymbol \theta_k\)</span> at iteration <span class="math inline">\(t=1\)</span></li>
-<li>For iteration <span class="math inline">\(t\geq 1\)</span> perform
-<ul>
-<li>Within-model move: with a fixed model k, update the parameters <span class="math inline">\(\boldsymbol \theta_k\)</span> acoording to any MCMC updating scheme</li>
-<li>Between-models move: simultaneously update model indicator k and the parameter <span class="math inline">\(\boldsymbol \theta_k\)</span> according to the general reversible proposal/acceptance mechanism<br />
-</li>
-</ul></li>
-<li>Increment iteration t=t+1. If <span class="math inline">\(t&lt;N\)</span>, go to step 2.</li>
+<li>使用patchwork组合图形：</li>
 </ul>
-<blockquote>
-<p>问题：Within-model move是一个传统的MH move，Between-model move是延拓的MH move，关键是，必须要在本model做一个move，然后再抽model吗？还是说其实只做两个一起抽也是可以的？</p>
-</blockquote>
-</div>
-<div id="application-area" class="section level3">
-<h3><span class="header-section-number">9.1.2</span> Application Area</h3>
-<p><em>Change-point models</em> One of the original application of the reversible jump sampler was in Bayesian change-point problems. Green(2005) analyzed mining disaster count data using a Poisson process with the rate parameter described as a step function with an unknown number and location of steps. Fan and Brooks(2000) applies the reversible jump sampler to model the shape of prehistoric tombs, where the curvature of the dome changes an unknown number of times</p>
-<p><em>Finite mixture models</em>. Mixture models are widely used where each data observation is generated according to some underlying categorical mechanism, which the mechanism is typically unobserved, so there is uncertainty regarding which component of the resulting mixture distribution each data observation was generated from, and uncertainty ober the nuber of mixture components.
-<span class="math display">\[
-f(x|\theta_k)=\sum_{j=1}^k w_jf_j(x|\phi_j)
-\]</span></p>
-<p><em>Variable selection</em> The multi-model setting emerges when attempting to identify the most relevant subsets of predictors, making it a natural candidate for the reversible jump sampler.</p>
-<p><em>Nonparametrics</em> Within Bayesian nonparametrics, many authors have successfully explored the use of the reversible jump sampler as a method to automate the knot selection process when using a pth-order spline model for curve fitting.
-<span class="math display">\[
-f(x)=\alpha_0+\sum_{j=1}^{P}\alpha_j x^j+\sum_{i=1}^k \eta_j(x-\kappa_i)^P_+ 
-\]</span>
-with <span class="math inline">\(x\in[a,b]\)</span></p>
-<p><em>Time series models</em> In the modelling of temporally dependent data, <span class="math inline">\(x_1,...,x_T\)</span>, multiple models naturally arise under uncertainty over the degree of dependence. For example, under a kth-order autoregressive process
-<span class="math display">\[
-X_t=\sum^k_{\tau=1}a_\tau X_{t-\tau}+\epsilon_t
-\]</span>
-with <span class="math inline">\(t=k+1,...,T\)</span></p>
-</div>
-</div>
-<div id="implementation" class="section level2">
-<h2><span class="header-section-number">9.2</span> Implementation</h2>
-<p>In practice, the construction of proposal moves between different models is achieved via the concept of “dimension matching.” Most simply, under a general Bayesian model determination setting, suppose that we are currently in state <span class="math inline">\((k,\theta_k)\)</span> in model <span class="math inline">\(\mathcal M_k\)</span>, and we wish to propose a move to a state <span class="math inline">\((k&#39;,\theta_k&#39;)\)</span> in model <span class="math inline">\(\mathcal M_{k&#39;}\)</span>, which is of a higher dimension, so that <span class="math inline">\(n_{k^{\prime}}&gt;n_{k}\)</span>. In order to “math dimensions” between the two model states, a random vector <span class="math inline">\(\boldsymbol u\)</span> of length <span class="math inline">\(d_{k \rightarrow k^{\prime}}=n_{k^{\prime}}-n_{k}\)</span> is generated from a known density <span class="math inline">\(q_{d_{k \rightarrow k^{\prime}}}(\mathbf{u})\)</span>. The current state <span class="math inline">\(\boldsymbol \theta_k\)</span> and the random vector <span class="math inline">\(\boldsymbol u\)</span> are then mapped to the new state <span class="math inline">\(\boldsymbol{\theta}_{k^{\prime}}^{\prime}=g_{k \rightarrow k^{\prime}}\left(\boldsymbol{\theta}_{k}, \mathbf{u}\right)\)</span> through a one-to-one mapping function <span class="math inline">\(g_{k \rightarrow k^{\prime}} : \mathbb{R}^{n_{k}} \times \mathbb{R}^{d_{k}} \rightarrow \mathbb{R}^{n_{k^{\prime}}}\)</span>. The acceptance probability of this proposal, combined with the joint posterior expression becomes
-<span class="math display">\[
-\alpha\left[\left(k, \theta_{k}\right),\left(k^{\prime}, \theta_{k^{\prime}}^{\prime}\right)\right]=\min \left\{1, \frac{\pi\left(k^{\prime}, \theta_{k^{\prime}}^{\prime} | \mathbf{x}\right) q\left(k^{\prime} \rightarrow k\right)}{\pi\left(k, \theta_{k} | \mathbf{x}\right) q\left(k \rightarrow k^{\prime}\right) q_{d_{k \rightarrow k^{\prime}}}(\mathbf{u})}\left|\frac{\partial g_{k \rightarrow k^{\prime}}\left(\boldsymbol{\theta}_{k}, \mathbf{u}\right)}{\partial\left(\theta_{k}, \mathbf{u}\right)}\right|\right\}
-\]</span></p>
-<p>为了填补缺少的维度，提出一个随机向量<span class="math inline">\(u\)</span>，维度是缺少的维度，来源于一个已知的密度函数<span class="math inline">\(q_{d_{k\rightarrow k&#39;}}(u)\)</span>.(这个密度怎么取？)。然后目前的状态<span class="math inline">\(\theta_k\)</span>和<span class="math inline">\(u\)</span>可以映射到新的状态<span class="math inline">\(\boldsymbol{\theta}_{k^{\prime}}^{\prime}=g_{k \rightarrow k^{\prime}}\left(\boldsymbol{\theta}_{k}, \mathbf{u}\right)\)</span>,通过g这个一一映射，<span class="math inline">\(g_{k \rightarrow k^{\prime}} : \mathbb{R}^{n_{k}} \times \mathbb{R}^{d_{k}} \rightarrow \mathbb{R}^{n_{k^{\prime}}}\)</span>. 然后有接受概率如上。解释，分子就是从新到老的概率，下面是从老到新的概率，因为多了u，所以多一块u的概率，而反过来则没有。
-后面那块则是一一映射g的jacobian矩阵。这一块是来自于因为对<span class="math inline">\(\theta\)</span>做了变换。在detail-balance condition equation那块做积分的时候会用到。</p>
-<p>反过来reverse move的话（从高维move到低维），则有接受概率
-<span class="math display">\[
-\alpha\left[\left(k^{\prime}, \boldsymbol{\theta}_{k^{\prime}}^{\prime}\right),\left(k, \boldsymbol{\theta}_{k}\right)\right]=\alpha\left[\left(k, \boldsymbol{\theta}_{k}\right),\left(k^{\prime}, \boldsymbol{\theta}_{k^{\prime}}^{\prime}\right)\right]^{-1}
-\]</span>
-。</p>
-<p>更一般的，我们可以放宽u长度的条件，也就是让<span class="math inline">\(d_{k \rightarrow k^{\prime}} \geq n_{k^{\prime}}-n_{k}\)</span>. 则在这种情况下，不确定的反向移动可以通过一个<span class="math inline">\(d_{k^{\prime} \rightarrow k}\)</span>-维的向量，<span class="math inline">\(\mathbf{u}^{\prime} \sim q_{d_{k^{\prime} \rightarrow k}}\left(\mathbf{u}^{\prime}\right)\)</span>,使得对应“dimension-match”条件能成立:在同一维度：<span class="math inline">\(n_{k}+d_{k \rightarrow k^{\prime}}=n_{k^{\prime}}+d_{k^{\prime} \rightarrow k}\)</span>.</p>
-<p>则反过来的映射可以写成<span class="math inline">\(\boldsymbol{\theta}_{k}=g_{k^{\prime} \rightarrow k}\left(\boldsymbol{\theta}_{k^{\prime}}^{\prime} \mathbf{u}^{\prime}\right)\)</span> ,使得有<span class="math inline">\(\boldsymbol{\theta}_{k}=g_{k^{\prime} \rightarrow k}\left(g_{k \rightarrow k^{\prime}}\left(\boldsymbol{\theta}_{k}, \mathbf{u}\right), \mathbf{u}^{\prime}\right)\)</span>,以及<span class="math inline">\(\boldsymbol{\theta}_{k^{\prime}}^{\prime}=g_{k \rightarrow k^{\prime}}\left(g_{k^{\prime} \rightarrow k}\left(\boldsymbol{\theta}_{k^{\prime}}^{\prime} \mathbf{u}^{\prime}\right), \mathbf{u}\right)\)</span>.接受概率则可以写成:</p>
-<p><span class="math display">\[
-\alpha\left[\left(k, \theta_{k}\right),\left(k^{\prime}, \theta_{k^{\prime}}^{\prime}\right)\right]=\min \left\{1, \frac{\pi\left(k^{\prime}, \theta_{k^{\prime}} | \mathbf{x}\right) q\left(k^{\prime} \rightarrow k\right) q_{d_{k^{\prime} \rightarrow k}}\left(\mathbf{u}^{\prime}\right)}{\pi\left(k, \theta_{k} | \mathbf{x}\right) q\left(k \rightarrow k^{\prime}\right) q_{d_{k \rightarrow k^{\prime}}}(\mathbf{u})}\left|\frac{\partial g_{k \rightarrow k^{\prime}}\left(\boldsymbol{\theta}_{k}, \mathbf{u}\right)}{\partial\left(\theta_{k}, \mathbf{u}\right)}\right|\right\}
-\]</span></p>
-<blockquote>
-<p>相当于，可以找一个更高维的中间变量，然后一个随机向量u，补齐各状态与中间变量之间的差异。这样就可以避免高维到低维，低维到高维的不对等关系，使得算法表达形式能统一。</p>
-</blockquote>
-<div id="example-dimension-matching" class="section level3">
-<h3><span class="header-section-number">9.2.1</span> Example Dimension Matching</h3>
-<p>Example in Green(1995) and Brooks(1998). Suppose that model <span class="math inline">\(\mathcal M_1\)</span> has states (<span class="math inline">\(k=1,\theta_1\in \mathbb R^1\)</span>) and model <span class="math inline">\(\mathcal M_2\)</span> with states (<span class="math inline">\(k=2,\theta_2\in \mathbb R^2\)</span>). So under this setting, <span class="math inline">\((1,\theta^*)\)</span> denote the current state in <span class="math inline">\(\mathcal M_1\)</span> and <span class="math inline">\((2,(\theta^{(1)},\theta^{(2)}))\)</span> denote the proposed state in <span class="math inline">\(\mathcal M_2\)</span>.
-Under dimension matching, we might generate a random scalar u, and let <span class="math inline">\(\theta^{(1)}=\theta^{*}+u \text { and } \theta^{(2)}=\theta^{*}-u\)</span>, with the reverse move given deterministically by <span class="math inline">\(\theta^{*}=\frac{1}{2}\left(\theta^{(1)}+\theta^{(2)}\right)\)</span>.</p>
-<p>所以就把1维和2维的统一在了一起，并且给定了转换表达式。</p>
-</div>
-<div id="example-moment-matching-in-a-finite-mixture-of-univariate-normals" class="section level3">
-<h3><span class="header-section-number">9.2.2</span> Example: Moment Matching in a Finite Mixture of Univariate Normals</h3>
-<p>如果模型是有限个单变量正态分布的混合，观测数据,<span class="math inline">\(x\)</span>,则服从混合正态分布,每块是<span class="math inline">\(N(\mu_j,\sigma_j)\)</span>. 模型之间的移动，Richardson and Green(1997) 实现了一个分割和合并的策略。</p>
-<p>当两个正态<span class="math inline">\(j_1\)</span>和<span class="math inline">\(j_2\)</span> 合并成一个,<span class="math inline">\(j^*\)</span>,有如下确定的映射，同时保持了0，1，2阶的矩。
-<span class="math display">\[
-\begin{aligned} w_{j^{*}} &amp;=w_{j_{1}}+w_{j_{2}} \\ w_{j^{*}} \mu_{j^{*}} &amp;=w_{j_{1}} \mu_{j_{1}}+w_{j_{2}} \mu_{j_{2}} \\ w_{j^{*}}\left(\mu_{j^{*}}^{2}+\sigma_{j^{*}}^{2}\right) &amp;=w_{j_{1}}\left(\mu_{j 1}^{2}+\sigma_{j_{1}}^{2}\right)+w_{j_{2}}\left(\mu_{j_{2}}^{2}+\sigma_{j_{2}}^{2}\right) \end{aligned}
-\]</span>
-分割则是
-<span class="math display">\[
-\begin{aligned} w_{j_{1}} &amp;=w_{j^{*}} * u_{1}, \quad w_{j_{2}}=w_{j^{*}} *\left(1-u_{1}\right) \\ \mu_{j_{1}} &amp;=\mu_{j^{*}}-u_{2} \sigma_{j^{*}} \sqrt{\frac{w_{j_{2}}}{w_{j_{1}}}} \\ \mu_{j_{2}} &amp;=\mu_{j^{*}}+u_{2} \sigma_{j^{*}} \sqrt{\frac{w_{j_{1}}}{w_{j_{2}}}} \\ \sigma_{j_{1}}^{2} &amp;=u_{3}\left(1-u_{2}^{2}\right) \sigma_{j^{*}}^{2} \frac{w_{j^{*}}}{w_{j_{2}}} \\ \sigma_{j_{2}}^{2} &amp;=\left(1-u_{3}\right)\left(1-u_{2}^{2}\right) \sigma_{j^{*}}^{2} \frac{w_{j^{*}}}{w_{j_{2}}} \end{aligned}
-\]</span>
-同时随机量<span class="math inline">\(u_{1}, u_{2} \sim \operatorname{Beta}(2,2)\)</span>,以及<span class="math inline">\(u_{3} \sim \operatorname{Beta}(1,1)\)</span>。这样满足了维度相同，然后能算分割步的接受概率和合并的接受概率。</p>
-</div>
-</div>
-<div id="mapping-functions-and-proposal-distribution" class="section level2">
-<h2><span class="header-section-number">9.3</span> Mapping Functions and Proposal Distribution</h2>
-<p>虽然维度匹配的想法很简单，但是实现却很复杂。因为存在一个任意的映射函数<span class="math inline">\(g_{k \rightarrow k^{\prime}}\)</span> 和proposal distribution <span class="math inline">\(q_{d_{k \rightarrow k^{\prime}}}(\mathbf{u})\)</span>。好的映射很自然的能提高采样的效率，体现在模型之间跳的接受率和chain本身的收敛。难点在于即是是很简单的nested model，也很难定义一个好的关系。模型之间的自由度只由<span class="math inline">\(q_{d_{k \rightarrow k^{\prime}}}(\mathbf{u})\)</span>决定。然而没有一个很显然的准则选择好的q。对比模型内的选择，随机游走Mh算法可能对应任意的接受概率，一个小的游走对应高的接受概率，大步游走则接受概率会比较低。可以借鉴这个“local”的想法到模型空间<span class="math inline">\(k\in\mathcal K\)</span>中。proposal来自于<span class="math inline">\(\theta_k\)</span> 在模型<span class="math inline">\(\mathcal M_k\)</span>比起另外一个<span class="math inline">\(\theta_{k&#39;}\)</span>来自于<span class="math inline">\(\mathcal M_{k&#39;}\)</span>会有更高的接受率，如果数据对应的likelihood差别不大的话。比如说Richardson 和Green(1997)提出的“birth/death” and “split.merge”映射,在切换模型的时候尽量切换likelihood差不多的模型。但是这并不容易实现。
-尽管如此，RjMCMC的采样效果还是很差。</p>
-<blockquote>
-<p>所以要用的时候还是从最简单的birth-dead proposal和merge-split proposal开始看起吧。</p>
-</blockquote>
-<div id="marginalization-and-augmentation" class="section level3">
-<h3><span class="header-section-number">9.3.1</span> Marginalization and augmentation:</h3>
-<p>Reduced- or fixed- dimensional sampler may be substituted because reversible jump MCMC would be heaby-handed.
-In lower dimensions, the reversible jump sampler is often easier to implement, as the problems associated with mapping function specification are conceptually simpler to resolve.</p>
-<p><a href="Example:Marginalization" class="uri">Example:Marginalization</a> in Variable Selection.</p>
-<p>用辅助变量，则能把parameter变成固定维数的问题。Under certain prior specifications for the regression coefficient <span class="math inline">\(\beta\)</span> and error variance <span class="math inline">\(\sigma^2\)</span>，the <span class="math inline">\(\beta\)</span> coefficients can be analytically integrated out of the posterior. A gibbs sampler directly on model space is then available for <span class="math inline">\(\gamma\)</span>。也就是说主要关注选取哪个模型的问题的话可以把<span class="math inline">\(\beta\)</span>先积掉然后研究模型问题，等选定模型再估<span class="math inline">\(\beta\)</span>?</p>
-<p><a href="Example:Marginalization" class="uri">Example:Marginalization</a> in Finite Mixture of Multivariate Normal Models.</p>
-<p>在Clusting问题里面，待估参数不是那么重要，所以Tadesse et al. (2005)提出来选取特定的先验，正态的系数可以积掉，然后对分几类做Reversible Jump，这样问题就被大大简化了。</p>
-<p>细节等要用这块再说。</p>
-</div>
-<div id="centering-and-order-methods" class="section level3">
-<h3><span class="header-section-number">9.3.2</span> Centering and Order Methods</h3>
-<p>Brooks et al.(2003c) introduce a class of methods to achieve the automatic scaling of the proposal density <span class="math inline">\(q_{d_{k\rightarrow k&#39;}}(u)\)</span>, based on “local” move proposal distribution, which are centered around the point of equal likelihood values under current and proposed models.</p>
-<blockquote>
-<p>这块以后再看好了。。。从目前的文献来看，birth-death 和 split-merge 策略已经足够很多了？等要用再来看后来这个auto-adaptive的方法</p>
-</blockquote>
+<p><a href="https://d.cosx.org/d/421267-ggplot-patchwork">来自于</a>, <a href="https://github.com/thomasp85/patchwork">官方文档</a></p>
 
-</div>
 </div>
 </div>
             </section>
@@ -493,8 +401,8 @@ In lower dimensions, the reversible jump sampler is often easier to implement, a
           </div>
         </div>
       </div>
-<a href="basicmcmc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="optimal-proposal-distributions-and-adaptive-mcmc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="longitudinal-data-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="basicmcmc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
