@@ -426,9 +426,29 @@ n^{-1} \log \left\{f\left(\boldsymbol{X}_{n} | \boldsymbol{\theta}\right) \pi(\b
 <div id="matrix-inverse" class="section level2">
 <h2><span class="header-section-number">3.7</span> Matrix inverse</h2>
 <p><span class="math display">\[
-(A+B)^{-1}=A^{-1}-A^{-1} B(A+B)^{-1}
+(A+D)^{-1}=D^{-1}\left(I+A D^{-1}\right)^{-1}
+\]</span></p>
+<p>If <span class="math inline">\(n=k\)</span> and <span class="math inline">\(U=V=I_{n}\)</span> is the identity matrix, then
+<span class="math display">\[
+\begin{aligned}
+(A+B)^{-1} &amp;=A^{-1}-A^{-1}\left(B^{-1}+A^{-1}\right)^{-1} A^{-1} \\
+&amp;=A^{-1}-A^{-1}\left(A B^{-1}+I\right)^{-1}
+\end{aligned}
 \]</span>
-Woodbury matrix identity
+Continuing with the merging of the terms of the far right-hand side of the above equation results in Hua’s identity
+<span class="math display">\[
+(A+B)^{-1}=A^{-1}-\left(A+A B^{-1} A\right)^{-1}
+\]</span>
+Another useful form of the same identity is
+<span class="math display">\[
+(A-B)^{-1}=A^{-1}+A^{-1} B(A-B)^{-1}
+\]</span>
+which has a recursive structure that yields
+<span class="math display">\[
+(A-B)^{-1}=\sum_{k=0}^{\infty}\left(A^{-1} B\right)^{k} A^{-1}
+\]</span>
+This form can be used in perturbative expansions where <span class="math inline">\(B\)</span> is a perturbation of <span class="math inline">\(A\)</span>.</p>
+<p>Woodbury matrix identity
 <span class="math display">\[
 (A+U C V)^{-1}=A^{-1}-A^{-1} U\left(C^{-1}+V A^{-1} U\right)^{-1} V A^{-1}
 \]</span></p>
