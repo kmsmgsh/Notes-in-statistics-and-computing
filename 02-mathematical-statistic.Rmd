@@ -79,5 +79,14 @@ $$
 这个形式和大数定律联系在哪里。
 
 
+## Matrix inverse
+$$
+(A+B)^{-1}=A^{-1}-A^{-1} B(A+B)^{-1}
+$$
+Woodbury matrix identity
+$$
+(A+U C V)^{-1}=A^{-1}-A^{-1} U\left(C^{-1}+V A^{-1} U\right)^{-1} V A^{-1}
+$$
+
 
 

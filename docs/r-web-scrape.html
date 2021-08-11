@@ -24,7 +24,7 @@
 <meta name="author" content="Jiaming Shen" />
 
 
-<meta name="date" content="2021-01-15" />
+<meta name="date" content="2021-08-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -144,6 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.4" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#vector-to-diagonal-matrix"><i class="fa fa-check"></i><b>3.4</b> Vector to diagonal matrix:</a></li>
 <li class="chapter" data-level="3.5" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#gaussian-integral-trick"><i class="fa fa-check"></i><b>3.5</b> Gaussian Integral Trick</a></li>
 <li class="chapter" data-level="3.6" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#asymptotic-issues"><i class="fa fa-check"></i><b>3.6</b> Asymptotic issues</a></li>
+<li class="chapter" data-level="3.7" data-path="mathematical-statistic-trick.html"><a href="mathematical-statistic-trick.html#matrix-inverse"><i class="fa fa-check"></i><b>3.7</b> Matrix inverse</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="general-notes.html"><a href="general-notes.html"><i class="fa fa-check"></i><b>4</b> General Notes</a><ul>
 <li class="chapter" data-level="4.1" data-path="general-notes.html"><a href="general-notes.html#台湾教授彭明辉教授的研究生手册"><i class="fa fa-check"></i><b>4.1</b> 台湾教授彭明辉教授的研究生手册</a><ul>
@@ -356,35 +357,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="r-web-scrape" class="section level1">
 <h1><span class="header-section-number">Chapter 17</span> R web scrape</h1>
 <p>Web scrape用</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="r-web-scrape.html#cb27-1"></a><span class="kw">library</span>(rvest)</span>
-<span id="cb27-2"><a href="r-web-scrape.html#cb27-2"></a>lego_movie &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;http://www.imdb.com/title/tt1490017/&quot;</span>)</span>
-<span id="cb27-3"><a href="r-web-scrape.html#cb27-3"></a></span>
-<span id="cb27-4"><a href="r-web-scrape.html#cb27-4"></a>rating &lt;-<span class="st"> </span>lego_movie <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb27-5"><a href="r-web-scrape.html#cb27-5"></a><span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;strong span&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 这个&quot;strong span&quot;是指什么意思？</span></span>
-<span id="cb27-6"><a href="r-web-scrape.html#cb27-6"></a><span class="st">  </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span></span>
-<span id="cb27-7"><a href="r-web-scrape.html#cb27-7"></a><span class="st">  </span><span class="kw">as.numeric</span>()</span>
-<span id="cb27-8"><a href="r-web-scrape.html#cb27-8"></a>rating</span></code></pre></div>
-<pre><code>## [1] 7.7</code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="r-web-scrape.html#cb29-1"></a><span class="co">#&gt; [1] 7.8</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="r-web-scrape.html#cb27-1"></a><span class="kw">library</span>(rvest)</span></code></pre></div>
+<pre><code>## Loading required package: xml2</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="r-web-scrape.html#cb29-1"></a>lego_movie &lt;-<span class="st"> </span><span class="kw">read_html</span>(<span class="st">&quot;http://www.imdb.com/title/tt1490017/&quot;</span>)</span>
+<span id="cb29-2"><a href="r-web-scrape.html#cb29-2"></a></span>
+<span id="cb29-3"><a href="r-web-scrape.html#cb29-3"></a>rating &lt;-<span class="st"> </span>lego_movie <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb29-4"><a href="r-web-scrape.html#cb29-4"></a><span class="st">  </span><span class="kw">html_nodes</span>(<span class="st">&quot;strong span&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># 这个&quot;strong span&quot;是指什么意思？</span></span>
+<span id="cb29-5"><a href="r-web-scrape.html#cb29-5"></a><span class="st">  </span><span class="kw">html_text</span>() <span class="op">%&gt;%</span></span>
+<span id="cb29-6"><a href="r-web-scrape.html#cb29-6"></a><span class="st">  </span><span class="kw">as.numeric</span>()</span>
+<span id="cb29-7"><a href="r-web-scrape.html#cb29-7"></a>rating</span></code></pre></div>
+<pre><code>## numeric(0)</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="r-web-scrape.html#cb31-1"></a><span class="co">#&gt; [1] 7.8</span></span></code></pre></div>
 <p>上述的问题回答是由于：</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="r-web-scrape.html#cb30-1"></a>knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="kw">rep</span>(<span class="st">&quot;pic/scrape_2.png&quot;</span>, <span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="r-web-scrape.html#cb32-1"></a>knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="kw">rep</span>(<span class="st">&quot;pic/scrape_2.png&quot;</span>, <span class="dv">1</span>))</span></code></pre></div>
 <p>含有7.8的html元素就是strong 下面的span的元素。</p>
 <p>根据这篇<a href="https://www.datacamp.com/community/tutorials/r-web-scraping-rvest">tutorial</a>
 提取class=""中的元素可以用如下代码</p>
 <pre><code> html_nodes(&#39;.pagination-page&#39;)</code></pre>
 <p>学这段写一下：</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="r-web-scrape.html#cb32-1"></a>a=<span class="kw">read_html</span>(<span class="st">&quot;https://d.cosx.org/d/420739-r&quot;</span>)</span>
-<span id="cb32-2"><a href="r-web-scrape.html#cb32-2"></a><span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostMention&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="r-web-scrape.html#cb34-1"></a>a=<span class="kw">read_html</span>(<span class="st">&quot;https://d.cosx.org/d/420739-r&quot;</span>)</span>
+<span id="cb34-2"><a href="r-web-scrape.html#cb34-2"></a><span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostMention&quot;</span>)</span></code></pre></div>
 <p>就得到分开的有PostMention类的元素</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="r-web-scrape.html#cb33-1"></a>PostMentionUser=<span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostMention&quot;</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</span>
-<span id="cb33-2"><a href="r-web-scrape.html#cb33-2"></a><span class="kw">head</span>(PostMentionUser)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="r-web-scrape.html#cb35-1"></a>PostMentionUser=<span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostMention&quot;</span>)<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">html_text</span>()</span>
+<span id="cb35-2"><a href="r-web-scrape.html#cb35-2"></a><span class="kw">head</span>(PostMentionUser)</span></code></pre></div>
 <p>得到PostMention里面的元素，<a href="mailto:应该是回复中带@的部分" class="email">应该是回复中带@的部分</a>？</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="r-web-scrape.html#cb34-1"></a><span class="kw">html_nodes</span>(a,<span class="st">&quot;.Post-body&quot;</span>)<span class="op">%&gt;%</span></span>
-<span id="cb34-2"><a href="r-web-scrape.html#cb34-2"></a><span class="st">  </span><span class="kw">html_text</span>()-&gt;body</span>
-<span id="cb34-3"><a href="r-web-scrape.html#cb34-3"></a><span class="kw">head</span>(body)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="r-web-scrape.html#cb36-1"></a><span class="kw">html_nodes</span>(a,<span class="st">&quot;.Post-body&quot;</span>)<span class="op">%&gt;%</span></span>
+<span id="cb36-2"><a href="r-web-scrape.html#cb36-2"></a><span class="st">  </span><span class="kw">html_text</span>()-&gt;body</span>
+<span id="cb36-3"><a href="r-web-scrape.html#cb36-3"></a><span class="kw">head</span>(body)</span></code></pre></div>
 <p>就得到回帖的内容，</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="r-web-scrape.html#cb35-1"></a><span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostUser&quot;</span>)</span>
-<span id="cb35-2"><a href="r-web-scrape.html#cb35-2"></a><span class="kw">html_nodes</span>(a,<span class="st">&quot;.username&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="r-web-scrape.html#cb37-1"></a><span class="kw">html_nodes</span>(a,<span class="st">&quot;.PostUser&quot;</span>)</span>
+<span id="cb37-2"><a href="r-web-scrape.html#cb37-2"></a><span class="kw">html_nodes</span>(a,<span class="st">&quot;.username&quot;</span>)</span></code></pre></div>
 <p>但是这个咋就不对。。。。奇怪。</p>
 <p>是因为元素叠起来的缘故吗？应该不是奇奇怪怪的，明天再看。</p>
 
