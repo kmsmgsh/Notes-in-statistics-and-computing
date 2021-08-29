@@ -24,7 +24,7 @@
 <meta name="author" content="Jiaming Shen" />
 
 
-<meta name="date" content="2021-08-11" />
+<meta name="date" content="2021-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -181,6 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="-.html"><a href="-.html"><i class="fa fa-check"></i><b>7</b> 统计图形笔记</a><ul>
 <li class="chapter" data-level="7.1" data-path="-.html"><a href="-.html#图例"><i class="fa fa-check"></i><b>7.1</b> 图例：</a></li>
+<li class="chapter" data-level="7.2" data-path="-.html"><a href="-.html#多图参数"><i class="fa fa-check"></i><b>7.2</b> 多图参数</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>8</b> BasicMCMC</a><ul>
 <li class="chapter" data-level="8.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>8.1</b> Metropolis-Hastings Update</a><ul>
@@ -378,13 +379,13 @@ That is, the state after the update is <span class="math inline">\(y\)</span> wi
 <p>Propose a move, how? Care <span class="math inline">\(h\)</span> is the stationary distribution(what we want), the <span class="math inline">\(q(\cdot|\cdot)\)</span> the proposal distribution.</p>
 </blockquote>
 <p>Update session:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="basicmcmc.html#cb3-1"></a><span class="cf">if</span> (<span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span>MH_ratio){</span>
-<span id="cb3-2"><a href="basicmcmc.html#cb3-2"></a>  x=y</span>
-<span id="cb3-3"><a href="basicmcmc.html#cb3-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="basicmcmc.html#cb5-1"></a><span class="cf">if</span> (<span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span>MH_ratio){</span>
+<span id="cb5-2"><a href="basicmcmc.html#cb5-2"></a>  x=y</span>
+<span id="cb5-3"><a href="basicmcmc.html#cb5-3"></a>}</span></code></pre></div>
 <p>or in log-scale</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="basicmcmc.html#cb4-1"></a><span class="cf">if</span> (log_MH_raio<span class="op">&gt;=</span><span class="dv">0</span><span class="op">||</span><span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span><span class="kw">exp</span>(log_MH_ratio)){</span>
-<span id="cb4-2"><a href="basicmcmc.html#cb4-2"></a>  x=y</span>
-<span id="cb4-3"><a href="basicmcmc.html#cb4-3"></a>  }</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="basicmcmc.html#cb6-1"></a><span class="cf">if</span> (log_MH_raio<span class="op">&gt;=</span><span class="dv">0</span><span class="op">||</span><span class="kw">runif</span>(<span class="dv">1</span>)<span class="op">&lt;</span><span class="kw">exp</span>(log_MH_ratio)){</span>
+<span id="cb6-2"><a href="basicmcmc.html#cb6-2"></a>  x=y</span>
+<span id="cb6-3"><a href="basicmcmc.html#cb6-3"></a>  }</span></code></pre></div>
 <p>The Metropolis-Hastings update is reversible with respect to <span class="math inline">\(h\)</span>,
 Assume <span class="math inline">\(X_n\)</span> is the current state and <span class="math inline">\(Y_n\)</span> is the proposal, we have <span class="math inline">\(X_n=X_{n+1}\)</span> whenever the proposal is rejected. The distribution of <span class="math inline">\((X_n,X_{n+1})\)</span> given rejection is exchangeable. 相当于恒等映射的可逆的，当然没问题。
 Hence, it only remains to be shown that <span class="math inline">\((X_n,Y_n)\)</span> is exchangeable given acceptance. We need to show that</p>
@@ -535,10 +536,10 @@ p(\tau | \mu, \mathbf{Y}) \propto p(\mathbf{Y}, \mu, \tau)=\tau^{n / 2} \exp \le
 <div id="a-metropolis-example" class="section level2">
 <h2><span class="header-section-number">8.4</span> A Metropolis Example</h2>
 <p>Frequency logistic regression.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="basicmcmc.html#cb5-1"></a><span class="kw">library</span>(mcmc)</span>
-<span id="cb5-2"><a href="basicmcmc.html#cb5-2"></a><span class="kw">data</span>(<span class="st">&quot;logit&quot;</span>)</span>
-<span id="cb5-3"><a href="basicmcmc.html#cb5-3"></a>out=<span class="kw">glm</span>(y<span class="op">~</span><span class="st"> </span>x1<span class="op">+</span>x2<span class="op">+</span>x3<span class="op">+</span>x4,<span class="dt">data=</span>logit,<span class="dt">family=</span><span class="kw">binomial</span>(),<span class="dt">x=</span><span class="ot">TRUE</span>)</span>
-<span id="cb5-4"><a href="basicmcmc.html#cb5-4"></a><span class="kw">summary</span>(out)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="basicmcmc.html#cb7-1"></a><span class="kw">library</span>(mcmc)</span>
+<span id="cb7-2"><a href="basicmcmc.html#cb7-2"></a><span class="kw">data</span>(<span class="st">&quot;logit&quot;</span>)</span>
+<span id="cb7-3"><a href="basicmcmc.html#cb7-3"></a>out=<span class="kw">glm</span>(y<span class="op">~</span><span class="st"> </span>x1<span class="op">+</span>x2<span class="op">+</span>x3<span class="op">+</span>x4,<span class="dt">data=</span>logit,<span class="dt">family=</span><span class="kw">binomial</span>(),<span class="dt">x=</span><span class="ot">TRUE</span>)</span>
+<span id="cb7-4"><a href="basicmcmc.html#cb7-4"></a><span class="kw">summary</span>(out)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = y ~ x1 + x2 + x3 + x4, family = binomial(), data = logit, 
@@ -566,18 +567,18 @@ p(\tau | \mu, \mathbf{Y}) \propto p(\mathbf{Y}, \mu, \tau)=\tau^{n / 2} \exp \le
 ## 
 ## Number of Fisher Scoring iterations: 6</code></pre>
 <p>Do this in bayesian analysis where the prior for coefficients are <span class="math inline">\(N(0,2)\)</span>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="basicmcmc.html#cb7-1"></a>x &lt;-<span class="st"> </span>out<span class="op">$</span>x </span>
-<span id="cb7-2"><a href="basicmcmc.html#cb7-2"></a>y &lt;-<span class="st"> </span>out<span class="op">$</span>y</span>
-<span id="cb7-3"><a href="basicmcmc.html#cb7-3"></a>lupost &lt;-<span class="st"> </span><span class="cf">function</span>(beta, x, y, ...) { </span>
-<span id="cb7-4"><a href="basicmcmc.html#cb7-4"></a>  eta &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(x <span class="op">%*%</span><span class="st"> </span>beta)</span>
-<span id="cb7-5"><a href="basicmcmc.html#cb7-5"></a>  logp &lt;-<span class="st"> </span><span class="kw">ifelse</span>(eta <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, eta <span class="op">-</span><span class="st"> </span><span class="kw">log1p</span>(<span class="kw">exp</span>(eta)),<span class="op">-</span><span class="st"> </span><span class="kw">log1p</span> (<span class="kw">exp</span>(<span class="op">-</span><span class="st"> </span>eta))) </span>
-<span id="cb7-6"><a href="basicmcmc.html#cb7-6"></a>  logq &lt;-<span class="st"> </span><span class="kw">ifelse</span>(eta <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="op">-</span><span class="st"> </span><span class="kw">log1p</span>(<span class="kw">exp</span>(eta)), <span class="op">-</span><span class="st"> </span>eta <span class="op">-</span><span class="st"> </span><span class="kw">log1p</span> (<span class="kw">exp</span>(<span class="op">-</span><span class="st"> </span>eta))) </span>
-<span id="cb7-7"><a href="basicmcmc.html#cb7-7"></a>  logl &lt;-<span class="st"> </span><span class="kw">sum</span>(logp[y <span class="op">==</span><span class="st"> </span><span class="dv">1</span>]) <span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(logq[y <span class="op">==</span><span class="st"> </span><span class="dv">0</span>]) </span>
-<span id="cb7-8"><a href="basicmcmc.html#cb7-8"></a>  <span class="kw">return</span>(logl <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(beta<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="dv">8</span>)</span>
-<span id="cb7-9"><a href="basicmcmc.html#cb7-9"></a>}</span>
-<span id="cb7-10"><a href="basicmcmc.html#cb7-10"></a>beta.init &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">coefficients</span>(out))</span>
-<span id="cb7-11"><a href="basicmcmc.html#cb7-11"></a>out &lt;-<span class="st"> </span><span class="kw">metrop</span>(lupost, beta.init, <span class="fl">1e3</span>, <span class="dt">x =</span> x, <span class="dt">y =</span> y)</span>
-<span id="cb7-12"><a href="basicmcmc.html#cb7-12"></a>out2=<span class="kw">metrop</span>(out,<span class="dt">x=</span>x,<span class="dt">y=</span>y)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="basicmcmc.html#cb9-1"></a>x &lt;-<span class="st"> </span>out<span class="op">$</span>x </span>
+<span id="cb9-2"><a href="basicmcmc.html#cb9-2"></a>y &lt;-<span class="st"> </span>out<span class="op">$</span>y</span>
+<span id="cb9-3"><a href="basicmcmc.html#cb9-3"></a>lupost &lt;-<span class="st"> </span><span class="cf">function</span>(beta, x, y, ...) { </span>
+<span id="cb9-4"><a href="basicmcmc.html#cb9-4"></a>  eta &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(x <span class="op">%*%</span><span class="st"> </span>beta)</span>
+<span id="cb9-5"><a href="basicmcmc.html#cb9-5"></a>  logp &lt;-<span class="st"> </span><span class="kw">ifelse</span>(eta <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, eta <span class="op">-</span><span class="st"> </span><span class="kw">log1p</span>(<span class="kw">exp</span>(eta)),<span class="op">-</span><span class="st"> </span><span class="kw">log1p</span> (<span class="kw">exp</span>(<span class="op">-</span><span class="st"> </span>eta))) </span>
+<span id="cb9-6"><a href="basicmcmc.html#cb9-6"></a>  logq &lt;-<span class="st"> </span><span class="kw">ifelse</span>(eta <span class="op">&lt;</span><span class="st"> </span><span class="dv">0</span>, <span class="op">-</span><span class="st"> </span><span class="kw">log1p</span>(<span class="kw">exp</span>(eta)), <span class="op">-</span><span class="st"> </span>eta <span class="op">-</span><span class="st"> </span><span class="kw">log1p</span> (<span class="kw">exp</span>(<span class="op">-</span><span class="st"> </span>eta))) </span>
+<span id="cb9-7"><a href="basicmcmc.html#cb9-7"></a>  logl &lt;-<span class="st"> </span><span class="kw">sum</span>(logp[y <span class="op">==</span><span class="st"> </span><span class="dv">1</span>]) <span class="op">+</span><span class="st"> </span><span class="kw">sum</span>(logq[y <span class="op">==</span><span class="st"> </span><span class="dv">0</span>]) </span>
+<span id="cb9-8"><a href="basicmcmc.html#cb9-8"></a>  <span class="kw">return</span>(logl <span class="op">-</span><span class="st"> </span><span class="kw">sum</span>(beta<span class="op">^</span><span class="dv">2</span>) <span class="op">/</span><span class="st"> </span><span class="dv">8</span>)</span>
+<span id="cb9-9"><a href="basicmcmc.html#cb9-9"></a>}</span>
+<span id="cb9-10"><a href="basicmcmc.html#cb9-10"></a>beta.init &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">coefficients</span>(out))</span>
+<span id="cb9-11"><a href="basicmcmc.html#cb9-11"></a>out &lt;-<span class="st"> </span><span class="kw">metrop</span>(lupost, beta.init, <span class="fl">1e3</span>, <span class="dt">x =</span> x, <span class="dt">y =</span> y)</span>
+<span id="cb9-12"><a href="basicmcmc.html#cb9-12"></a>out2=<span class="kw">metrop</span>(out,<span class="dt">x=</span>x,<span class="dt">y=</span>y)</span></code></pre></div>
 <p>The functions in the mcmc package are designed so that if given the output of a preceding run as their first argument, they continue the run of the Markov chain where the other run left off.</p>
 <p>It is generally accepted that an acceptance rate of about 20% is right.</p>
 <p>Although this magic number can fail, but this is good for most cases, and easy to understand and implement for beginners.</p>

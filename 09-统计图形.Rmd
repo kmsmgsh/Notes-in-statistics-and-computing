@@ -60,11 +60,19 @@ lty是线的类型，是点的话这就用了NA。
 [来自于](https://d.cosx.org/d/421267-ggplot-patchwork), [官方文档](https://github.com/thomasp85/patchwork)
 
 
+## 多图参数
 
+多个图排列
 
+```{r}
+par(mfrow=c(2,2))
+```
 
+图之间的margin
 
-
+```{r}
+par(mar=rep(2.5,4))
+```
 
 
 

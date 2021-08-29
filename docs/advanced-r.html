@@ -24,7 +24,7 @@
 <meta name="author" content="Jiaming Shen" />
 
 
-<meta name="date" content="2021-08-11" />
+<meta name="date" content="2021-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -181,6 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="-.html"><a href="-.html"><i class="fa fa-check"></i><b>7</b> 统计图形笔记</a><ul>
 <li class="chapter" data-level="7.1" data-path="-.html"><a href="-.html#图例"><i class="fa fa-check"></i><b>7.1</b> 图例：</a></li>
+<li class="chapter" data-level="7.2" data-path="-.html"><a href="-.html#多图参数"><i class="fa fa-check"></i><b>7.2</b> 多图参数</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>8</b> BasicMCMC</a><ul>
 <li class="chapter" data-level="8.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>8.1</b> Metropolis-Hastings Update</a><ul>
@@ -372,18 +373,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">13.0.1.1</span> Atomic vectors</h4>
 <p>有四类atomic vectors我将会仔细的讨论：logical, integer, double(也叫numeric), 和character. 有两类稀有的类型不会深入讨论：complex 和 raw。
 Atomic vectors经常使用c()进行创建，表示combine:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="advanced-r.html#cb9-1"></a>db1_var=<span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">2.5</span>,<span class="fl">4.5</span>)</span>
-<span id="cb9-2"><a href="advanced-r.html#cb9-2"></a><span class="co"># L表示整数，因为r默认数字的结构为numeric（double）</span></span>
-<span id="cb9-3"><a href="advanced-r.html#cb9-3"></a>int_var=<span class="kw">c</span>(1L,6L,10L)</span>
-<span id="cb9-4"><a href="advanced-r.html#cb9-4"></a><span class="co">#使用TRUE和FALSE(或者 T 和 F)用来创建一个逻辑vectors</span></span>
-<span id="cb9-5"><a href="advanced-r.html#cb9-5"></a>log_var=<span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,T,F)</span>
-<span id="cb9-6"><a href="advanced-r.html#cb9-6"></a>chr_var=<span class="kw">c</span>(<span class="st">&quot;these are&quot;</span>,<span class="st">&quot;some strings&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="advanced-r.html#cb11-1"></a>db1_var=<span class="kw">c</span>(<span class="dv">1</span>,<span class="fl">2.5</span>,<span class="fl">4.5</span>)</span>
+<span id="cb11-2"><a href="advanced-r.html#cb11-2"></a><span class="co"># L表示整数，因为r默认数字的结构为numeric（double）</span></span>
+<span id="cb11-3"><a href="advanced-r.html#cb11-3"></a>int_var=<span class="kw">c</span>(1L,6L,10L)</span>
+<span id="cb11-4"><a href="advanced-r.html#cb11-4"></a><span class="co">#使用TRUE和FALSE(或者 T 和 F)用来创建一个逻辑vectors</span></span>
+<span id="cb11-5"><a href="advanced-r.html#cb11-5"></a>log_var=<span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,T,F)</span>
+<span id="cb11-6"><a href="advanced-r.html#cb11-6"></a>chr_var=<span class="kw">c</span>(<span class="st">&quot;these are&quot;</span>,<span class="st">&quot;some strings&quot;</span>)</span></code></pre></div>
 <p>Atomic vector总是扁平的，甚至你用堆叠的<code>c()</code>
 Atomic vectors are always flat, even if you nect <code>c()</code>’s:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="advanced-r.html#cb10-1"></a><span class="kw">c</span>(<span class="dv">1</span>,<span class="kw">c</span>(<span class="dv">2</span>,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="advanced-r.html#cb12-1"></a><span class="kw">c</span>(<span class="dv">1</span>,<span class="kw">c</span>(<span class="dv">2</span>,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>)))</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="advanced-r.html#cb12-1"></a><span class="co">#和这个一样</span></span>
-<span id="cb12-2"><a href="advanced-r.html#cb12-2"></a><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="advanced-r.html#cb14-1"></a><span class="co">#和这个一样</span></span>
+<span id="cb14-2"><a href="advanced-r.html#cb14-2"></a><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</span></code></pre></div>
 <pre><code>## [1] 1 2 3 4</code></pre>
 </div>
 </div>
@@ -396,7 +397,7 @@ Atomic vectors are always flat, even if you nect <code>c()</code>’s:</p>
 <h3><span class="header-section-number">13.0.3</span> Coercion</h3>
 <p>所有的atomic vector的元素必须是一种类型，所以如果你尝试组合不同类型的话，这些数据会被coerced 成为最复杂的那种类型，序是：logical,integer,double和character.</p>
 <p>比如说，组合一个character和一个integer可以得到一个character:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="advanced-r.html#cb14-1"></a><span class="kw">str</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="dv">1</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="advanced-r.html#cb16-1"></a><span class="kw">str</span>(<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>,<span class="dv">1</span>))</span></code></pre></div>
 <pre><code>##  chr [1:2] &quot;a&quot; &quot;1&quot;</code></pre>
 <p>所以这里coerced应该是强制转换的意思。一个逻辑vector强制转换成integer或者double的时候TRUE变成1，FALSE变成0.一个常用的技巧是和<code>sum()</code>以及<code>mean()</code>组合使用。</p>
 <p>类型强制转换一般自动产生，大部分数学函数会强制转换成double或者integer，大部分的逻辑操作符会强制转换为logical。如果coercion可能损失信息的时候，一般会得到一个警告信息。如果会产生confusion,可以用as系列函数<code>as.character()</code>, <code>as.double()</code>, <code>as.integer()</code>, or <code>as.logical()</code>.</p>
@@ -410,28 +411,28 @@ str(df)</code></pre>
 <code>plyr::rbind.fill()</code></p>
 <div id="ordering-integer-subsetting" class="section level3">
 <h3><span class="header-section-number">13.1.1</span> Ordering (integer subsetting)</h3>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="advanced-r.html#cb17-1"></a>x=<span class="kw">c</span>(<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>,<span class="st">&quot;a&quot;</span>)</span>
-<span id="cb17-2"><a href="advanced-r.html#cb17-2"></a>x[<span class="kw">order</span>(x)]</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="advanced-r.html#cb19-1"></a>x=<span class="kw">c</span>(<span class="st">&quot;b&quot;</span>,<span class="st">&quot;c&quot;</span>,<span class="st">&quot;a&quot;</span>)</span>
+<span id="cb19-2"><a href="advanced-r.html#cb19-2"></a>x[<span class="kw">order</span>(x)]</span></code></pre></div>
 <pre><code>## [1] &quot;a&quot; &quot;b&quot; &quot;c&quot;</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="advanced-r.html#cb19-1"></a>df=<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">each=</span><span class="dv">2</span>),<span class="dt">y=</span><span class="dv">6</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">z=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>])</span>
-<span id="cb19-2"><a href="advanced-r.html#cb19-2"></a>df2=df[<span class="kw">sample</span>(<span class="kw">nrow</span>(df)),<span class="dv">3</span><span class="op">:</span><span class="dv">1</span>]</span>
-<span id="cb19-3"><a href="advanced-r.html#cb19-3"></a>df2[<span class="kw">order</span>(df2<span class="op">$</span>x),]</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="advanced-r.html#cb21-1"></a>df=<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">each=</span><span class="dv">2</span>),<span class="dt">y=</span><span class="dv">6</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">z=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>])</span>
+<span id="cb21-2"><a href="advanced-r.html#cb21-2"></a>df2=df[<span class="kw">sample</span>(<span class="kw">nrow</span>(df)),<span class="dv">3</span><span class="op">:</span><span class="dv">1</span>]</span>
+<span id="cb21-3"><a href="advanced-r.html#cb21-3"></a>df2[<span class="kw">order</span>(df2<span class="op">$</span>x),]</span></code></pre></div>
 <pre><code>##   z y x
-## 1 a 6 1
 ## 2 b 5 1
-## 4 d 3 2
+## 1 a 6 1
 ## 3 c 4 2
-## 5 e 2 3
-## 6 f 1 3</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="advanced-r.html#cb21-1"></a>df2[,<span class="kw">order</span>(<span class="kw">names</span>(df2))]</span></code></pre></div>
+## 4 d 3 2
+## 6 f 1 3
+## 5 e 2 3</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="advanced-r.html#cb23-1"></a>df2[,<span class="kw">order</span>(<span class="kw">names</span>(df2))]</span></code></pre></div>
 <pre><code>##   x y z
-## 4 2 3 d
+## 3 2 4 c
+## 2 1 5 b
+## 6 3 1 f
 ## 1 1 6 a
 ## 5 3 2 e
-## 6 3 1 f
-## 2 1 5 b
-## 3 2 4 c</code></pre>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="advanced-r.html#cb23-1"></a>df=<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">y=</span><span class="dv">3</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">z=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</span></code></pre></div>
+## 4 2 3 d</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="advanced-r.html#cb25-1"></a>df=<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">y=</span><span class="dv">3</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">z=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</span></code></pre></div>
 </div>
 <div id="calling-a-function-given-a-list-of-arguments" class="section level3">
 <h3><span class="header-section-number">13.1.2</span> Calling a function given a list of arguments</h3>

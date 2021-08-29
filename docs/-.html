@@ -24,7 +24,7 @@
 <meta name="author" content="Jiaming Shen" />
 
 
-<meta name="date" content="2021-08-11" />
+<meta name="date" content="2021-08-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -181,6 +181,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7" data-path="-.html"><a href="-.html"><i class="fa fa-check"></i><b>7</b> 统计图形笔记</a><ul>
 <li class="chapter" data-level="7.1" data-path="-.html"><a href="-.html#图例"><i class="fa fa-check"></i><b>7.1</b> 图例：</a></li>
+<li class="chapter" data-level="7.2" data-path="-.html"><a href="-.html#多图参数"><i class="fa fa-check"></i><b>7.2</b> 多图参数</a></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="basicmcmc.html"><a href="basicmcmc.html"><i class="fa fa-check"></i><b>8</b> BasicMCMC</a><ul>
 <li class="chapter" data-level="8.1" data-path="basicmcmc.html"><a href="basicmcmc.html#metropolis-hastings-update"><i class="fa fa-check"></i><b>8.1</b> Metropolis-Hastings Update</a><ul>
@@ -394,6 +395,13 @@ lty是线的类型，是点的话这就用了NA。</p>
 <li>使用patchwork组合图形：</li>
 </ul>
 <p><a href="https://d.cosx.org/d/421267-ggplot-patchwork">来自于</a>, <a href="https://github.com/thomasp85/patchwork">官方文档</a></p>
+</div>
+<div id="多图参数" class="section level2">
+<h2><span class="header-section-number">7.2</span> 多图参数</h2>
+<p>多个图排列</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="-.html#cb3-1"></a><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>))</span></code></pre></div>
+<p>图之间的margin</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="-.html#cb4-1"></a><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">rep</span>(<span class="fl">2.5</span>,<span class="dv">4</span>))</span></code></pre></div>
 
 </div>
 </div>
