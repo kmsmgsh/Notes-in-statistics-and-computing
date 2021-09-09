@@ -24,7 +24,7 @@
 <meta name="author" content="Jiaming Shen" />
 
 
-<meta name="date" content="2021-08-13" />
+<meta name="date" content="2021-09-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -422,16 +422,16 @@ str(df)</code></pre>
 ## 1 a 6 1
 ## 3 c 4 2
 ## 4 d 3 2
-## 6 f 1 3
-## 5 e 2 3</code></pre>
+## 5 e 2 3
+## 6 f 1 3</code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="advanced-r.html#cb23-1"></a>df2[,<span class="kw">order</span>(<span class="kw">names</span>(df2))]</span></code></pre></div>
 <pre><code>##   x y z
-## 3 2 4 c
+## 5 3 2 e
 ## 2 1 5 b
 ## 6 3 1 f
-## 1 1 6 a
-## 5 3 2 e
-## 4 2 3 d</code></pre>
+## 3 2 4 c
+## 4 2 3 d
+## 1 1 6 a</code></pre>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="advanced-r.html#cb25-1"></a>df=<span class="kw">data.frame</span>(<span class="dt">x=</span><span class="dv">1</span><span class="op">:</span><span class="dv">3</span>,<span class="dt">y=</span><span class="dv">3</span><span class="op">:</span><span class="dv">1</span>,<span class="dt">z=</span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</span></code></pre></div>
 </div>
 <div id="calling-a-function-given-a-list-of-arguments" class="section level3">
